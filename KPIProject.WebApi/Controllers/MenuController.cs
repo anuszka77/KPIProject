@@ -11,7 +11,7 @@ namespace KPIProject.WebApi.Controllers
         [Route("GetLastStatusOfTask/")]
         public async Task<IActionResult> FGetLastStatusOfTask()
         {
-            return Ok( 5545);
+            return Ok( "Są dane z API");
         }
 
     }
