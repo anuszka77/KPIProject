@@ -19,7 +19,7 @@ const requestConfig = (params) => {
 		headers: {
 			'accept':'*/*',
 			'Content-Type': 'application/json',
-			// "Access-Control-Allow-Origin": "*"
+			"Access-Control-Allow-Origin": "*"
 		}
 	};
 	if (params) {
@@ -35,7 +35,7 @@ const anonymousRequestConfig = (params) => {
 		headers: {
 			'accept':'*/*',
   			'Content-Type': 'application/json',
-			//   "Access-Control-Allow-Origin": "*"
+			"Access-Control-Allow-Origin": "*"
 		}
 
 	};
