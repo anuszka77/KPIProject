@@ -14,7 +14,7 @@ var services = builder.Services;
 services.AddSingleton(builder.Configuration.GetSection(nameof(Settings)).Get<Settings>());
 
 //services.AddDbContext();
-//services.SetAuthentication();
+services.SetAuthentication();
 services.SetServicesCors();
 services.AddControllers();
 services.AddHttpContextAccessor();
