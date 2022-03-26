@@ -1,5 +1,6 @@
 using Microsoft.OpenApi.Models;
 using KPIProject;
+using KPIProject.WebApi.AppStart;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ services.AddSingleton(builder.Configuration.GetSection(nameof(Settings)).Get<Set
 
 //services.AddDbContext();
 //services.SetAuthentication();
-//services.SetServicesCors();
+services.SetServicesCors();
 services.AddControllers();
 services.AddHttpContextAccessor();
 services.AddEndpointsApiExplorer();
