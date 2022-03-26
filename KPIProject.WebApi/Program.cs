@@ -45,7 +45,7 @@ app.UseSwaggerUI();
 
 
 app.UseHttpsRedirection();
-//app.SetApplicationCors();
+app.SetApplicationCors();
 
 app.UseAuthentication();
 app.MapControllers();
