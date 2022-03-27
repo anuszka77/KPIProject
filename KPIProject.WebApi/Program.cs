@@ -1,6 +1,7 @@
 using Microsoft.OpenApi.Models;
 using KPIProject;
 using KPIProject.WebApi.AppStart;
+using KPIProject.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,14 +14,14 @@ SettingsFilesFactory.CreateSettingsFiles();
 var services = builder.Services;
 services.AddSingleton(builder.Configuration.GetSection(nameof(Settings)).Get<Settings>());
 
-//services.AddDbContext();
+services.AddDbContext();
 services.SetAuthentication();
 services.SetServicesCors();
 services.AddControllers();
 services.AddHttpContextAccessor();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
-//services.InitAutoMapper();
+services.InitAutoMapper();
 //services.AddAllValidators();
 //services.AddRepositories();
 //services.AddServices();

@@ -1,12 +1,14 @@
 import axios from "axios";
 
 export const api = {
-	//  address: "https://localhost:7145/",
-	//  apiAddress: "https://localhost:7145/api",
+	  address: "https://localhost:7108/",
+	  apiAddress: "https://localhost:7108/api",
 	
 //local IIS
-	address: "https://your-kpi-process-api.herokuapp.com/",
-	apiAddress: "https://your-kpi-process-api.herokuapp.com/api",
+	//address: "https://your-kpi-process-api.herokuapp.com/",
+	//apiAddress: "https://your-kpi-process-api.herokuapp.com/api",
+	//address: "https://your-kpi-process-api.herokuapp.com/",
+	//apiAddress: "https://your-kpi-process-api.herokuapp.com/api",
 
 	apiPrefix: "/api"
 	

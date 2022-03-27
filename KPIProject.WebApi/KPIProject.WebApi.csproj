@@ -23,4 +23,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KPIProject.DataCore\KPIProject.DataCore.csproj" />
+    <ProjectReference Include="..\KPIProject.DTO\KPIProject.DTO.csproj" />
+    <ProjectReference Include="..\KPIProject.Mapper\KPIProject.Mapper.csproj" />
+  </ItemGroup>
+
 </Project>

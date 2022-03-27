@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using KPIProject.DataCore.ContextTemp;
+using KPIProject.DTO.Menu;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace KPIProject.WebApi.Controllers
 {
@@ -6,12 +10,24 @@ namespace KPIProject.WebApi.Controllers
     [Route("api/[controller]")]
     public class MenuController: Controller
     {
+        private readonly ProcessBookContext context;
+        //do usuniecia!11111
+        protected readonly IMapper mapper;
+
+        public MenuController(ProcessBookContext context, IMapper mapper )
+        {
+            this.context = context;
+            this.mapper = mapper;
+        }
 
         [HttpGet]
         [Route("GetLastStatusOfTask/")]
         public async Task<IActionResult> FGetLastStatusOfTask()
         {
-            return Ok( "Są dane z API");
+            //return Ok(context.DimensionsDictionaries);
+
+            return Ok(await mapper.ProjectTo<DimensionsDictionaryDTO>(context.DimensionsDictionary).ToListAsync());
+
         }
 
     }
