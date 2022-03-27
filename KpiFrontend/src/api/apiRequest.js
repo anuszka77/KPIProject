@@ -5,8 +5,8 @@ export const api = {
 	//  apiAddress: "https://localhost:7145/api",
 	
 //local IIS
-	address: "https://localhost:7108/",
-	apiAddress: "https://localhost:7108/api",
+	address: "https://your-kpi-process-api.herokuapp.com/",
+	apiAddress: "https://your-kpi-process-api.herokuapp.com/api",
 
 	apiPrefix: "/api"
 	
