@@ -16,11 +16,7 @@ const withc = false;
 
 const requestConfig = (params) => {
 	const config = {
-		headers: {
-			'accept':'*/*',
-			'Content-Type': 'application/json',
-			//"Access-Control-Allow-Origin": "*"
-		}
+		headers: {}
 	};
 	if (params) {
 		for (const key in params) {
@@ -32,11 +28,7 @@ const requestConfig = (params) => {
 
 const anonymousRequestConfig = (params) => {
 	const config = {
-		headers: {
-			'accept':'*/*',
-  			'Content-Type': 'application/json',
-			//"Access-Control-Allow-Origin": "*"
-		}
+		headers: {}
 
 	};
 	if (params) {
