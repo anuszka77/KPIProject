@@ -1,9 +1,11 @@
-import React, { Component } from "react"
+import React, { Component} from "react"
 import logo from "./logo.svg"
 import "./App.css"
 import { loadDetails} from "./services/checklistService"; 
+import { useState } from "react/cjs/react.production.min"
 
-const d= "Nie ma danych z API"
+const d = "Nie ma danych z API";
+
 class LambdaDemo extends Component {
   constructor(props) {
     super(props)
@@ -12,10 +14,10 @@ class LambdaDemo extends Component {
 
 
 
-
   handleClick = api => e => {
     e.preventDefault()
     this.setState({ loading: true })
+    loadDetails().then(x=> alert(x));
     fetch("/.netlify/functions/" + api)
       .then(response => response.json())
       .then(json => this.setState({ loading: false, msg: json.msg }))
@@ -23,7 +25,7 @@ class LambdaDemo extends Component {
 
   render() {
     const { loading, msg } = this.state
-    const d=loadDetails();
+
 
     return (
       <p>
