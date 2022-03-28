@@ -1,57 +1,32 @@
-import React, { Component} from "react"
-import logo from "./logo.svg"
-import "./App.css"
-import { loadDetails} from "./services/checklistService"; 
-import { useState } from "react/cjs/react.production.min"
+import { useSelector } from 'react-redux';
 
-const d = "Nie ma danych z API";
+import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline, StyledEngineProvider } from '@mui/material';
 
-class LambdaDemo extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { loading: false, msg: null }
-  }
+// routing
+import Routes from 'routes';
 
+// defaultTheme
+import themes from 'themes';
 
+// project imports
+import NavigationScroll from 'layout/NavigationScroll';
 
-  handleClick = api => e => {
-    e.preventDefault()
-    this.setState({ loading: true })
-    loadDetails().then(x=> alert(x[0].dimensionDescription + " " + x[1].dimensionDescription + " " + x[2].dimensionDescription + " " + x[3].dimensionDescription));
-    fetch("/.netlify/functions/" + api)
-      .then(response => response.json())
-      .then(json => this.setState({ loading: false, msg: json.msg }))
-  }
+// ==============================|| APP ||============================== //
 
-  render() {
-    const { loading, msg } = this.state
-
+const App = () => {
+    const customization = useSelector((state) => state.customization);
 
     return (
-      <p>
-        <button onClick={this.handleClick("hello")}>{loading ? d : "Loading"}</button>
-        <button onClick={this.handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button>
-        <br />
-        <span>{msg}</span>
-      </p>
-    )
-  }
-}
+        <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={themes(customization)}>
+                <CssBaseline />
+                <NavigationScroll>
+                    <Routes />
+                </NavigationScroll>
+            </ThemeProvider>
+        </StyledEngineProvider>
+    );
+};
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <LambdaDemo />
-        </header>
-      </div>
-    )
-  }
-}
-
-export default App
+export default App;

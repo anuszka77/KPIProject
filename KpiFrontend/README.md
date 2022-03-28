@@ -1,108 +1,128 @@
-## Create-React-App-Lambda
+# Berry Free React Material Admin Template [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Get%20Berry%20React%20-%20The%20most%20beautiful%20Material%20designed%20Admin%20Dashboard%20Template%20&url=https://berrydashboard.io&via=codedthemes&hashtags=reactjs,webdev,developers,javascript)
 
-This project is a reference demo showing you how to use [Create React App v3](https://github.com/facebookincubator/create-react-app) and [netlify-lambda v1](https://github.com/netlify/netlify-lambda) together in a [Netlify Dev](https://www.netlify.com/docs/cli/?utm_source=github&utm_medium=swyx-CRAL&utm_campaign=devex#netlify-dev-beta) workflow. You can clone this and immediately be productive with a React app with serverless Netlify Functions in the same repo. Alternatively you can deploy straight to Netlify with this one-click Deploy:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Price](https://img.shields.io/badge/price-FREE-0098f7.svg)](https://github.com/codedthemes/berry-free-react-admin-template/blob/main/LICENSE)
+[![GitHub package version](https://img.shields.io/github/package-json/v/codedthemes/berry-free-react-admin-template)](https://github.com/codedthemes/berry-free-react-admin-template/)
 
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg?utm_source=github&utm_medium=swyx-CRAL&utm_campaign=devex)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify/create-react-app-lambda&utm_source=github&utm_medium=swyx-CRAL&utm_campaign=devex)
+Berry is a free react admin template build using the M-UI. It is meant to be the best User Experience with highly customizable feature-riched pages. It is a complete React Dashboard Template with easy and intuitive responsive design as on retina screens or laptops.
 
-> ⚠️NOTE: You may not need this project at all. [Netlify Dev](https://github.com/netlify/netlify-dev-plugin) works with `create-react-app` out of the box! Only use `netlify-lambda` if you need a build step for your functions, eg if you want to use Babel or TypeScript ([see its README for details](https://github.com/netlify/netlify-lambda/blob/master/README.md#netlify-lambda)).
+:star: :star: :star: Do not forget to star (Top right of this page) it if you like the theme  :star: :star: :star:
 
-## Project Setup
+![IMG_8566.jpg](https://berrydashboard.io/imp-images/berry-github-free-repo-1.jpg)
 
-**Source**: The main addition to base Create-React-App is a new folder: `src/lambda`. This folder is specified and can be changed in the `package.json` script: `"build:lambda": "netlify-lambda build src/lambda"`.
 
-**Dist**: Each JavaScript file in there will be built for Netlify Function deployment in `/built-lambda`, specified in [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/?utm_source=github&utm_medium=swyx-CRAL&utm_campaign=devex).
+[Pro version](https://berrydashboard.io) of Berry react template contains features like TypeScript, Apps, Authentication Methods (i.e. JWT, Auth0, Firebase), Advance Components, Form Plugins, Layouts, Widgets, and many more.
 
-As an example, we've included a small `src/lambda/hello.js` function, which will be deployed to `/.netlify/functions/hello`. We've also included an async lambda example using async/await syntax in `async-dadjoke.js`.
+| [Berry Free](https://berrydashboard.io/free/)    | [Berry](https://material-ui.com/store/items/berry-react-material-admin/) |
+| ---------------------------------------------------------------------------------------- | :------------------------------------------------------------------------|
+| **9** Demo pages                                                                         | **45+** demo pages                                                       |
+| -                                                                                        | ✓ Multi-language                                                         |
+| -                                                                                        | ✓ Dark/Light Mode 🌓                                                    |
+| -                                                                                        | ✓ TypeScript version                                                     |
+| -                                                                                        | ✓ Design files (Figma)                                                   |
+| -                                                                                        | ✓ 6+ color Options                                                       |
+| -                                                                                        | ✓ RTL                                                                    |
+| -                                                                                        | ✓ JWT, Firebase, Auth0 authentications                                   |
+| -                                                                                        | ✓ [More components](https://berrydashboard.io/dashboard/default)         |  
 
-## Video
 
-Learn how to set this up yourself (and why everything is the way it is) from scratch in a video: https://www.youtube.com/watch?v=3ldSM98nCHI
+## Why Berry?
 
-## Babel/webpack compilation
+Berry brings everything you need for dashboard development. We have added the following high-end features in the initial release.
 
-All functions (inside `src/lambda`) are compiled with webpack using Babel, so you can use modern JavaScript, import npm modules, etc., without any extra setup.
+ * Modern aesthetics UI design
+ * Material-UI components
+ * Fully Responsive, all modern browser supported
+ * Easy to use code structure
+ * Flexible & High-Performance code
+ * Easy Documentation Guide
 
-## Local Development
+## Free Berry React version
 
-```bash
-## prep steps for first time users
-npm i -g netlify-cli # Make sure you have the [Netlify CLI](https://github.com/netlify/cli) installed
-git clone https://github.com/netlify/create-react-app-lambda ## clone this repo
-cd create-react-app-lambda ## change into this repo
-yarn # install all dependencies
+#### Preview
 
-## done every time you start up this project
-ntl dev ## nice shortcut for `netlify dev`, starts up create-react-app AND a local Node.js server for your Netlify functions
+ - [Demo](https://berrydashboard.io/free/)
+
+#### Download
+
+ - [Download from Github](https://github.com/codedthemes/berry-free-react-admin-template)
+ 
+## Berry Pro version
+
+Berry is available to purchase.
+#### Preview
+
+ - [Demo](https://berrydashboard.io)
+
+#### Purchase
+
+ - [Purchase from Material UI Store](https://material-ui.com/store/items/berry-react-material-admin/)
+
+## Table of contents
+
+ * [Getting Started](#getting-started)
+ * [Documentation](#documentation)
+ * [Technology Stack](#technology-stack)
+ * [Author](#author)
+ * [Issues?](#issues)
+ * [License](#license)
+ * [More Products](#more-free-react-material-admin-templates)
+ * [Follow us](#follow-us)
+ 
+## Getting Started
+
+Clone from Github 
+```
+git clone https://github.com/codedthemes/berry-free-react-admin-template.git
 ```
 
-This fires up [Netlify Dev](https://www.netlify.com/docs/cli/?utm_source=github&utm_medium=swyx-CRAL&utm_campaign=devex#netlify-dev-beta), which:
+## Documentation
 
-- Detects that you are running a `create-react-app` project and runs the npm script that contains `react-scripts start`, which in this project is the `start` script
-- Detects that you use `netlify-lambda` as a [function builder](https://github.com/netlify/netlify-dev-plugin/#function-builders-function-builder-detection-and-relationship-with-netlify-lambda), and runs the npm script that contains `netlify-lambda build`, which in this project is the `build:lambda` script.
+[Berry documentation](https://codedthemes.gitbook.io/berry/) helps you out in all aspects from Installation to deployment.
 
-You can view the project locally via Netlify Dev, via `localhost:8888`.
+## Technology Stack
 
-Each function will be available at the same port as well:
+ - [Material UI V5](https://material-ui.com/)
+ - Built with React Hooks API
+ - Redux & React Context API for State Management
+ - React Router for Navigation Routing
+ - Support of react-script
+ - Code Splitting
+ - CSS-in-JS where CSS is composed using JavaScript instead of defined in external files
 
-- `http://localhost:8888/.netlify/functions/hello` and 
-- `http://localhost:8888/.netlify/functions/async-dadjoke`
+## Author
 
-## Deployment
+Berry is managed by Team [CodedThemes](https://codedthemes.com).
 
-During deployment, this project is configured, inside `netlify.toml` to run the build `command`: `yarn build`.
+## Issues
 
-`yarn build` corresponds to the npm script `build`, which uses `npm-run-all` (aka `run-p`) to concurrently run `"build:app"` (aka `react-scripts build`) and `build:lambda` (aka `netlify-lambda build src/lambda`).
+Please generate a [Github issue](https://github.com/codedthemes/berry-free-react-admin-template/issues) if you found a bug in any version. We are trying to be responsive to resolve the issue.
 
-## Typescript
+## License
 
-<details>
-  <summary>
-    <b id="typescript">Click for instructions</b>
-  </summary>
+ - Licensed cover under [MIT](https://github.com/codedthemes/datta-able-bootstrap-dashboard/blob/master/LICENSE)
 
-You can use Typescript in both your frontend React code (with `react-scripts` v2.1+) and your serverless functions (with `netlify-lambda` v1.1+). Follow these instructions:
+## Berry - Nodejs version by Appseed
 
-1. `yarn add -D typescript @types/node @types/react @types/react-dom @babel/preset-typescript @types/aws-lambda`
-2. convert `src/lambda/hello.js` to `src/lambda/hello.ts`
-3. use types in your event handler:
+- [Free Nodejs](https://appseed.us/product/react-node-js-berry-dashboard)
+- [Premium Berry Nodejs](https://appseed.us/full-stack/react-berry-dashboard)
 
-```ts
-import { Handler, Context, Callback, APIGatewayEvent } from 'aws-lambda'
+## More Free React Material Admin Templates
 
-interface HelloResponse {
-  statusCode: number
-  body: string
-}
+ - [Free Materially](https://codedthemes.com/item/materially-free-reactjs-admin-template/)
+ - [Free Mantis](https://mantisdashboard.io/free/)
 
-const handler: Handler = (event: APIGatewayEvent, context: Context, callback: Callback) => {
-  const params = event.queryStringParameters
-  const response: HelloResponse = {
-    statusCode: 200,
-    body: JSON.stringify({
-      msg: `Hello world ${Math.floor(Math.random() * 10)}`,
-      params,
-    }),
-  }
+[![IMG_8566.jpg](https://camo.githubusercontent.com/a2364ad8c498b2a7378dae5e1a5eb5d8e1fcb2d6ceeb8b54acdc2e8bc2508775/68747470733a2f2f6d616e74697364617368626f6172642e696f2f6164762d62616e6e65722d696d616765732f6f672d736f6369616c2e706e67)](https://mantisdashboard.io/free/)
 
-  callback(undefined, response)
-}
+## More Premium React Material Admin Templates
 
-export { handler }
-```
-
-rerun and see it work!
-
-You are free to set up your `tsconfig.json` and `tslint` as you see fit.
-
-</details>
-
-**If you want to try working in Typescript on the client and lambda side**: There are a bunch of small setup details to get right. Check https://github.com/sw-yx/create-react-app-lambda-typescript for a working starter.
-
-## Routing and authentication with Netlify Identity
-
-For a full demo of routing and authentication, check this branch: https://github.com/netlify/create-react-app-lambda/pull/18 This example will not be maintained but may be helpful.
-
-## Service Worker
-
-`create-react-app`'s default service worker (in `src/index.js`) does not work with lambda functions out of the box. It prevents calling the function and returns the app itself instead ([Read more](https://github.com/facebook/create-react-app/issues/2237#issuecomment-302693219)). To solve this you have to eject and enhance the service worker configuration in the webpack config. Whitelist the path of your lambda function and you are good to go.
+ - [Materially](https://codedthemes.com/item/materially-reactjs-admin-dashboard/)
+ 
+## Follow us
+ - Website [https://berrydashboard.io](https://berrydashboard.io)
+ - Blog [https://blog.berrydashboard.io](https://blog.berrydashboard.io)
+ - CodedThemes [https://codedthemes.com](https://codedthemes.com)
+ - Dribbble [https://dribbble.com/codedthemes](https://dribbble.com/codedthemes)
+ - Facebook [https://www.facebook.com/codedthemes](https://www.facebook.com/codedthemes)
+ - Twitter [https://twitter.com/codedthemes](https://twitter.com/codedthemes)

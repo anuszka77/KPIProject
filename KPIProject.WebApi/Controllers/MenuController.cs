@@ -11,7 +11,7 @@ namespace KPIProject.WebApi.Controllers
     public class MenuController: Controller
     {
         private readonly ProcessBookContext context;
-        //do usuniecia!11111
+        //do usuniecia! mappery dodamy w Service!!!!!!!!!!
         protected readonly IMapper mapper;
 
         public MenuController(ProcessBookContext context, IMapper mapper )
