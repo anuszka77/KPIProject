@@ -2,7 +2,9 @@
     "name": "berry-material-react-free",
     "version": "3.0.1",
     "private": true,
-    "homepage": "https://berrydashboard.io/free",
+	"engines": {
+		"node": "14.x"
+	},
     "dependencies": {
         "@emotion/cache": "^11.4.0",
         "@emotion/react": "^11.4.0",
