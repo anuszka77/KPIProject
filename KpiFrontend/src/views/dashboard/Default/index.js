@@ -11,7 +11,6 @@ import TotalIncomeDarkCard from './TotalIncomeDarkCard';
 import TotalIncomeLightCard from './TotalIncomeLightCard';
 import TotalGrowthBarChart from './TotalGrowthBarChart';
 import { gridSpacing } from 'store/constant';
-import { DataGrid } from '@mui/x-data-grid';
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 

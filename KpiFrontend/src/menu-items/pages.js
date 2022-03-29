@@ -1,12 +1,12 @@
 // assets
-import { IconKey, IconNotebook, IconUsers, IconComponents } from '@tabler/icons';
+import { IconKey, IconNotebook, IconUsers, IconApps } from '@tabler/icons';
 
 // constant
 const icons = {
     IconKey,
     IconNotebook,
     IconUsers,
-    IconComponents
+    IconApps
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
@@ -29,7 +29,7 @@ const pages = {
             title: 'Obiekty/Produkty',
             type: 'item',
             url: '/objects',
-            icon: icons.IconComponents,
+            icon: icons.IconApps,
             breadcrumbs: false
         },
         {
