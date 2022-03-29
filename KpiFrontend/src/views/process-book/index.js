@@ -11,12 +11,12 @@ import { loadDetails } from '../../services/processBookService';
 
 const ProcessBook = () => {
     const [data, setData] = useState();
-    useEffect(() => {
+   /* useEffect(() => {
         loadDetails().then((x) => {
             setData(x);
             console.log(x[0].dimensionDescription);
         });
-    }, []);
+    }, []);*/
     return (
         <MainCard title="Słownik zaciągnięty z bazy">
             <Typography variant="body2">
