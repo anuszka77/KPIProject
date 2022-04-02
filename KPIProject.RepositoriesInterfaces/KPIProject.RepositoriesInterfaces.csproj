@@ -7,13 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="11.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\KPIProject.DataCore\KPIProject.DataCore.csproj" />
     <ProjectReference Include="..\KPIProject.DTO\KPIProject.DTO.csproj" />
-    <ProjectReference Include="..\KPIProject.ServicesInterfaces\KPIProject.ServicesInterfaces.csproj" />
   </ItemGroup>
 
 </Project>

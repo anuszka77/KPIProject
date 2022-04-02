@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using KPIProject.DataCore.Models;
 
-namespace KPIProject.DataCore.ContextTemp
+namespace KPIProject.DataCore.ProcessBookContext
 {
     public partial class ProcessBookContext : DbContext
     {
@@ -30,6 +30,8 @@ namespace KPIProject.DataCore.ContextTemp
 
         #region Properties
         public virtual DbSet<DimensionsDictionary> DimensionsDictionary { get; set; } = null!;
+        public IQueryable<FGetListOfProcess_Result> FGetListOfProcess() => FromExpression(() => FGetListOfProcess());
+        public IQueryable<FGetTierListByDim_Result> FGetTierListByDim(short? dimensionId) => FromExpression(() => FGetTierListByDim(dimensionId));
 
 
         #endregion Properties
@@ -46,12 +48,20 @@ namespace KPIProject.DataCore.ContextTemp
         //    }
         //}
 
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             modelBuilder.HasDefaultSchema(shema);
 
             modelBuilder.UseCollation("Polish_CI_AS");
+
+            modelBuilder.Entity<FGetListOfProcess_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfProcess))).HasSchema("PbApp");
+
+            modelBuilder.Entity<FGetTierListByDim_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetTierListByDim), new[] { typeof(short?) })).HasSchema("PbApp");
 
             modelBuilder.Entity<DimensionsDictionary>(entity =>
             {

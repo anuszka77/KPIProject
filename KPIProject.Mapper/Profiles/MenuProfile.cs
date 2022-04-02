@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using KPIProject.DataCore.Models;
+using KPIProject.DTO.Dictionary;
 using KPIProject.DTO.Menu;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,10 @@ namespace KPIProject.Mapper.Profiles
         public MenuProfile()
         {
             CreateMap<DimensionsDictionary, DimensionsDictionaryDTO > ().ReverseMap();
+            CreateMap<FGetListOfProcess_Result, FGetListOfProcess_ResultDTO>().ReverseMap();
+            CreateMap<FGetTierListByDim_Result, FGetTierListByDim_ResultDTO>().ReverseMap();
+
+
         }
 
         #endregion Constructors

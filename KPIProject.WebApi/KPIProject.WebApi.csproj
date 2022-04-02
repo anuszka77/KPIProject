@@ -27,6 +27,9 @@
     <ProjectReference Include="..\KPIProject.DataCore\KPIProject.DataCore.csproj" />
     <ProjectReference Include="..\KPIProject.DTO\KPIProject.DTO.csproj" />
     <ProjectReference Include="..\KPIProject.Mapper\KPIProject.Mapper.csproj" />
+    <ProjectReference Include="..\KPIProject.RepositoriesInterfaces\KPIProject.RepositoriesInterfaces.csproj" />
+    <ProjectReference Include="..\KPIProject.Repositories\KPIProject.Repositories.csproj" />
+    <ProjectReference Include="..\KPIProject.Services\KPIProject.Services.csproj" />
   </ItemGroup>
 
 </Project>

@@ -23,8 +23,8 @@ services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.InitAutoMapper();
 //services.AddAllValidators();
-//services.AddRepositories();
-//services.AddServices();
+services.AddRepositories();
+services.AddServices();
 //services.AddSignalR();
 
 services.AddSwaggerGen(options =>

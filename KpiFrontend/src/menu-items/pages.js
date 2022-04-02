@@ -1,28 +1,48 @@
 // assets
-import { IconKey, IconNotebook, IconUsers, IconApps } from '@tabler/icons';
+import { IconKey, IconNotebook, IconUsers, IconApps, IconBookmark, IconBook, IconChartArrowsVertical } from '@tabler/icons';
+
 
 // constant
 const icons = {
     IconKey,
     IconNotebook,
     IconUsers,
-    IconApps
+    IconApps,
+    IconBookmark,
+    IconBook,
+    IconChartArrowsVertical
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
 
 const pages = {
     id: 'pages',
-    title: 'Zarządzanie procesami',
+    //title: 'Zarządzanie procesami',
     type: 'group',
     children: [
         {
-            id: 'process-book',
-            title: 'Księga procesów',
-            type: 'item',
-            url: '/process-book',
-            icon: icons.IconNotebook,
-            breadcrumbs: false
+            id: 'process',
+            title: 'Procesy',
+            type: 'collapse',
+            icon: icons.IconChartArrowsVertical,
+            children: [
+                {
+                    id: 'process-book',
+                    title: 'Księga procesów',
+                    type: 'item',
+                    url: '/process-book',
+                    icon: icons.IconNotebook,
+                    breadcrumbs: false
+                },
+                {
+                    id: 'dictionary',
+                    title: 'Słowniki',
+                    type: 'item',
+                    url: '/dictionary',
+                    icon: icons.IconBook,
+                    breadcrumbs: false
+                }
+            ]
         },
         {
             id: 'objects',

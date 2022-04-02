@@ -3,7 +3,7 @@ import { getApi } from '../api/apiRequest';
 
 export const loadDetails = async () => {
     try {
-        return await getApi('/Menu/GetLastStatusOfTask')
+        return await getApi('/ProcessBook/GetProcessBook')
             .then((res) => {
                 if (res.status === 200) {
                     return Promise.resolve(res.data);
@@ -11,7 +11,7 @@ export const loadDetails = async () => {
                 return Promise.resolve([]);
             })
             .catch((error) => {
-                const responseMsg = 'fffff';
+                const responseMsg = error.message;
                 console.log(responseMsg);
                 return Promise.reject(responseMsg);
             });

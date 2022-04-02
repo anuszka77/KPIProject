@@ -15,10 +15,12 @@ const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialI
 const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons')));
 
 // sample page routing
-const SamplePage = Loadable(lazy(() => import('views/sample-page')));
+//const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 
 // process book routing
 const ProcessBook = Loadable(lazy(() => import('views/process-book')));
+
+const Dictionary = Loadable(lazy(() => import('views/dictionary')));
 
 const Objects = Loadable(lazy(() => import('views/objects')));
 
@@ -59,12 +61,12 @@ const MainRoutes = {
             element: <UtilsMaterialIcons />
         },
         {
-            path: '/sample-page',
-            element: <SamplePage />
-        },
-        {
             path: '/process-book',
             element: <ProcessBook />
+        },
+        {
+            path: '/dictionary',
+            element: <Dictionary />
         },
         {
             path: '/objects',
