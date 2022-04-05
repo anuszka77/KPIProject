@@ -1,4 +1,4 @@
-﻿using KPIProject.DataCore.Models;
+﻿using KPIProject.DTO.Menu;
 using System;
 using System.Collections.Generic;
 using System.Linq;

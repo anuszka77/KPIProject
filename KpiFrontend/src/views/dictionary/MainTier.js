@@ -30,8 +30,6 @@ const [tierList, setTierList]=useState([]);
 const [tierValue, setTierValue] = React.useState('');
 
 
-const age =10;
-
 const handleChange = (event) => {
     setDimensionValue(event.target.value);
     setTierValue(null);
@@ -42,7 +40,6 @@ const handleChange = (event) => {
 
  const handleChangeTier = (event) => {
     setTierValue(event.target.value);
-
  };
 
 

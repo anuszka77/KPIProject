@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 // material-ui
 import { Typography } from '@mui/material';
@@ -6,49 +6,57 @@ import { DataGrid } from '@mui/x-data-grid';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import { loadDetails } from '../../services/processBookService';
+import { loadDetails, loadColumnToShow } from '../../services/processBookService';
 
 import { styled } from '@mui/material/styles';
 
+
 // ==============================|| SAMPLE PAGE ||============================== //
+const capitalize = (str) => {
+  return str.charAt(0).toLowerCase() + str.slice(1);
+  }
 
 const ProcessBook = () => {
     const [data, setData] = useState([]);
-    //const [row, setRow] = useState();
-    //var rows=[];
-
-
+    const [columnToShow, setColumnToShow] = useState([]);
+    
     const getData = async => {
         loadDetails().then((x) => {
             setData(x);
         });
     }
 
+    const getListOfColumnToShow = async => {
+      loadColumnToShow(1,1).then((y) => {
+        setColumnToShow(y);
+      });
+  }
+
     useEffect(() => {
         getData();
+        getListOfColumnToShow();
     }, []);
 
-    const columns = [
-    { field: 'idProcess', headerName: 'Numer procesu', width:150 },
-    {
-        field: 'processVin',
-        headerName: 'Numer Vin',
-        width: 300,
-    },
-    {
-        field: 'processName',
-        headerName: 'Nazwa procesu',
-        width: 1000,
-    }
-    ];
-
+    const columns = columnToShow.map((row) => ({
+      field: capitalize(row.columnToGridName),
+      headerName: row.columnToGridNamePl,
+      width: 250
+    }));
+    
+    
     const rows = data.map((row) => ({
+        type: 'MASTER',
+        expanded: false,
         idProcess: row.idProcess,
         processVin: row.processVin,
-        processName: row.processName
+        processName: row.processName,
+        areaLayerName: row.areaLayerName,
+        subAreaLayerName: row.subAreaLayerName,
+        subjectLayerName: row.subjectLayerName,
+        attributeLayerName: row.attributeLayerName
     }));
 
- 
+   
 
     const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
         border: 'none',
@@ -103,7 +111,8 @@ const ProcessBook = () => {
             checkboxSelection
             disableSelectionOnClick
             getRowId={(row) => row.idProcess}
-      /></div>
+      />  
+      </div>
         </MainCard>
     );
 };

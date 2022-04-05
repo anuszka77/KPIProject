@@ -10,6 +10,8 @@ namespace KPIProject.WebApi.AppStart
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddTransient<IDictionaryService, DictionaryService>();
+            services.AddTransient<IProcessBookService, ProcessBookService>();
+
 
 
             return services;

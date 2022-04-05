@@ -19,3 +19,23 @@ export const loadDetails = async () => {
         return Promise.reject(e);
     }
 };
+
+
+export const loadColumnToShow = async (idDatabaseObject, roleId ) => {
+    try {
+        return await getApi('/ProcessBook/GetListOfColumnToShow/'+idDatabaseObject+"/"+roleId)
+            .then((res) => {
+                if (res.status === 200) {
+                    return Promise.resolve(res.data);
+                }
+                return Promise.resolve([]);
+            })
+            .catch((error) => {
+                const responseMsg = error.message;
+                console.log(responseMsg);
+                return Promise.reject(responseMsg);
+            });
+    } catch (e) {
+        return Promise.reject(e);
+    }
+};

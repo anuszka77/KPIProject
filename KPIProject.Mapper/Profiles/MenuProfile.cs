@@ -17,7 +17,11 @@ namespace KPIProject.Mapper.Profiles
         public MenuProfile()
         {
             CreateMap<DimensionsDictionary, DimensionsDictionaryDTO > ().ReverseMap();
+            
             CreateMap<FGetListOfProcess_Result, FGetListOfProcess_ResultDTO>().ReverseMap();
+            CreateMap<FGetListOfColumToShowByRole_Result, FGetListOfColumToShowByRole_ResultDTO>().ReverseMap();
+
+
             CreateMap<FGetTierListByDim_Result, FGetTierListByDim_ResultDTO>().ReverseMap();
 
 
