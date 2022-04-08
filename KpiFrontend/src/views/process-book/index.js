@@ -9,6 +9,22 @@ import MainCard from 'ui-component/cards/MainCard';
 import { loadDetails, loadColumnToShow } from '../../services/processBookService';
 
 import { styled } from '@mui/material/styles';
+import MasterDetail from '@sakit-sa/react-master-detail';
+import '@sakit-sa/react-master-detail/dist/index.css';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import { gridSpacing } from 'store/constant';
+import { Grid } from '@mui/material';
+import ProcessDetails from './ProcessDetails';
+import { useHistory } from "react-router-dom";
+
+import { useNavigate } from 'react-router-dom';
 
 
 // ==============================|| SAMPLE PAGE ||============================== //
@@ -19,6 +35,15 @@ const capitalize = (str) => {
 const ProcessBook = () => {
     const [data, setData] = useState([]);
     const [columnToShow, setColumnToShow] = useState([]);
+
+    const [value, setValue] = useState('1');
+
+    
+    const navigate = useNavigate();
+
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
     
     const getData = async => {
         loadDetails().then((x) => {
@@ -45,7 +70,6 @@ const ProcessBook = () => {
     
     
     const rows = data.map((row) => ({
-        type: 'MASTER',
         expanded: false,
         idProcess: row.idProcess,
         processVin: row.processVin,
@@ -56,65 +80,65 @@ const ProcessBook = () => {
         attributeLayerName: row.attributeLayerName
     }));
 
-   
+    useEffect(() => {
+      navigate( { state: { rows, columns }})
+  }, []);
+    
 
-    const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-        border: 'none',
-        title: 'Procesy',
-        color:
-          theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.85)',
-        fontFamily: [
-          '-apple-system',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Roboto',
-          '"Helvetica Neue"',
-          'Arial',
-          'sans-serif',
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
-        ].join(','),
-        WebkitFontSmoothing: 'auto',
-        letterSpacing: 'normal',
-        //headerAlign: 'center',
-        align: 'center',
-        //'& .MuiDataGrid-columnsContainer': {
-        //  backgroundColor: theme.palette.mode === 'light' ? '#fafafa' : '#1d1d1d',         
-        //},
-        '& .MuiDataGrid-iconSeparator': {
-          display: 'none',
-        },
-        '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
-          borderBottom: `1px solid ${
-            theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'
-          }`,
-        },
-        '& .MuiDataGrid-cell': {
-          color:
-            theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.65)',
-        },
-        '& .MuiPaginationItem-root': {
-          borderRadius: 0,
-        },
-//...customCheckbox(theme),
-      }));
+
+    const changedColor = (e) =>{
+     navigate( { state: { rows, columns }})
+     
+    }
+  
     
     return (
-        <MainCard title="Księga procesów" height="100%">
-            <div style={{height: 680, width:"100%"}}>
-           <StyledDataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={12}
-            rowsPerPageOptions={[12]}
-            checkboxSelection
-            disableSelectionOnClick
-            getRowId={(row) => row.idProcess}
-      />  
-      </div>
-        </MainCard>
+      <div style={{height: 900, width:"100%"}}>
+          
+      <MasterDetail 
+      canClose={false}
+      defaultMasterWidth="50px"
+      masterWidth="300px"
+      adjustable={false}
+      >
+
+          <div>
+            <div>Księga procesów</div>
+            <div>
+              <Stack direction="column" spacing={1}>
+                {data.map((row) => (
+                <Button 
+                variant="contained"
+                onClick={changedColor}>
+                  {row.processName}
+                </Button>
+                ))} </Stack>   
+            </div>   
+          </div>
+
+<div>
+          <TabContext value={value}>
+                          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                              <TabList onChange={handleChange} >
+                                  <Tab label="Szczegóły procesu" value="1" />
+                                  <Tab label="Czynności" value="2" />
+                              </TabList>
+                          </Box>
+                          <TabPanel value="1" style={{height: `inherit`}} >
+                              <ProcessDetails></ProcessDetails>
+                          </TabPanel>
+                          <TabPanel value="2">Item Two</TabPanel>
+             </TabContext>
+             </div>
+
+
+
+
+
+            </MasterDetail>
+        </div>
     );
 };
 
 export default ProcessBook;
+
