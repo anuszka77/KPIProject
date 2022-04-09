@@ -25,6 +25,13 @@ import ProcessDetails from './ProcessDetails';
 import { useHistory } from "react-router-dom";
 
 import { useNavigate } from 'react-router-dom';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 
 // ==============================|| SAMPLE PAGE ||============================== //
@@ -32,11 +39,18 @@ const capitalize = (str) => {
   return str.charAt(0).toLowerCase() + str.slice(1);
   }
 
+  const createData = (name, value) => {
+    return { name, value};
+  }
+
 const ProcessBook = () => {
     const [data, setData] = useState([]);
     const [columnToShow, setColumnToShow] = useState([]);
 
     const [value, setValue] = useState('1');
+
+    const [processDetails, setProcessDetails] = useState([]);
+    const [rows, setRows]=useState([]);
 
     
     const navigate = useNavigate();
@@ -48,6 +62,7 @@ const ProcessBook = () => {
     const getData = async => {
         loadDetails().then((x) => {
             setData(x);
+                 
         });
     }
 
@@ -65,11 +80,11 @@ const ProcessBook = () => {
     const columns = columnToShow.map((row) => ({
       field: capitalize(row.columnToGridName),
       headerName: row.columnToGridNamePl,
-      width: 250
+      id: row.idColumnsToGrid
     }));
     
     
-    const rows = data.map((row) => ({
+   /* const rows = processDetails.map((row) => ({
         expanded: false,
         idProcess: row.idProcess,
         processVin: row.processVin,
@@ -78,7 +93,20 @@ const ProcessBook = () => {
         subAreaLayerName: row.subAreaLayerName,
         subjectLayerName: row.subjectLayerName,
         attributeLayerName: row.attributeLayerName
-    }));
+    }));*/
+
+
+    /*const rows = [
+      {id: 1, name: processDetails.idProcess},
+      {id: 2, name: processDetails.processName},
+      {id: 9, name: processDetails.areaLayerName},
+      {id: 13, name: processDetails.subAreaLayerName},
+      {id: 21, name: processDetails.subjectLayerName},
+      {id: 29, name: processDetails.attributeLayerName}
+    ];
+    */
+    
+
 
     useEffect(() => {
       navigate( { state: { rows, columns }})
@@ -86,11 +114,34 @@ const ProcessBook = () => {
     
 
 
-    const changedColor = (e) =>{
-     navigate( { state: { rows, columns }})
+    const onProcessClick = (e) =>{
+     //navigate( { state: { rows, columns }})
+     const selectedProcessName = e.target.innerText.toLowerCase();
      
+     const filter = data
+     .filter(x => x.processName.toLowerCase() === selectedProcessName);
+
+
+      setProcessDetails(filter);
+
+      const y=[
+        {id: 1, name: filter[0].idProcess},
+        {id: 2, name: filter[0].processName},
+        {id: 9, name: filter[0].areaLayerName},
+        {id: 13, name: filter[0].subAreaLayerName},
+        {id: 21, name: filter[0].subjectLayerName},
+        {id: 29, name: filter[0].attributeLayerName}
+      ];
+      
+      setRows(y);
+
+      console.log(y.filter(z => z.id == 1)[0].name + " no zoba jest poszłoooooooooooooooo")
+     //processDetails.filter
+
     }
-  
+
+ 
+
     
     return (
       <div style={{height: 900, width:"100%"}}>
@@ -109,8 +160,10 @@ const ProcessBook = () => {
                 {data.map((row) => (
                 <Button 
                 variant="contained"
-                onClick={changedColor}>
-                  {row.processName}
+                onClick={onProcessClick}
+                //key={row.idProcess}
+                >
+                 {row.processName}
                 </Button>
                 ))} </Stack>   
             </div>   
@@ -125,7 +178,38 @@ const ProcessBook = () => {
                               </TabList>
                           </Box>
                           <TabPanel value="1" style={{height: `inherit`}} >
-                              <ProcessDetails></ProcessDetails>
+                                <TableContainer component={Paper}>
+                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">                                     
+                                      <TableBody>                                     
+                                        {columns.map((row) => 
+                                        processDetails.length != 0 ?
+                                        (
+                                          <TableRow
+                                            key={row.field}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                          >
+                                            <TableCell component="th" scope="row">
+                                              {row.headerName}
+                                            </TableCell>
+                                            <TableCell>{rows.filter(x => x.id === row.id)[0].name}</TableCell>
+                                          </TableRow>
+                                        )
+                                        :
+                                        (
+                                          <TableRow
+                                            key={row.field}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                          >                                           
+                                          <TableCell component="th" scope="row">
+                                          {row.headerName}
+                                        </TableCell>
+                                        </TableRow>
+                                        )
+                                        )
+                                        }
+                                      </TableBody>
+                                    </Table>
+                              </TableContainer>
                           </TabPanel>
                           <TabPanel value="2">Item Two</TabPanel>
              </TabContext>
