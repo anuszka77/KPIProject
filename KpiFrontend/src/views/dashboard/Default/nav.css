@@ -2,13 +2,25 @@
 background-color: #17202e;
 }
 
+.MuiBox-root, .css-rs0zx6{
+    background-color: white!important;
+    
+}
+
+.css-kvip5o-MuiToolbar-root{
+    height: "20px"!important;
+}
 .css-o4begf-MuiAvatar-root {
-    background-color: #17202e;
+    background-color: black;
 
 }
 
 .MuiListItemButton-gutters {
     color: white;
+}
+
+.css-9xt4ef-MuiPaper-root-MuiAppBar-root{
+    background-color: white!important;
 }
 
 
@@ -41,4 +53,14 @@ background-color: #17202e;
 
 .css-kvip5o-MuiToolbar-root{
     background-color: transparent!important;
+}
+
+.css-1okj3ks-MuiStack-root.Mui-selected
+{
+    background-color: red;
+}
+
+
+.MuiButtonGroup-contained.Mui-selected{
+    background-color: red;
 }

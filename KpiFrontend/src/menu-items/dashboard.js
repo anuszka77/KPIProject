@@ -8,7 +8,7 @@ const icons = { IconDashboard, IconKey, IconNotebook, IconUsers, IconApps, IconB
 
 const dashboard = {
     id: 'dashboard',
-    //title: 'Strona główna',
+    title: 'Menu',
     type: 'group',
     children: [
         {
@@ -20,28 +20,20 @@ const dashboard = {
             breadcrumbs: false
         },
         {
-            id: 'process',
-            title: 'Procesy',
-            type: 'collapse',
-            icon: icons.IconChartArrowsVertical,
-            children: [
-                {
-                    id: 'process-book',
-                    title: 'Księga procesów',
-                    type: 'item',
-                    url: '/process-book',
-                    icon: icons.IconNotebook,
-                    breadcrumbs: false
-                },
-                {
-                    id: 'dictionary',
-                    title: 'Słowniki',
-                    type: 'item',
-                    url: '/dictionary',
-                    icon: icons.IconBook,
-                    breadcrumbs: false
-                }
-            ]
+            id: 'process-book',
+            title: 'Księga procesów',
+            type: 'item',
+            url: '/process-book',
+            icon: icons.IconNotebook,
+            breadcrumbs: false
+        },
+        {
+            id: 'dictionary',
+            title: 'Słowniki',
+            type: 'item',
+            url: '/dictionary',
+            icon: icons.IconBook,
+            breadcrumbs: false
         },
         {
             id: 'objects',

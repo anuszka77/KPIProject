@@ -32,6 +32,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+
 
 
 // ==============================|| SAMPLE PAGE ||============================== //
@@ -51,6 +56,9 @@ const ProcessBook = () => {
 
     const [processDetails, setProcessDetails] = useState([]);
     const [rows, setRows]=useState([]);
+
+    const [flag, setFlag] = useState(false);
+
 
     
     const navigate = useNavigate();
@@ -116,6 +124,7 @@ const ProcessBook = () => {
 
     const onProcessClick = (e) =>{
      //navigate( { state: { rows, columns }})
+     setFlag(!flag);
      const selectedProcessName = e.target.innerText.toLowerCase();
      
      const filter = data
@@ -140,7 +149,6 @@ const ProcessBook = () => {
 
     }
 
- 
 
     
     return (
@@ -157,15 +165,17 @@ const ProcessBook = () => {
             <div>Księga procesów</div>
             <div>
               <Stack direction="column" spacing={1}>
+              <ButtonGroup  variant="contained" orientation="vertical" aria-label="outlined primary button group" spacing={2}>
                 {data.map((row) => (
                 <Button 
-                variant="contained"
                 onClick={onProcessClick}
+                //color={flag ? "primary" : "secondary"}
                 //key={row.idProcess}
                 >
                  {row.processName}
                 </Button>
-                ))} </Stack>   
+                ))}                 </ButtonGroup>
+                </Stack>   
             </div>   
           </div>
 

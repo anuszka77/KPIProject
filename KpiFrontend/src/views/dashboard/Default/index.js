@@ -12,7 +12,6 @@ import TotalIncomeLightCard from './TotalIncomeLightCard';
 import TotalGrowthBarChart from './TotalGrowthBarChart';
 import { gridSpacing } from 'store/constant';
 
-import './nav.css';
 
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //

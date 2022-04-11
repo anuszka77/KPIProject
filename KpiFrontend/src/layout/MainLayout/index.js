@@ -14,6 +14,8 @@ import Customization from '../Customization';
 import navigation from 'menu-items';
 import { drawerWidth } from 'store/constant';
 import { SET_MENU } from 'store/actions';
+import './nav.css';
+
 
 // assets
 import { IconChevronRight } from '@tabler/icons';
@@ -84,6 +86,10 @@ const MainLayout = () => {
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             {/* header */}
+
+            <Sidebar drawerOpen={leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} />
+
+         
             <AppBar
                 enableColorOnDark
                 position="fixed"
@@ -97,10 +103,12 @@ const MainLayout = () => {
                 <Toolbar>
                     <Header handleLeftDrawerToggle={handleLeftDrawerToggle} />
                 </Toolbar>
+
             </AppBar>
+            
 
             {/* drawer */}
-            <Sidebar drawerOpen={leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} />
+                 
 
             {/* main content */}
             <Main theme={theme} open={leftDrawerOpened}>
@@ -108,6 +116,7 @@ const MainLayout = () => {
                 <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
                 <Outlet />
             </Main>
+        
             <Customization />
         </Box>
     );
