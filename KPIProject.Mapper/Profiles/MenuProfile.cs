@@ -20,6 +20,8 @@ namespace KPIProject.Mapper.Profiles
             
             CreateMap<FGetListOfProcess_Result, FGetListOfProcess_ResultDTO>().ReverseMap();
             CreateMap<FGetListOfColumToShowByRole_Result, FGetListOfColumToShowByRole_ResultDTO>().ReverseMap();
+            CreateMap<FGetListOfProcessActivity_Result, FGetListOfProcessActivity_ResultDTO>().ReverseMap();
+
 
 
             CreateMap<FGetTierListByDim_Result, FGetTierListByDim_ResultDTO>().ReverseMap();

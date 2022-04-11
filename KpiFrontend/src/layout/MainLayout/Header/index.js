@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import { useEffect, useState, useMemo } from 'react';
+
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -17,13 +19,31 @@ import { IconMenu2 } from '@tabler/icons';
 
 const Header = ({ handleLeftDrawerToggle }) => {
     const theme = useTheme();
+    const [margin, setMargin] = useState(`250px`)
+    const [menuCollapsed, setMenuCollapsed] = useState(true);
+
+
+    const onMenuClick = (e) =>{
+        var newState = menuCollapsed === true ? false: true;
+        setMenuCollapsed(newState);
+
+        if(newState === true)
+        {
+            setMargin(`250px`);
+        }
+        else
+        {
+            setMargin(`0px`);
+        }
+        handleLeftDrawerToggle();
+    }
 
     return (
         <>
             {/* logo & toggler button */}
 
-
-                    <Avatar
+                <div style={{marginLeft: margin}}>
+                    <Avatar 
                         variant="rounded"
                         sx={{
                             ...theme.typography.commonAvatar,
@@ -36,12 +56,12 @@ const Header = ({ handleLeftDrawerToggle }) => {
                                 color: theme.palette.secondary.light
                             }
                         }}
-                        onClick={handleLeftDrawerToggle}
+                        onClick={onMenuClick}
                         color="inherit"
                     >
                         <IconMenu2 stroke={1.5} size="1.3rem" />
                     </Avatar>
-                    <h2 style={{marginLeft: `20px`, color: `#17202e` }}>Your KPI</h2>
+                    </div>
           
             {/* notification & profile */}
 

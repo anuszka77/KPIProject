@@ -24,5 +24,10 @@ namespace KPIProject.Services
         {
             return await mapper.ProjectTo<FGetListOfColumToShowByRole_ResultDTO>(context.FGetListOfColumToShowByRole(idDatabaseObject, roleId)).ToListAsync();
         }
+
+        public async Task<IEnumerable<FGetListOfProcessActivity_ResultDTO>> GetListOfProcessActivity()
+        {
+            return await mapper.ProjectTo<FGetListOfProcessActivity_ResultDTO>(context.FGetListOfProcessActivity()).ToListAsync();
+        }
     }
 }

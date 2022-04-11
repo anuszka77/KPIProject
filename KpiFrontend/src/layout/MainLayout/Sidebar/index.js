@@ -13,7 +13,13 @@ import MenuList from './MenuList';
 import LogoSection from '../LogoSection';
 import MenuCard from './MenuCard';
 import { drawerWidth } from 'store/constant';
+import { Avatar } from '@mui/material';
 
+// project imports
+
+
+// assets
+import { IconMenu2 } from '@tabler/icons';
 // ==============================|| SIDEBAR DRAWER ||============================== //
 
 const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
@@ -64,7 +70,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
                         color: theme.palette.text.primary,
                         borderRight: 'none',
                         [theme.breakpoints.up('md')]: {
-                            top: '55px'
+                            top: '0px'
                         }
                     }
                 }}

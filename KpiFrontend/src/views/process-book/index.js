@@ -6,7 +6,7 @@ import { DataGrid } from '@mui/x-data-grid';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import { loadDetails, loadColumnToShow } from '../../services/processBookService';
+import { loadDetails, loadColumnToShow , loadListOfProcessBookActivity} from '../../services/processBookService';
 
 import { styled } from '@mui/material/styles';
 import MasterDetail from '@sakit-sa/react-master-detail';
@@ -33,10 +33,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import ImageIcon from '@mui/icons-material/Image';
+import ListItemButton from '@mui/material/ListItemButton';
 
 
 // ==============================|| SAMPLE PAGE ||============================== //
@@ -59,8 +62,13 @@ const ProcessBook = () => {
 
     const [flag, setFlag] = useState(false);
 
+    const [activity, setActvity] = useState([]);
 
-    
+    const [rowsActivity, setRowsActivity]=useState([]);
+
+
+
+    //loadListOfProcessBookActivity
     const navigate = useNavigate();
 
     const handleChange = (event, newValue) => {
@@ -80,9 +88,17 @@ const ProcessBook = () => {
       });
   }
 
+  
+  const getListOfProcessActivity = async => {
+    loadListOfProcessBookActivity().then((z) => {
+      setActvity(z);
+    });
+}
+
     useEffect(() => {
         getData();
         getListOfColumnToShow();
+        getListOfProcessActivity();
     }, []);
 
     const columns = columnToShow.map((row) => ({
@@ -92,17 +108,11 @@ const ProcessBook = () => {
     }));
     
     
-   /* const rows = processDetails.map((row) => ({
-        expanded: false,
-        idProcess: row.idProcess,
-        processVin: row.processVin,
-        processName: row.processName,
-        areaLayerName: row.areaLayerName,
-        subAreaLayerName: row.subAreaLayerName,
-        subjectLayerName: row.subjectLayerName,
-        attributeLayerName: row.attributeLayerName
-    }));*/
-
+ 
+    const columnsActivity =[
+      {field: "ActionStepName", headerName: "Krok", width: 200},
+      {field: "ActivityHierarchyName", headerName: "Nazwa hierarchii",  width: 200}
+    ]
 
     /*const rows = [
       {id: 1, name: processDetails.idProcess},
@@ -124,11 +134,12 @@ const ProcessBook = () => {
 
     const onProcessClick = (e) =>{
      //navigate( { state: { rows, columns }})
-     setFlag(!flag);
-     const selectedProcessName = e.target.innerText.toLowerCase();
+     setFlag(true);
+     const selectedProcessId = e.currentTarget.id;
+     //const selectedProcessName = e.target.innerText.toLowerCase();
      
      const filter = data
-     .filter(x => x.processName.toLowerCase() === selectedProcessName);
+     .filter(x => x.idProcess=== parseInt(selectedProcessId));
 
 
       setProcessDetails(filter);
@@ -143,13 +154,67 @@ const ProcessBook = () => {
       ];
       
       setRows(y);
+      
+      
+      
+      const rows = activity.filter(x => x.idProcess=== parseInt(selectedProcessId)).map((row) => ({
+        processId: row.processId,
+        actionStepName: row.actionStepName,
+        actionHierarchyName: row.activityHierarchyName
+    }));
 
-      console.log(y.filter(z => z.id == 1)[0].name + " no zoba jest poszłoooooooooooooooo")
-     //processDetails.filter
+      
+      
+      
+      
+      setRowsActivity(rows);
+      
 
     }
 
 
+    const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
+      border: 'none',
+      title: 'Procesy',
+      color:
+        theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.85)',
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+      WebkitFontSmoothing: 'auto',
+      letterSpacing: 'normal',
+      //headerAlign: 'center',
+      align: 'center',
+      //'& .MuiDataGrid-columnsContainer': {
+      //  backgroundColor: theme.palette.mode === 'light' ? '#fafafa' : '#1d1d1d',         
+      //},
+      '& .MuiDataGrid-iconSeparator': {
+        display: 'none',
+      },
+      '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
+        borderBottom: `1px solid ${
+          theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'
+        }`,
+      },
+      '& .MuiDataGrid-cell': {
+        color:
+          theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.65)',
+      },
+      '& .MuiPaginationItem-root': {
+        borderRadius: 0,
+      },
+  //...customCheckbox(theme),
+    }));
+  
     
     return (
       <div style={{height: 900, width:"100%"}}>
@@ -160,22 +225,31 @@ const ProcessBook = () => {
       masterWidth="300px"
       adjustable={false}
       >
-
+ 
           <div>
             <div>Księga procesów</div>
             <div>
-              <Stack direction="column" spacing={1}>
-              <ButtonGroup  variant="contained" orientation="vertical" aria-label="outlined primary button group" spacing={2}>
+            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            <nav aria-label="main mailbox folders">
                 {data.map((row) => (
-                <Button 
-                onClick={onProcessClick}
-                //color={flag ? "primary" : "secondary"}
-                //key={row.idProcess}
-                >
-                 {row.processName}
-                </Button>
-                ))}                 </ButtonGroup>
-                </Stack>   
+                 <ListItemButton>    
+                <ListItemAvatar>
+                   <Avatar>
+                     <ImageIcon />
+                   </Avatar>
+                 </ListItemAvatar>   
+                 <ListItemText 
+                 primary={row.processName} 
+                 secondary={"identyfikator: " + row.idProcess}
+                 id={row.idProcess}
+                 onClick={onProcessClick}
+                 color={flag ? "primary" : "secondary"}/>
+                 </ListItemButton>
+
+                ))}     
+                </nav>            
+                </List>  
+                 
             </div>   
           </div>
 
@@ -221,7 +295,20 @@ const ProcessBook = () => {
                                     </Table>
                               </TableContainer>
                           </TabPanel>
-                          <TabPanel value="2">Item Two</TabPanel>
+                          <TabPanel value="2" style={{height: `inherit`}} >
+                              <StyledDataGrid
+                                  rows={rowsActivity}
+                                  columns={columnsActivity}
+                                  //pageSize={100}
+                                  //rowsPerPageOptions={[12]}
+                                  checkboxSelection={false}
+                                  disableSelectionOnClick
+                                  getRowId={(row) => row.processId}
+                                  height="100%"
+                                  direction="rtl"
+                                  /> 
+                                
+                          </TabPanel>
              </TabContext>
              </div>
 

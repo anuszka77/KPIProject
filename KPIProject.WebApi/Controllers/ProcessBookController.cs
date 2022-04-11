@@ -33,5 +33,10 @@ namespace KPIProject.WebApi.Controllers
         [Route("GetListOfColumnToShow/{idDatabaseObject:int}/{roleId:int}")]
         public async Task<IActionResult> FGetListOfColumnToShowByRole(short idDatabaseObject, byte roleId) => Ok(await processBookService.GetListOfColumnToShowByRole(idDatabaseObject, roleId));
 
+        [HttpGet]
+        [Route("GetListOfProcessActivity")]
+        public async Task<IActionResult> FGetListOfProcessActivity() => Ok(await processBookService.GetListOfProcessActivity());
+
+
     }
 }

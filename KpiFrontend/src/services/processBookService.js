@@ -39,3 +39,24 @@ export const loadColumnToShow = async (idDatabaseObject, roleId ) => {
         return Promise.reject(e);
     }
 };
+
+
+
+export const loadListOfProcessBookActivity = async ( ) => {
+    try {
+        return await getApi('/GetListOfProcessActivity')
+            .then((res) => {
+                if (res.status === 200) {
+                    return Promise.resolve(res.data);
+                }
+                return Promise.resolve([]);
+            })
+            .catch((error) => {
+                const responseMsg = error.message;
+                console.log(responseMsg);
+                return Promise.reject(responseMsg);
+            });
+    } catch (e) {
+        return Promise.reject(e);
+    }
+};

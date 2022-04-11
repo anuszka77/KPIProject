@@ -8,7 +8,7 @@ const icons = { IconDashboard, IconKey, IconNotebook, IconUsers, IconApps, IconB
 
 const dashboard = {
     id: 'dashboard',
-    title: 'Menu',
+    title: 'Your KPI',
     type: 'group',
     children: [
         {

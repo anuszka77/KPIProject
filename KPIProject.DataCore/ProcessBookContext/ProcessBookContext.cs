@@ -35,6 +35,7 @@ namespace KPIProject.DataCore.ProcessBookContext
 
         public IQueryable<FGetListOfColumToShowByRole_Result> FGetListOfColumToShowByRole(short idDatabaseObject, byte roleId ) => FromExpression(() => FGetListOfColumToShowByRole(idDatabaseObject, roleId));
 
+        public IQueryable<FGetListOfProcessActivity_Result> FGetListOfProcessActivity() => FromExpression(() => FGetListOfProcessActivity());
 
         #endregion Properties
 
@@ -61,6 +62,9 @@ namespace KPIProject.DataCore.ProcessBookContext
 
             modelBuilder.Entity<FGetListOfProcess_Result>().HasNoKey();
             modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfProcess))).HasSchema("PbApp");
+
+            modelBuilder.Entity<FGetListOfProcessActivity_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfProcessActivity))).HasSchema("PbApp");
 
             modelBuilder.Entity<FGetTierListByDim_Result>().HasNoKey();
             modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetTierListByDim), new[] { typeof(short?) })).HasSchema("PbApp");
