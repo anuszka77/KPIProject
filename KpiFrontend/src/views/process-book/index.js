@@ -42,7 +42,12 @@ import ImageIcon from '@mui/icons-material/Image';
 import ListItemButton from '@mui/material/ListItemButton';
 import { Construction } from '@mui/icons-material';
 import ListItem from "@material-ui/core/ListItem";
-
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 
 // ==============================|| SAMPLE PAGE ||============================== //
@@ -210,10 +215,56 @@ const ProcessBook = () => {
       setRowsActivity(rows?.sort((x1,x2)=>x1.stepId-x2.stepId));
     };
   
+    const processLabels=data.map((row) => ({
+      label: row.processName,
+      idLabel: row.idProcess
+    }));
+    
+
+    const onFiltersChanged =(e) => {
+          const dd=e.target.value;
+
+    }
     
     return (
       <div style={{height: 900, width:"100%"}}>
-          
+      <Grid container spacing={2} columns={1}>
+      <Grid item xs={12}>
+      <MainCard> 
+        <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={processLabels}
+                  renderInput={(params) => <TextField {...params} label="Nazwa procesu" />}
+                  onChange={onFiltersChanged}
+                  key={56}
+                />
+                                                 
+              </Grid>
+              <Grid item xs={4}>
+              <Autocomplete
+                  disablePortal
+                  id="combo-box-demo-2"
+                  options={processLabels}
+                  renderInput={(params) => <TextField {...params} label="Nazwa obszaru" />}
+                  //onChange={processFilters}
+                />
+              </Grid>
+              <Grid item md={4}  xs={2}>
+              <Button style={{marginTop: '5px'}} variant="contained">Nowy proces</Button>
+              </Grid>
+
+              </Grid>
+              
+              
+              
+              </MainCard>
+      </Grid>
+
+      <Grid item xs={12}>
+
       <MasterDetail 
       canClose={false}
       defaultMasterWidth="50px"
@@ -222,8 +273,10 @@ const ProcessBook = () => {
       >
  
           <div>
-            <div>Księga procesów</div>
             <div>
+              Księga procesów</div>
+            <div>
+             
             <List sx={{width: '100%', maxWidth: 360 }} >
             <nav aria-label="main mailbox folders">
                 {data.map((row) => (
@@ -314,7 +367,10 @@ const ProcessBook = () => {
              </div>
 
             </MasterDetail>
+            </Grid>
+              </Grid>
         </div>
+
     );
 };
 
