@@ -7,6 +7,7 @@ import { DataGrid } from '@mui/x-data-grid';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import { loadDetails, loadColumnToShow , loadListOfProcessBookActivity} from '../../services/processBookService';
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 import { styled } from '@mui/material/styles';
 import MasterDetail from '@sakit-sa/react-master-detail';
@@ -34,13 +35,14 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
 import ListItemButton from '@mui/material/ListItemButton';
 import { Construction } from '@mui/icons-material';
+import ListItem from "@material-ui/core/ListItem";
+
 
 
 // ==============================|| SAMPLE PAGE ||============================== //
@@ -125,47 +127,6 @@ const ProcessBook = () => {
   }, []);
     
 
-    const onProcessClick = (e) =>{
-     setFlag(true);
-     const selectedProcessId = e.currentTarget.id;
-     
-     const filter = data
-     .filter(x => x.idProcess=== parseInt(selectedProcessId));
-
-
-      setProcessDetails(filter);
-
-      const y=[
-        {id: 1, name: filter[0].idProcess},
-        {id: 2, name: filter[0].processName},
-        {id: 9, name: filter[0].areaLayerName},
-        {id: 13, name: filter[0].subAreaLayerName},
-        {id: 21, name: filter[0].subjectLayerName},
-        {id: 29, name: filter[0].attributeLayerName}
-      ];
-      
-      setRows(y);
-      
-      
-      
-      const rows = activity.filter(x => x.processId=== parseInt(selectedProcessId)).map((row) => ({
-        processId: row.processId,
-        activityVin: row.activityVin,
-        activityTierName: row.activityTierName,
-        activityLayerName: row.activityLayerName,
-        activityTierName: row.activityTierName,
-        actionStepName: row.actionStepName,
-        activityHierarchyName: row.activityHierarchyName,        
-        stepId: row.stepId
-    }));
-
-            
-      setRowsActivity(rows?.sort((x1,x2)=>x1.stepId-x2.stepId));
-      
-
-    }
-
-
     const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
       border: 'none',
       title: 'Procesy',
@@ -207,6 +168,47 @@ const ProcessBook = () => {
       },
   //...customCheckbox(theme),
     }));
+
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
+    const handleListItemClick = (e) => {
+      setSelectedIndex(e.currentTarget.id);
+      setFlag(true);
+     const selectedProcessId = e.currentTarget.id;
+     
+     const filter = data
+     .filter(x => x.idProcess=== parseInt(selectedProcessId));
+
+
+      setProcessDetails(filter);
+
+      const y=[
+        {id: 1, name: filter[0].idProcess},
+        {id: 2, name: filter[0].processName},
+        {id: 9, name: filter[0].areaLayerName},
+        {id: 13, name: filter[0].subAreaLayerName},
+        {id: 21, name: filter[0].subjectLayerName},
+        {id: 29, name: filter[0].attributeLayerName}
+      ];
+      
+      setRows(y);
+      
+      
+      
+      const rows = activity.filter(x => x.processId=== parseInt(selectedProcessId)).map((row) => ({
+        processId: row.processId,
+        activityVin: row.activityVin,
+        activityTierName: row.activityTierName,
+        activityLayerName: row.activityLayerName,
+        activityTierName: row.activityTierName,
+        actionStepName: row.actionStepName,
+        activityHierarchyName: row.activityHierarchyName,        
+        stepId: row.stepId
+    }));
+
+            
+      setRowsActivity(rows?.sort((x1,x2)=>x1.stepId-x2.stepId));
+    };
   
     
     return (
@@ -222,10 +224,14 @@ const ProcessBook = () => {
           <div>
             <div>Księga procesów</div>
             <div>
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} >
+            <List sx={{width: '100%', maxWidth: 360 }} >
             <nav aria-label="main mailbox folders">
                 {data.map((row) => (
-                 <ListItemButton divider={false} >    
+                 <ListItemButton  
+                 divider={false} 
+                 selected={parseInt(selectedIndex) === row.idProcess}
+                 id={row.idProcess}
+                 onClick={handleListItemClick} >    
                 <ListItemAvatar>
                    <Avatar>
                      <Construction />
@@ -234,9 +240,8 @@ const ProcessBook = () => {
                  <ListItemText 
                  primary={row.processName} 
                  secondary={"identyfikator: " + row.idProcess}
-                 id={row.idProcess}
-                 onClick={onProcessClick}
-                 color={flag ? "primary" : "secondary"}/>
+                  />
+                 
                  </ListItemButton>
 
                 ))}     
@@ -252,6 +257,8 @@ const ProcessBook = () => {
                               <TabList onChange={handleChange} >
                                   <Tab label="Szczegóły procesu" value="1" />
                                   <Tab label="Czynności" value="2" />
+                                  <Tab label="Diagram" value="3" />
+
                               </TabList>
                           </Box>
                           <TabPanel value="1" style={{height: `inherit`}} >
@@ -302,6 +309,7 @@ const ProcessBook = () => {
                                   /> 
                                 
                           </TabPanel>
+                          <TabPanel value="3" style={{height: `inherit`}} >Diagramy </TabPanel>
              </TabContext>
              </div>
 
