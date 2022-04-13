@@ -40,6 +40,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
 import ListItemButton from '@mui/material/ListItemButton';
+import { Construction } from '@mui/icons-material';
 
 
 // ==============================|| SAMPLE PAGE ||============================== //
@@ -159,7 +160,7 @@ const ProcessBook = () => {
     }));
 
             
-      setRowsActivity(rows);
+      setRowsActivity(rows?.sort((x1,x2)=>x1.stepId-x2.stepId));
       
 
     }
@@ -227,7 +228,7 @@ const ProcessBook = () => {
                  <ListItemButton divider={false} >    
                 <ListItemAvatar>
                    <Avatar>
-                     <ImageIcon />
+                     <Construction />
                    </Avatar>
                  </ListItemAvatar>   
                  <ListItemText 
@@ -289,7 +290,7 @@ const ProcessBook = () => {
                           </TabPanel>
                           <TabPanel value="2" style={{height: `inherit`}} >
                               <StyledDataGrid
-                                  rows={rowsActivity?.sort((x1,x2)=>x1.stepId-x2.stepId)}
+                                  rows={rowsActivity}
                                   columns={columnsActivity}
                                   //pageSize={100}
                                   //rowsPerPageOptions={[12]}

@@ -22,8 +22,9 @@ import { useEffect, useState } from 'react';
 
 const MainTier = () => {
 
-const [dimensionValue, setDimensionValue] = React.useState('');
 const [dimension, setDimension]=useState([]);
+const [dimensionValue, setDimensionValue] = React.useState('');
+
 
 
 const [tierList, setTierList]=useState([]);
