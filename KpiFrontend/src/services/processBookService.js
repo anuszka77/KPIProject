@@ -42,9 +42,9 @@ export const loadColumnToShow = async (idDatabaseObject, roleId ) => {
 
 
 
-export const loadListOfProcessBookActivity = async ( ) => {
+export const loadListOfProcessBookActivity = async () => {
     try {
-        return await getApi('/GetListOfProcessActivity')
+        return await getApi('/ProcessBook/GetListOfProcessActivity')
             .then((res) => {
                 if (res.status === 200) {
                     return Promise.resolve(res.data);

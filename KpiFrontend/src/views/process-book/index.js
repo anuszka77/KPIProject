@@ -110,33 +110,23 @@ const ProcessBook = () => {
     
  
     const columnsActivity =[
-      {field: "ActionStepName", headerName: "Krok", width: 200},
-      {field: "ActivityHierarchyName", headerName: "Nazwa hierarchii",  width: 200}
+      {field: "stepId", headerName: "Nr kroku", width: 80},
+      {field: "activityVin", headerName: "Nr Vin", width: 100},
+      {field: "activityTierName", headerName: "Nazwa Tier", width: 150},
+      {field: "activityLayerName", headerName: "Nazwa warstwy", width: 150},
+      {field: "actionStepName", headerName: "Nazwa kroku", width: 500},
+      {field: "activityHierarchyName", headerName: "Hierarchia",  width: 150}
     ]
 
-    /*const rows = [
-      {id: 1, name: processDetails.idProcess},
-      {id: 2, name: processDetails.processName},
-      {id: 9, name: processDetails.areaLayerName},
-      {id: 13, name: processDetails.subAreaLayerName},
-      {id: 21, name: processDetails.subjectLayerName},
-      {id: 29, name: processDetails.attributeLayerName}
-    ];
-    */
-    
-
-
+ 
     useEffect(() => {
       navigate( { state: { rows, columns }})
   }, []);
     
 
-
     const onProcessClick = (e) =>{
-     //navigate( { state: { rows, columns }})
      setFlag(true);
      const selectedProcessId = e.currentTarget.id;
-     //const selectedProcessName = e.target.innerText.toLowerCase();
      
      const filter = data
      .filter(x => x.idProcess=== parseInt(selectedProcessId));
@@ -157,16 +147,18 @@ const ProcessBook = () => {
       
       
       
-      const rows = activity.filter(x => x.idProcess=== parseInt(selectedProcessId)).map((row) => ({
+      const rows = activity.filter(x => x.processId=== parseInt(selectedProcessId)).map((row) => ({
         processId: row.processId,
+        activityVin: row.activityVin,
+        activityTierName: row.activityTierName,
+        activityLayerName: row.activityLayerName,
+        activityTierName: row.activityTierName,
         actionStepName: row.actionStepName,
-        actionHierarchyName: row.activityHierarchyName
+        activityHierarchyName: row.activityHierarchyName,        
+        stepId: row.stepId
     }));
 
-      
-      
-      
-      
+            
       setRowsActivity(rows);
       
 
@@ -229,10 +221,10 @@ const ProcessBook = () => {
           <div>
             <div>Księga procesów</div>
             <div>
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} >
             <nav aria-label="main mailbox folders">
                 {data.map((row) => (
-                 <ListItemButton>    
+                 <ListItemButton divider={false} >    
                 <ListItemAvatar>
                    <Avatar>
                      <ImageIcon />
@@ -297,13 +289,13 @@ const ProcessBook = () => {
                           </TabPanel>
                           <TabPanel value="2" style={{height: `inherit`}} >
                               <StyledDataGrid
-                                  rows={rowsActivity}
+                                  rows={rowsActivity.sort((x1,x2)=>x1.stepId-x2.stepId)}
                                   columns={columnsActivity}
                                   //pageSize={100}
                                   //rowsPerPageOptions={[12]}
                                   checkboxSelection={false}
                                   disableSelectionOnClick
-                                  getRowId={(row) => row.processId}
+                                  getRowId={(row) => row.stepId}
                                   height="100%"
                                   direction="rtl"
                                   /> 
@@ -311,10 +303,6 @@ const ProcessBook = () => {
                           </TabPanel>
              </TabContext>
              </div>
-
-
-
-
 
             </MasterDetail>
         </div>
