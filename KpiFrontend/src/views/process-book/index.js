@@ -289,7 +289,7 @@ const ProcessBook = () => {
                           </TabPanel>
                           <TabPanel value="2" style={{height: `inherit`}} >
                               <StyledDataGrid
-                                  rows={rowsActivity.sort((x1,x2)=>x1.stepId-x2.stepId)}
+                                  rows={rowsActivity?.sort((x1,x2)=>x1.stepId-x2.stepId)}
                                   columns={columnsActivity}
                                   //pageSize={100}
                                   //rowsPerPageOptions={[12]}
