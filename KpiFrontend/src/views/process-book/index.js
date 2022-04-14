@@ -61,6 +61,8 @@ const capitalize = (str) => {
 
 const ProcessBook = () => {
     const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
+
     const [columnToShow, setColumnToShow] = useState([]);
 
     const [value, setValue] = useState('1');
@@ -74,6 +76,9 @@ const ProcessBook = () => {
 
     const [rowsActivity, setRowsActivity]=useState([]);
 
+    const [filterProcessValue, setFilterProcessValue] = useState();
+
+
 
 
     //loadListOfProcessBookActivity
@@ -86,6 +91,7 @@ const ProcessBook = () => {
     const getData = async => {
         loadDetails().then((x) => {
             setData(x);
+            setFilteredData(x);
                  
         });
     }
@@ -221,39 +227,55 @@ const ProcessBook = () => {
     }));
     
 
-    const onFiltersChanged =(e) => {
-          const dd=e.target.value;
+    const onFiltersChanged =(e, newValue) => {
+      if(newValue !=null)
+      {
+        setFilterProcessValue(newValue.idLabel);
+        setFilteredData(data.filter(x => x.idProcess === newValue.idLabel));
+        setProcessDetails(newValue.idLabel);
+      }
+      else
+      {
+        setFilterProcessValue(null);
+        setFilteredData(data);
+        setProcessDetails(null);
 
+      }
     }
-    
+
     return (
       <div style={{height: 900, width:"100%"}}>
-      <Grid container spacing={2} columns={1}>
+      <Grid container spacing={1} columns={1}>
       <Grid item xs={12}>
       <MainCard> 
-        <Grid container spacing={2}>
-              <Grid item xs={4}>
+        <Grid container spacing={30}>
+              <Grid item xs={2}>
                 <Autocomplete
                   disablePortal
                   id="combo-box-demo"
                   options={processLabels}
                   renderInput={(params) => <TextField {...params} label="Nazwa procesu" />}
-                  onChange={onFiltersChanged}
+                  //onChange={onFiltersChanged}
                   key={56}
+                  size="small"
+                  sx={{width: "260px"}}
+                  onChange={onFiltersChanged}
                 />
                                                  
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
               <Autocomplete
                   disablePortal
                   id="combo-box-demo-2"
                   options={processLabels}
                   renderInput={(params) => <TextField {...params} label="Nazwa obszaru" />}
+                  size="small"
+                  sx={{width: "260px"}}
                   //onChange={processFilters}
                 />
               </Grid>
               <Grid item md={4}  xs={2}>
-              <Button style={{marginTop: '5px'}} variant="contained">Nowy proces</Button>
+              <Button  variant="contained">Nowy proces</Button>
               </Grid>
 
               </Grid>
@@ -270,6 +292,7 @@ const ProcessBook = () => {
       defaultMasterWidth="50px"
       masterWidth="300px"
       adjustable={false}
+      
       >
  
           <div>
@@ -279,7 +302,7 @@ const ProcessBook = () => {
              
             <List sx={{width: '100%', maxWidth: 360 }} >
             <nav aria-label="main mailbox folders">
-                {data.map((row) => (
+                {filteredData.map((row) => (
                  <ListItemButton  
                  divider={false} 
                  selected={parseInt(selectedIndex) === row.idProcess}
@@ -319,7 +342,7 @@ const ProcessBook = () => {
                                     <Table sx={{ minWidth: 650 }} aria-label="simple table">                                     
                                       <TableBody>                                     
                                         {columns.map((row) => 
-                                        processDetails.length != 0 ?
+                                        (processDetails != null && processDetails.length != 0) ?
                                         (
                                           <TableRow
                                             key={row.field}
