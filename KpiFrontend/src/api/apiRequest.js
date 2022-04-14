@@ -8,7 +8,7 @@ export const api = {
     //apiAddress: 'https://localhost:7108/api',
     apiPrefix: '/api'
 };
-
+ 
 const requestConfig = (params) => {
     const config = {
         headers: {}
@@ -20,7 +20,7 @@ const requestConfig = (params) => {
     }
     return config;
 };
-
+  
 const anonymousRequestConfig = (params) => {
     const config = {
         headers: {}
