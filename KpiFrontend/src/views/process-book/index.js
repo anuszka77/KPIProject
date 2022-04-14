@@ -48,6 +48,12 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import AddCircle from '@mui/icons-material/AddCircle';
+import Edit from '@mui/icons-material/Edit';
+
+
 
 
 // ==============================|| SAMPLE PAGE ||============================== //
@@ -244,13 +250,38 @@ const ProcessBook = () => {
     }
 
     return (
-      <div style={{height: 900, width:"100%"}}>
-      <Grid container spacing={1} columns={1}>
-      <Grid item xs={12}>
-      <MainCard> 
-        <Grid container spacing={30}>
+      <div style={{height: "100%", width:"100%"}}>
+      <MasterDetail 
+      canClose={false}
+      defaultMasterWidth="50px"
+      masterWidth="300px"
+      adjustable={false}      
+      >
+        <div>
+          <div>
+          <Grid container spacing={3}> 
+              <Grid item  xs={8}>
+              <div style={{marginTop: "10px", fontWeight: "bold", fontSize: "15px"}}>
+              Księga procesów
+              </div>
+              </Grid>             
               <Grid item xs={2}>
-                <Autocomplete
+              <IconButton color="primary" aria-label="upload picture" component="span">
+              <AddCircle />
+              </IconButton>    
+              </Grid>  
+              <Grid item xs={1}>
+              <IconButton color="primary" aria-label="upload picture" component="span" hint>
+              <Edit />
+              </IconButton>
+              </Grid>     
+              </Grid>
+          </div>
+            
+          <div>
+          <Grid container spacing={2} columns={1}> 
+          <Grid item  xs={1}>
+          <Autocomplete
                   disablePortal
                   id="combo-box-demo"
                   options={processLabels}
@@ -258,12 +289,11 @@ const ProcessBook = () => {
                   //onChange={onFiltersChanged}
                   key={56}
                   size="small"
-                  sx={{width: "260px"}}
+                  sx={{width: "260px", marginTop: "15px"}}
                   onChange={onFiltersChanged}
                 />
-                                                 
-              </Grid>
-              <Grid item xs={3}>
+          </Grid>
+          <Grid item  xs={1}>
               <Autocomplete
                   disablePortal
                   id="combo-box-demo-2"
@@ -273,33 +303,8 @@ const ProcessBook = () => {
                   sx={{width: "260px"}}
                   //onChange={processFilters}
                 />
-              </Grid>
-              <Grid item md={4}  xs={2}>
-              <Button  variant="contained">Nowy proces</Button>
-              </Grid>
-
-              </Grid>
-              
-              
-              
-              </MainCard>
-      </Grid>
-
-      <Grid item xs={12}>
-
-      <MasterDetail 
-      canClose={false}
-      defaultMasterWidth="50px"
-      masterWidth="300px"
-      adjustable={false}
-      
-      >
- 
-          <div>
-            <div>
-              Księga procesów</div>
-            <div>
-             
+            </Grid>
+            <Grid item  xs={1}>
             <List sx={{width: '100%', maxWidth: 360 }} >
             <nav aria-label="main mailbox folders">
                 {filteredData.map((row) => (
@@ -322,12 +327,14 @@ const ProcessBook = () => {
 
                 ))}     
                 </nav>            
-                </List>  
-                 
-            </div>   
-          </div>
-
+                </List>   
+                </Grid>
+                </Grid>
+               
+            </div> 
+            </div>  
 <div>
+
           <TabContext value={value}>
                           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                               <TabList onChange={handleChange} >
@@ -390,8 +397,7 @@ const ProcessBook = () => {
              </div>
 
             </MasterDetail>
-            </Grid>
-              </Grid>
+  
         </div>
 
     );
