@@ -90,7 +90,13 @@ namespace KPIProject.DataCore.ProcessBookContext
                         .HasPeriodEnd("SysEndTime")
                         .HasColumnName("SysEndTime");
                 }
-));
+             ));
+
+
+
+
+
+
 
                 entity.Property(e => e.DimensionDescription).HasMaxLength(512);
 

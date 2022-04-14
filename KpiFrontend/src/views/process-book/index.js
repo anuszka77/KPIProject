@@ -84,6 +84,7 @@ const ProcessBook = () => {
 
     const [filterProcessValue, setFilterProcessValue] = useState();
 
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
 
 
@@ -186,19 +187,12 @@ const ProcessBook = () => {
   //...customCheckbox(theme),
     }));
 
-    const [selectedIndex, setSelectedIndex] = useState(0);
-
-    const handleListItemClick = (e) => {
-      setSelectedIndex(e.currentTarget.id);
-      setFlag(true);
-     const selectedProcessId = e.currentTarget.id;
-     
-     const filter = data
+    const loadDataToSelectedIdProcess = (selectedIndex) => {
+      setSelectedIndex(selectedIndex);     
+      const selectedProcessId = selectedIndex;    
+      const filter = data
      .filter(x => x.idProcess=== parseInt(selectedProcessId));
-
-
       setProcessDetails(filter);
-
       const y=[
         {id: 1, name: filter[0].idProcess},
         {id: 2, name: filter[0].processName},
@@ -206,12 +200,8 @@ const ProcessBook = () => {
         {id: 13, name: filter[0].subAreaLayerName},
         {id: 21, name: filter[0].subjectLayerName},
         {id: 29, name: filter[0].attributeLayerName}
-      ];
-      
-      setRows(y);
-      
-      
-      
+      ];     
+      setRows(y);        
       const rows = activity.filter(x => x.processId=== parseInt(selectedProcessId)).map((row) => ({
         processId: row.processId,
         activityVin: row.activityVin,
@@ -221,36 +211,40 @@ const ProcessBook = () => {
         actionStepName: row.actionStepName,
         activityHierarchyName: row.activityHierarchyName,        
         stepId: row.stepId
-    }));
-
-            
+    }));         
       setRowsActivity(rows?.sort((x1,x2)=>x1.stepId-x2.stepId));
+    }
+
+    const handleListItemClick = (e) => {
+      loadDataToSelectedIdProcess(e.currentTarget.id);
     };
   
     const processLabels=data.map((row) => ({
       label: row.processName,
       idLabel: row.idProcess
     }));
-    
+
 
     const onFiltersChanged =(e, newValue) => {
       if(newValue !=null)
       {
-        setFilterProcessValue(newValue.idLabel);
-        setFilteredData(data.filter(x => x.idProcess === newValue.idLabel));
-        setProcessDetails(newValue.idLabel);
+        const newData = data.filter(x => x.idProcess === newValue.idLabel);
+        setFilteredData(newData);     
+        loadDataToSelectedIdProcess(newValue.idLabel);
       }
       else
       {
         setFilterProcessValue(null);
         setFilteredData(data);
-        setProcessDetails(null);
-
       }
     }
 
+    
+
+
+
     return (
-      <div style={{height: "100%", width:"100%"}}>
+      <div style={{height: "800px", width:"100%"}}>
       <MasterDetail 
       canClose={false}
       defaultMasterWidth="50px"
@@ -305,14 +299,16 @@ const ProcessBook = () => {
                 />
             </Grid>
             <Grid item  xs={1}>
-            <List sx={{width: '100%', maxWidth: 360 }} >
+            <List sx={{width: '100%', height: '80%' }} >
             <nav aria-label="main mailbox folders">
                 {filteredData.map((row) => (
                  <ListItemButton  
                  divider={false} 
                  selected={parseInt(selectedIndex) === row.idProcess}
                  id={row.idProcess}
-                 onClick={handleListItemClick} >    
+                 onClick={handleListItemClick}               
+                 > 
+                    
                 <ListItemAvatar>
                    <Avatar>
                      <Construction />
