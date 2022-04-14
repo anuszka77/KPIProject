@@ -37,6 +37,9 @@ namespace KPIProject.DataCore.ProcessBookContext
 
         public IQueryable<FGetListOfProcessActivity_Result> FGetListOfProcessActivity() => FromExpression(() => FGetListOfProcessActivity());
 
+        public IQueryable<FGetListOfProcessLayers_Result> FGetListOfProcessLayers() => FromExpression(() => FGetListOfProcessLayers());
+
+
         #endregion Properties
 
         #region Methods
@@ -71,6 +74,10 @@ namespace KPIProject.DataCore.ProcessBookContext
 
             modelBuilder.Entity<FGetListOfColumToShowByRole_Result>().HasNoKey();
             modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfColumToShowByRole), new[] { typeof(short), typeof(byte) })).HasSchema("PbApp");
+
+            modelBuilder.Entity<FGetListOfProcessLayers_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfProcessLayers))).HasSchema("PbApp");
+
 
 
             modelBuilder.Entity<DimensionsDictionary>(entity =>

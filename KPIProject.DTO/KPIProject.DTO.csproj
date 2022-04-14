@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Menu\FGetListOfProcessLayers_ResultDTO" />
+  </ItemGroup>
+
 </Project>

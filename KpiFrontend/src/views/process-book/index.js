@@ -6,7 +6,7 @@ import { DataGrid } from '@mui/x-data-grid';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import { loadDetails, loadColumnToShow , loadListOfProcessBookActivity} from '../../services/processBookService';
+import { loadDetails, loadColumnToShow , loadListOfProcessBookActivity, loadListOfProcessLayers} from '../../services/processBookService';
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 import { styled } from '@mui/material/styles';
@@ -82,9 +82,11 @@ const ProcessBook = () => {
 
     const [rowsActivity, setRowsActivity]=useState([]);
 
-    const [filterProcessValue, setFilterProcessValue] = useState();
 
     const [selectedIndex, setSelectedIndex] = useState(0);
+
+    const [areas, setAreas] = useState([]);
+
 
 
 
@@ -116,10 +118,18 @@ const ProcessBook = () => {
     });
 }
 
+
+const getListOfProcessLayers = async => {
+  loadListOfProcessLayers().then((k) => {
+    setAreas(k.filter(x=> x.dimensionId === 1));
+  });
+}
+
     useEffect(() => {
         getData();
         getListOfColumnToShow();
         getListOfProcessActivity();
+        getListOfProcessLayers();
     }, []);
 
     const columns = columnToShow.map((row) => ({
@@ -225,7 +235,14 @@ const ProcessBook = () => {
     }));
 
 
-    const onFiltersChanged =(e, newValue) => {
+    const areasLabels=areas.map((row) => ({
+      label: row.layerName,
+      idLabel: row.layerId
+    }));
+
+
+
+    const onProcessFiltersChanged =(e, newValue) => {
       if(newValue !=null)
       {
         const newData = data.filter(x => x.idProcess === newValue.idLabel);
@@ -234,14 +251,23 @@ const ProcessBook = () => {
       }
       else
       {
-        setFilterProcessValue(null);
         setFilteredData(data);
       }
     }
 
+    const onAreaFiltersChanged = (e, newValue) => {
+      if(newValue !=null)
+      {
+        const newData = data.filter(x => x.areaLayerId === newValue.idLabel);
+        setFilteredData(newData);     
+        //loadDataToSelectedIdProcess(newData.idProcess);
+      }
+      else
+      {
+        setFilteredData(data);
+      }
+    }
     
-
-
 
     return (
       <div style={{height: "800px", width:"100%"}}>
@@ -284,18 +310,18 @@ const ProcessBook = () => {
                   key={56}
                   size="small"
                   sx={{width: "260px", marginTop: "15px"}}
-                  onChange={onFiltersChanged}
+                  onChange={onProcessFiltersChanged}
                 />
           </Grid>
           <Grid item  xs={1}>
               <Autocomplete
                   disablePortal
                   id="combo-box-demo-2"
-                  options={processLabels}
+                  options={areasLabels}
                   renderInput={(params) => <TextField {...params} label="Nazwa obszaru" />}
                   size="small"
                   sx={{width: "260px"}}
-                  //onChange={processFilters}
+                  onChange={onAreaFiltersChanged}
                 />
             </Grid>
             <Grid item  xs={1}>

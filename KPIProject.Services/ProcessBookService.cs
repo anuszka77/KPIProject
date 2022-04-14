@@ -29,5 +29,10 @@ namespace KPIProject.Services
         {
             return await mapper.ProjectTo<FGetListOfProcessActivity_ResultDTO>(context.FGetListOfProcessActivity()).ToListAsync();
         }
+
+        public async Task<IEnumerable<FGetListOfProcessLayers_ResultDTO>> GetListOfProcessLayers()
+        {
+            return await mapper.ProjectTo<FGetListOfProcessLayers_ResultDTO>(context.FGetListOfProcessLayers()).ToListAsync();
+        }
     }
 }
