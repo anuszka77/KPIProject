@@ -12,6 +12,6 @@ namespace KPIProject.DTO.Menu
         public int? LayerId { get; set; }
         public string? LayerName { get; set; }
         public string? PartOfVin { get; set; }
-        public short? PositionInVinNumber { get; set; }
+        public short? PositionInVinNumber { get; set; } 
     }
 }
