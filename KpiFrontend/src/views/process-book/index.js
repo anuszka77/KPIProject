@@ -55,6 +55,9 @@ import Edit from '@mui/icons-material/Edit';
 import Dialog from '@mui/material/Dialog';
 
 import NewProcess from './NewProcess';
+import Diagram from './Diagram';
+import Link from '@mui/material/Link';
+
 
 
 // ==============================|| SAMPLE PAGE ||============================== //
@@ -420,7 +423,12 @@ const getListOfProcessLayers = async => {
                                   /> 
                                 
                           </TabPanel>
-                          <TabPanel value="3" style={{height: `inherit`}} >Diagramy </TabPanel>
+                          <TabPanel value="3" style={{height: `inherit`}} >
+                          <Link href="#">https://drive.google.com/file/d/12vfNGXGaDNLWKxL_4Z4fmnV78elEJ1JZ/view?usp=sharing
+</Link>
+                          <Diagram selectedIndex={selectedIndex}/>
+                          
+                          </TabPanel>
              </TabContext>
              </div>
 

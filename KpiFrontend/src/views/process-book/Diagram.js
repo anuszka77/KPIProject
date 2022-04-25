@@ -6,42 +6,35 @@ import { DataGrid } from '@mui/x-data-grid';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import { loadListOfProcessBookActivity } from '../../services/processBookService';
+import { loadListOfProcessBookActivity , loadProcessDiagramActivity} from '../../services/processBookService';
 
 import { styled } from '@mui/material/styles';
 
 import '@sakit-sa/react-master-detail/dist/index.css';
+import { DataSaverOff } from '@mui/icons-material';
+import Avatar from '@mui/material/Avatar';
+import DiagramRender from './DiagramRender';
 
 
-const ActivityData = ( {selectedIndex, activity} ) => {
-  const [rowsActivity, setRowsActivity]=useState([]);
+
+const Diagram = ( {selectedIndex} ) => {
+  const [data, setData]=useState([]);
   
 
   useEffect(() => {
-    if(selectedIndex != undefined && selectedIndex != 0 && activity != null && activity.length>0)
+    if(selectedIndex != undefined && selectedIndex != 0)
     {
-        const rows = activity.filter(x => x.processId=== parseInt(selectedIndex)).map((row) => ({
-          processId: row.processId,
-          activityVin: row.activityVin,
-          activityTierName: row.activityTierName,
-          activityLayerName: row.activityLayerName,
-          activityTierName: row.activityTierName,
-          actionStepName: row.actionStepName,
-          activityHierarchyName: row.activityHierarchyName,        
-          stepId: row.stepId
-      }));         
-        setRowsActivity(rows?.sort((x1,x2)=>x1.stepId-x2.stepId));
-  }
+      loadProcessDiagramActivity(selectedIndex).then(x => setData(x));
+    }       
   }, selectedIndex);
 
+  const renderDiagram = (params) => {
+    return <DiagramRender params={params} />;
+  }
 
 const columnsActivity =[
-  {field: "stepId", headerName: "Nr kroku", width: 80},
-  {field: "activityVin", headerName: "Nr Vin", width: 100},
-  {field: "activityTierName", headerName: "Nazwa Tier", width: 150},
-  {field: "activityLayerName", headerName: "Nazwa warstwy", width: 150},
-  {field: "actionStepName", headerName: "Nazwa kroku", width: 500},
-  {field: "activityHierarchyName", headerName: "Hierarchia",  width: 150}
+  {field: "tierId", headerName: "Numer tier", flex: 1},
+  {field: "listProcessActivityXml", headerName: "a takie hocki klocki", flex: 10, renderCell:(row) => renderDiagram(row)}
 ]
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
@@ -65,6 +58,7 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   letterSpacing: 'normal',
   //headerAlign: 'center',
   align: 'center',
+  alignContent: 'center',
   //'& .MuiDataGrid-columnsContainer': {
   //  backgroundColor: theme.palette.mode === 'light' ? '#fafafa' : '#1d1d1d',         
   //},
@@ -88,15 +82,16 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
 
 return(
   <StyledDataGrid
-      rows={rowsActivity}
+      rows={data}
       columns={columnsActivity}
       checkboxSelection={false}
       disableSelectionOnClick
-      getRowId={(row) => row.stepId}
+      getRowId={(row) => row.tierId}
       height="100%"
       direction="rtl"
+      rowHeight={100}
       /> 
 );
 }
 
-export default ActivityData;
+export default Diagram;

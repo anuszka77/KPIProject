@@ -80,3 +80,24 @@ export const loadListOfProcessLayers = async () => {
         return Promise.reject(e);
     }
 };
+
+
+
+export const loadProcessDiagramActivity = async (processId ) => {
+    try {
+        return await getApi('/ProcessBook/GetProcessActivityDiagram/'+processId)
+            .then((res) => {
+                if (res.status === 200) {
+                    return Promise.resolve(res.data);
+                }
+                return Promise.resolve([]);
+            })
+            .catch((error) => {
+                const responseMsg = error.message;
+                console.log(responseMsg);
+                return Promise.reject(responseMsg);
+            });
+    } catch (e) {
+        return Promise.reject(e);
+    }
+};
