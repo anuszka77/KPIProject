@@ -2,6 +2,8 @@
 using KPIProject.DataCore.Models;
 using KPIProject.DTO.Dictionary;
 using KPIProject.DTO.Menu;
+using KPIProject.DTO.XmlType;
+using KPIProject.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +23,10 @@ namespace KPIProject.Mapper.Profiles
             CreateMap<FGetListOfProcess_Result, FGetListOfProcess_ResultDTO>().ReverseMap();
             CreateMap<FGetListOfColumToShowByRole_Result, FGetListOfColumToShowByRole_ResultDTO>().ReverseMap();
             CreateMap<FGetListOfProcessActivity_Result, FGetListOfProcessActivity_ResultDTO>().ReverseMap();
-
             CreateMap<FGetListOfProcessLayers_Result, FGetListOfProcessLayers_ResultDTO>().ReverseMap();
-
-
             CreateMap<FGetTierListByDim_Result, FGetTierListByDim_ResultDTO>().ReverseMap();
 
-
+            CreateMap<FGetProcessActivityDiagramTier_Result, FGetProcessActivityDiagramTier_ResultDTO>().ForMember(dest => dest.ListProcessActivityXml, opt => opt.MapFrom(src => src.ProcessActivityXml.DeSerializeFromXML<ProcessDetails>()));
         }
 
         #endregion Constructors

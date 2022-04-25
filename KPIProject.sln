@@ -21,13 +21,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KPIProject.Mapper", "KPIPro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KPIProject.Mapper", "KPIProject.Mapper\KPIProject.Mapper.csproj", "{6FF10B26-10A0-4588-BEB2-1B3EC3E0F647}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPIProject.ServicesInterfaces", "KPIProject.ServicesInterfaces\KPIProject.ServicesInterfaces.csproj", "{1585B4AF-9AA1-4CBA-97F1-DD57B0F05297}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KPIProject.ServicesInterfaces", "KPIProject.ServicesInterfaces\KPIProject.ServicesInterfaces.csproj", "{1585B4AF-9AA1-4CBA-97F1-DD57B0F05297}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KPIProject.Repositories", "KPIProject.Repositories", "{6D54FFF3-B1FE-4578-93F5-5DDA71332BB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPIProject.Repositories", "KPIProject.Repositories\KPIProject.Repositories.csproj", "{1ABE5754-B1BD-40F3-99FF-D5AFB79BE5A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KPIProject.Repositories", "KPIProject.Repositories\KPIProject.Repositories.csproj", "{1ABE5754-B1BD-40F3-99FF-D5AFB79BE5A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPIProject.RepositoriesInterfaces", "KPIProject.RepositoriesInterfaces\KPIProject.RepositoriesInterfaces.csproj", "{4B96203A-22F7-4833-8B41-7C3AFCAA9E91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KPIProject.RepositoriesInterfaces", "KPIProject.RepositoriesInterfaces\KPIProject.RepositoriesInterfaces.csproj", "{4B96203A-22F7-4833-8B41-7C3AFCAA9E91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KPIProject.Utils", "KPIProject.Utils", "{4585DE3E-6EBE-4659-B0AB-FFC785B8BD80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPIProject.Utils", "KPIProject.Utils\KPIProject.Utils.csproj", "{91330859-C7EE-4CC6-823B-5697D7309DB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +71,10 @@ Global
 		{4B96203A-22F7-4833-8B41-7C3AFCAA9E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B96203A-22F7-4833-8B41-7C3AFCAA9E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B96203A-22F7-4833-8B41-7C3AFCAA9E91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91330859-C7EE-4CC6-823B-5697D7309DB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91330859-C7EE-4CC6-823B-5697D7309DB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91330859-C7EE-4CC6-823B-5697D7309DB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91330859-C7EE-4CC6-823B-5697D7309DB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +88,7 @@ Global
 		{1585B4AF-9AA1-4CBA-97F1-DD57B0F05297} = {0653B2DE-5D1E-4F0A-8666-AF31255BDDAF}
 		{1ABE5754-B1BD-40F3-99FF-D5AFB79BE5A6} = {6D54FFF3-B1FE-4578-93F5-5DDA71332BB2}
 		{4B96203A-22F7-4833-8B41-7C3AFCAA9E91} = {6D54FFF3-B1FE-4578-93F5-5DDA71332BB2}
+		{91330859-C7EE-4CC6-823B-5697D7309DB3} = {4585DE3E-6EBE-4659-B0AB-FFC785B8BD80}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {50255B7A-CC6A-413E-81B7-8AA263C3664A}

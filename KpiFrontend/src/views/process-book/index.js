@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 
 // material-ui
 import { Typography } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid , GridToolbar} from '@mui/x-data-grid';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
@@ -52,8 +52,9 @@ import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import AddCircle from '@mui/icons-material/AddCircle';
 import Edit from '@mui/icons-material/Edit';
+import Dialog from '@mui/material/Dialog';
 
-
+import NewProcess from './NewProcess';
 
 
 // ==============================|| SAMPLE PAGE ||============================== //
@@ -203,15 +204,20 @@ const getListOfProcessLayers = async => {
       const filter = data
      .filter(x => x.idProcess=== parseInt(selectedProcessId));
       setProcessDetails(filter);
+     
+     // do pobrania badz uzupelnienia wszytskie id dla kaz
       const y=[
         {id: 1, name: filter[0].idProcess},
         {id: 2, name: filter[0].processName},
         {id: 9, name: filter[0].areaLayerName},
         {id: 13, name: filter[0].subAreaLayerName},
         {id: 21, name: filter[0].subjectLayerName},
-        {id: 29, name: filter[0].attributeLayerName}
+        {id: 29, name: filter[0].attributeLayerName},
+        {id: 54, name: filter[0].objectTierName}
+
       ];     
       setRows(y);        
+      
       const rows = activity.filter(x => x.processId=== parseInt(selectedProcessId)).map((row) => ({
         processId: row.processId,
         activityVin: row.activityVin,
@@ -269,6 +275,7 @@ const getListOfProcessLayers = async => {
     }
     
 
+
     return (
       <div style={{height: "800px", width:"100%"}}>
       <MasterDetail 
@@ -286,18 +293,14 @@ const getListOfProcessLayers = async => {
               </div>
               </Grid>             
               <Grid item xs={2}>
-              <IconButton color="primary" aria-label="upload picture" component="span">
-              <AddCircle />
-              </IconButton>    
+                
               </Grid>  
               <Grid item xs={1}>
-              <IconButton color="primary" aria-label="upload picture" component="span" hint>
-              <Edit />
-              </IconButton>
+              <NewProcess/>
               </Grid>     
               </Grid>
           </div>
-            
+        
           <div>
           <Grid container spacing={2} columns={1}> 
           <Grid item  xs={1}>
@@ -325,7 +328,7 @@ const getListOfProcessLayers = async => {
                 />
             </Grid>
             <Grid item  xs={1}>
-            <List sx={{width: '100%', height: '80%' }} >
+            <List sx={{width: '100%', height: '80%' }}  >
             <nav aria-label="main mailbox folders">
                 {filteredData.map((row) => (
                  <ListItemButton  
@@ -411,6 +414,9 @@ const getListOfProcessLayers = async => {
                                   getRowId={(row) => row.stepId}
                                   height="100%"
                                   direction="rtl"
+                                  components={{
+                                    Toolbar: GridToolbar
+                                  }}
                                   /> 
                                 
                           </TabPanel>

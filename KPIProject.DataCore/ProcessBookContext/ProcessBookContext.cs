@@ -30,6 +30,7 @@ namespace KPIProject.DataCore.ProcessBookContext
 
         #region Properties
         public virtual DbSet<DimensionsDictionary> DimensionsDictionary { get; set; } = null!;
+
         public IQueryable<FGetListOfProcess_Result> FGetListOfProcess() => FromExpression(() => FGetListOfProcess());
         public IQueryable<FGetTierListByDim_Result> FGetTierListByDim(short? dimensionId) => FromExpression(() => FGetTierListByDim(dimensionId));
 
@@ -38,6 +39,9 @@ namespace KPIProject.DataCore.ProcessBookContext
         public IQueryable<FGetListOfProcessActivity_Result> FGetListOfProcessActivity() => FromExpression(() => FGetListOfProcessActivity());
 
         public IQueryable<FGetListOfProcessLayers_Result> FGetListOfProcessLayers() => FromExpression(() => FGetListOfProcessLayers());
+
+        public IQueryable<FGetProcessActivityDiagramTier_Result> FGetProcessActivityDiagramTier(int? processId) => FromExpression(() => FGetProcessActivityDiagramTier(processId));
+
 
 
         #endregion Properties
@@ -77,6 +81,9 @@ namespace KPIProject.DataCore.ProcessBookContext
 
             modelBuilder.Entity<FGetListOfProcessLayers_Result>().HasNoKey();
             modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfProcessLayers))).HasSchema("PbApp");
+
+            modelBuilder.Entity<FGetProcessActivityDiagramTier_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetProcessActivityDiagramTier), new[] { typeof(int?) })).HasSchema("PbApp");
 
 
 

@@ -7,5 +7,7 @@ namespace KPIProject.ServicesInterfaces
         Task<IEnumerable<FGetListOfColumToShowByRole_ResultDTO>> GetListOfColumnToShowByRole(short idDatabaseObject, byte roleId);
         Task<IEnumerable<FGetListOfProcessActivity_ResultDTO>> GetListOfProcessActivity();
         Task<IEnumerable<FGetListOfProcessLayers_ResultDTO>> GetListOfProcessLayers();
+        Task<IEnumerable<FGetProcessActivityDiagramTier_ResultDTO>> GetProcessActivityDiagramTier(int processId);
+
     }
 }

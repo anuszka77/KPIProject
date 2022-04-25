@@ -26,7 +26,6 @@ const Header = ({ handleLeftDrawerToggle }) => {
     const onMenuClick = (e) =>{
         var newState = menuCollapsed === true ? false: true;
         setMenuCollapsed(newState);
-
         if(newState === true)
         {
             setMargin(`250px`);
@@ -35,6 +34,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
         {
             setMargin(`0px`);
         }
+        
         handleLeftDrawerToggle();
     }
 

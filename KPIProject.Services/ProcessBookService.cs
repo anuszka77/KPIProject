@@ -34,5 +34,10 @@ namespace KPIProject.Services
         {
             return await mapper.ProjectTo<FGetListOfProcessLayers_ResultDTO>(context.FGetListOfProcessLayers()).ToListAsync();
         }
+
+        public async Task<IEnumerable<FGetProcessActivityDiagramTier_ResultDTO>> GetProcessActivityDiagramTier(int processId)
+        {
+            return await mapper.ProjectTo<FGetProcessActivityDiagramTier_ResultDTO>(context.FGetProcessActivityDiagramTier(processId)).ToListAsync();
+        }
     }
 }
