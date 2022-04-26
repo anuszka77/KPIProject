@@ -41,6 +41,7 @@ namespace KPIProject.DataCore.ProcessBookContext
         public IQueryable<FGetListOfProcessLayers_Result> FGetListOfProcessLayers() => FromExpression(() => FGetListOfProcessLayers());
 
         public IQueryable<FGetProcessActivityDiagramTier_Result> FGetProcessActivityDiagramTier(int? processId) => FromExpression(() => FGetProcessActivityDiagramTier(processId));
+        public IQueryable<FGetListOfSystemDictionary_Result> FGetListOfSystemDictionary() => FromExpression(() => FGetListOfSystemDictionary());
 
 
 
@@ -84,6 +85,9 @@ namespace KPIProject.DataCore.ProcessBookContext
 
             modelBuilder.Entity<FGetProcessActivityDiagramTier_Result>().HasNoKey();
             modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetProcessActivityDiagramTier), new[] { typeof(int?) })).HasSchema("PbApp");
+
+            modelBuilder.Entity<FGetListOfSystemDictionary_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfSystemDictionary))).HasSchema("PbApp");
 
 
 

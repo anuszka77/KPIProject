@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using KPIProject.DataCore.ProcessBookContext;
+using KPIProject.DTO.Dictionary;
 using KPIProject.DTO.Menu;
 using KPIProject.RepositoriesInterfaces;
 using KPIProject.ServicesInterfaces;
@@ -29,6 +30,15 @@ namespace KPIProject.WebApi.Controllers
         [HttpGet]
         [Route("GetTierDictionaryToDimension/{idDimension:int}")]
         public async Task<IActionResult> FGetTierListByDim(short? idDimension) => Ok(await dictService.GetTierDictionaryToDimension(idDimension));
+
+
+        [HttpPost]
+        [Route("SaveLayers/{systemId:int}")]
+        public async Task<IActionResult> SaveLayers([FromBody] List<LayersToAddDTO> layers, int systemId) => Ok(await dictService.SaveLayers(layers, systemId));
+
+        [HttpGet]
+        [Route("GetDictSystem")]
+        public async Task<IActionResult> FGetListOfSystemDictionary() => Ok(await dictService.GetListOfSystemDictionary());
 
     }
 }

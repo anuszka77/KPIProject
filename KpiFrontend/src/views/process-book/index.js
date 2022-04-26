@@ -58,7 +58,7 @@ import NewProcess from './NewProcess';
 import Diagram from './Diagram';
 import Link from '@mui/material/Link';
 
-
+import { useProcessContext, ProcessContext } from './ProcessContext';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 const capitalize = (str) => {
@@ -87,7 +87,9 @@ const ProcessBook = () => {
     const [rowsActivity, setRowsActivity]=useState([]);
 
 
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    //const [selectedProcessId, setSelectedProcessId] = useState(0);
+    const [selectedProcessId, setSelectedProcessId] = useState();
+
 
     const [areas, setAreas] = useState([]);
 
@@ -201,11 +203,10 @@ const getListOfProcessLayers = async => {
   //...customCheckbox(theme),
     }));
 
-    const loadDataToSelectedIdProcess = (selectedIndex) => {
-      setSelectedIndex(selectedIndex);     
-      const selectedProcessId = selectedIndex;    
+    const loadDataToSelectedIdProcess = (selectedProcessIdClicked) => {
+      setSelectedProcessId(selectedProcessIdClicked);     
       const filter = data
-     .filter(x => x.idProcess=== parseInt(selectedProcessId));
+     .filter(x => x.idProcess=== parseInt(selectedProcessIdClicked));
       setProcessDetails(filter);
      
      // do pobrania badz uzupelnienia wszytskie id dla kaz
@@ -221,7 +222,7 @@ const getListOfProcessLayers = async => {
       ];     
       setRows(y);        
       
-      const rows = activity.filter(x => x.processId=== parseInt(selectedProcessId)).map((row) => ({
+      const rows = activity.filter(x => x.processId=== parseInt(selectedProcessIdClicked)).map((row) => ({
         processId: row.processId,
         activityVin: row.activityVin,
         activityTierName: row.activityTierName,
@@ -280,6 +281,7 @@ const getListOfProcessLayers = async => {
 
 
     return (
+      <ProcessContext.Provider value={{ selectedProcessId, setSelectedProcessId}}>
       <div style={{height: "800px", width:"100%"}}>
       <MasterDetail 
       canClose={false}
@@ -336,7 +338,7 @@ const getListOfProcessLayers = async => {
                 {filteredData.map((row) => (
                  <ListItemButton  
                  divider={false} 
-                 selected={parseInt(selectedIndex) === row.idProcess}
+                 selected={parseInt(selectedProcessId) === row.idProcess}
                  id={row.idProcess}
                  onClick={handleListItemClick}               
                  > 
@@ -424,9 +426,8 @@ const getListOfProcessLayers = async => {
                                 
                           </TabPanel>
                           <TabPanel value="3" style={{height: `inherit`}} >
-                          <Link href="#">https://drive.google.com/file/d/12vfNGXGaDNLWKxL_4Z4fmnV78elEJ1JZ/view?usp=sharing
-</Link>
-                          <Diagram selectedIndex={selectedIndex}/>
+                          
+                          <Diagram selectedIndex={selectedProcessId}/>
                           
                           </TabPanel>
              </TabContext>
@@ -435,6 +436,7 @@ const getListOfProcessLayers = async => {
             </MasterDetail>
   
         </div>
+        </ProcessContext.Provider>
 
     );
 };

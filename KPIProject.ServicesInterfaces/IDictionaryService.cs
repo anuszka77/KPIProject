@@ -12,6 +12,9 @@ namespace KPIProject.ServicesInterfaces
     {
         Task<IEnumerable<DimensionsDictionaryDTO>> GetDimensionsDictionary();
         Task<IEnumerable<FGetTierListByDim_ResultDTO>> GetTierDictionaryToDimension(short? dimensionId);
+        Task<string> SaveLayers(List<LayersToAddDTO> layers, int systemId);
+        Task<IEnumerable<FGetListOfSystemDictionary_ResultDTO>> GetListOfSystemDictionary();
+
 
     }
 }
