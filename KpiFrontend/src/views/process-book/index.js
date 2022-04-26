@@ -343,11 +343,7 @@ const getListOfProcessLayers = async => {
                  onClick={handleListItemClick}               
                  > 
                     
-                <ListItemAvatar>
-                   <Avatar>
-                     <Construction />
-                   </Avatar>
-                 </ListItemAvatar>   
+               
                  <ListItemText 
                  primary={row.processName} 
                  secondary={"identyfikator: " + row.idProcess}

@@ -39,8 +39,8 @@ const Diagram = ({selectedIndex}) => {
   }
 
 const columnsActivity =[
-  {field: "tierId", headerName: "Numer tier", width: 50, position: "sticky"},
-  {field: "listProcessActivityXml", headerName: "a takie hocki klocki", width: 2000,  renderCell:(row) => renderDiagram(row)}
+  {field: "tierId", headerName: "Numer tier", width: 100, position: "sticky"},
+  {field: "listProcessActivityXml", headerName: "Przepływ procesu", width: 2000,  renderCell:(row) => renderDiagram(row)}
 ]
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({

@@ -1,0 +1,25 @@
+.css-1e9lk82-MuiListItemAvatar-root{
+    color: #1b67de!important;
+}
+
+
+.css-tlzztl-MuiButtonBase-root-MuiListItemButton-root:hover{
+    background-color: whitesmoke!important;
+    color: white;
+    border-radius: 20px;;
+
+}
+
+.css-tlzztl-MuiButtonBase-root-MuiListItemButton-root.Mui-selected{
+    background-color: #e8e8e8!important;
+    color: white;
+    border-radius: 20px;;
+
+}
+
+
+.Mui-selected {
+    border-radius: "20px 20px"!important;
+}
+
+

@@ -14,6 +14,7 @@ import Customization from '../Customization';
 import navigation from 'menu-items';
 import { drawerWidth } from 'store/constant';
 import { SET_MENU } from 'store/actions';
+import './List.css'
 import './nav.css';
 
 
