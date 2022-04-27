@@ -147,7 +147,7 @@ const getListOfProcessLayers = async => {
         bgcolor: 'background.paper',
         position: 'relative',
         overflow: 'auto',
-        maxHeight: 600,
+        maxHeight: 640,
         '& ul': { padding: 0 },
       }}  >
         <nav aria-label="main mailbox folders">

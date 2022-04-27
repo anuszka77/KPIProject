@@ -86,10 +86,10 @@ const ProcessBook = () => {
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
             <Grid container spacing={gridSpacing}>
-              <Grid item lg={2.5} md={6} sm={6} xs={12}>
+              <Grid item lg={2.5} md={4} sm={3} xs={12}>
                 <ProcessList/>
               </Grid>
-              <Grid item lg={9.5} md={6} sm={6} xs={12}>
+              <Grid item lg={9.5} md={8} sm={9} xs={12}>
                 <MainCard>
                 <TabContext value={value}>
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

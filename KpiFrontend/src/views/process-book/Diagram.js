@@ -11,7 +11,7 @@ import { loadListOfProcessBookActivity , loadProcessDiagramActivity} from '../..
 import { styled } from '@mui/material/styles';
 
 import '@sakit-sa/react-master-detail/dist/index.css';
-import { DataSaverOff } from '@mui/icons-material';
+import { DataSaverOff, SignalCellularNullOutlined } from '@mui/icons-material';
 import Avatar from '@mui/material/Avatar';
 import DiagramRender from './DiagramRender';
 
@@ -41,7 +41,7 @@ const Diagram = () => {
 
 const columnsActivity =[
   {field: "tierId", headerName: "Numer tier", width: 100, position: "sticky"},
-  {field: "listProcessActivityXml", headerName: "Przepływ procesu", width: 2000,  renderCell:(row) => renderDiagram(row)}
+  {field: "listProcessActivityXml", headerName: "Przepływ procesu", width: 2000,  renderCell:(row) => row !=undefined  && row!=null?  renderDiagram(row) : null}
 ]
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
