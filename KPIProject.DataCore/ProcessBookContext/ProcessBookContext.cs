@@ -41,10 +41,12 @@ namespace KPIProject.DataCore.ProcessBookContext
         public IQueryable<FGetListOfProcessLayers_Result> FGetListOfProcessLayers() => FromExpression(() => FGetListOfProcessLayers());
 
         public IQueryable<FGetProcessActivityDiagramTier_Result> FGetProcessActivityDiagramTier(int? processId) => FromExpression(() => FGetProcessActivityDiagramTier(processId));
+
         public IQueryable<FGetListOfSystemDictionary_Result> FGetListOfSystemDictionary() => FromExpression(() => FGetListOfSystemDictionary());
 
-
-
+        public IQueryable<FGetListOfKpiDictionary_Result> FGetListOfKpiDictionary() => FromExpression(() => FGetListOfKpiDictionary());
+        public IQueryable<FGetListOfCriticalToDictionary_Result> FGetListOfCriticalToDictionary() => FromExpression(() => FGetListOfCriticalToDictionary());
+       
         #endregion Properties
 
         #region Methods
@@ -89,7 +91,11 @@ namespace KPIProject.DataCore.ProcessBookContext
             modelBuilder.Entity<FGetListOfSystemDictionary_Result>().HasNoKey();
             modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfSystemDictionary))).HasSchema("PbApp");
 
+            modelBuilder.Entity<FGetListOfKpiDictionary_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfKpiDictionary))).HasSchema("PbApp");
 
+            modelBuilder.Entity<FGetListOfCriticalToDictionary_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfCriticalToDictionary))).HasSchema("PbApp");
 
             modelBuilder.Entity<DimensionsDictionary>(entity =>
             {

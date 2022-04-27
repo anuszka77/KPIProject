@@ -29,6 +29,8 @@ namespace KPIProject.Mapper.Profiles
             CreateMap<FGetProcessActivityDiagramTier_Result, FGetProcessActivityDiagramTier_ResultDTO>().ForMember(dest => dest.ListProcessActivityXml, opt => opt.MapFrom(src => src.ProcessActivityXml.DeSerializeFromXML<ProcessDetails>()));
 
             CreateMap<FGetListOfSystemDictionary_Result, FGetListOfSystemDictionary_ResultDTO>().ReverseMap();
+            CreateMap<FGetListOfKpiDictionary_Result, FGetListOfKpiDictionary_ResultDTO>().ReverseMap();
+            CreateMap<FGetListOfCriticalToDictionary_Result, FGetListOfCriticalToDictionary_ResultDTO>().ReverseMap();
 
         }
 

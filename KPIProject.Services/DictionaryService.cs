@@ -44,7 +44,17 @@ namespace KPIProject.Services
             return await mapper.ProjectTo<FGetListOfSystemDictionary_ResultDTO>(context.FGetListOfSystemDictionary()).ToListAsync();
         }
 
-     
+        public async Task<IEnumerable<FGetListOfKpiDictionary_ResultDTO>> GetListOfKpiDictionary()
+        {
+            return await mapper.ProjectTo<FGetListOfKpiDictionary_ResultDTO>(context.FGetListOfKpiDictionary()).ToListAsync();
+        }
+
+        public async Task<IEnumerable<FGetListOfCriticalToDictionary_ResultDTO>> GetListOfCriticalToDictionary()
+        {
+            return await mapper.ProjectTo<FGetListOfCriticalToDictionary_ResultDTO>(context.FGetListOfCriticalToDictionary()).ToListAsync();
+        }
+
+
         public async Task<string> SaveLayers(List<LayersToAddDTO> layers, int systemId)
         {
             List<SqlParameter> parms = new()
