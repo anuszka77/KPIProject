@@ -45,8 +45,7 @@ return(
            <ListItem
            //id={rowData.tierId}
            //onClick={handleListItemClick}               
-           > 
-               
+           >                
            <ListItemText 
            primary={rowData.actionStepName} 
            secondary={"obecny tier: " + rowData.tierIdToDiagram}

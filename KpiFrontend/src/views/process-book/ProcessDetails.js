@@ -1,50 +1,61 @@
+import * as React from 'react';
 import { useEffect, useState, useMemo } from 'react';
 
-// material-ui
-import { Typography } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-
-// project imports
-import MainCard from 'ui-component/cards/MainCard';
-import { loadDetails, loadColumnToShow } from '../../services/processBookService';
-
-import { styled } from '@mui/material/styles';
-import MasterDetail from '@sakit-sa/react-master-detail';
-import '@sakit-sa/react-master-detail/dist/index.css';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import AddCircle from '@mui/icons-material/AddCircle';
+import TextField from '@mui/material/TextField';
 import { gridSpacing } from 'store/constant';
 import { Grid } from '@mui/material';
-import MainTier from './MainTier';
-import { useLocation } from "react-router-dom";
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
+
+import { loadDetails, loadColumnToShow , loadListOfProcessBookActivity, loadListOfProcessLayers} from '../../services/processBookService';
+import { ProcessContext , useProcessContext} from './ProcessContext';
 
 const capitalize = (str) => {
   return str.charAt(0).toLowerCase() + str.slice(1);
   }
 
 const ProcessDetails = () => {
-  const location = useLocation();
-  const [data, setData] = useState([]);
+    
+  const {selectedProcessId, setSelectedProcessId, processData, setProcessData} = useProcessContext();  
   const [columnToShow, setColumnToShow] = useState([]);
-  
+  const [processDetails, setProcessDetails] = useState([]);
+  const [rows, setRows]=useState([]);
 
-  const [value, setValue] = useState('1');
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  
-  const getData = async => {
-      loadDetails().then((x) => {
-          setData(x);
-      });
-  }
+
+  useEffect(() => {
+    if(selectedProcessId != undefined && parseInt(selectedProcessId) != 0)
+    {
+    getListOfColumnToShow();
+    const filter = processData.filter(x => x.idProcess=== parseInt(selectedProcessId));
+    setProcessDetails(filter);
+    const y=[
+      {id: 1, name: filter[0].idProcess},
+      {id: 2, name: filter[0].processName},
+      {id: 9, name: filter[0].areaLayerName},
+      {id: 13, name: filter[0].subAreaLayerName},
+      {id: 21, name: filter[0].subjectLayerName},
+      {id: 29, name: filter[0].attributeLayerName},
+      {id: 54, name: filter[0].objectTierName} 
+    ];     
+    setRows(y); 
+  } 
+}, [selectedProcessId]);
 
   const getListOfColumnToShow = async => {
     loadColumnToShow(1,1).then((y) => {
@@ -52,87 +63,48 @@ const ProcessDetails = () => {
     });
 }
 
-  useEffect(() => {
-      getData();
-      getListOfColumnToShow();
-  }, []);
 
   const columns = columnToShow.map((row) => ({
     field: capitalize(row.columnToGridName),
     headerName: row.columnToGridNamePl,
-    width: 250
+    id: row.idColumnsToGrid
   }));
   
   
-  const rows = data.map((row) => ({
-      expanded: false,
-      idProcess: row.idProcess,
-      processVin: row.processVin,
-      processName: row.processName,
-      areaLayerName: row.areaLayerName,
-      subAreaLayerName: row.subAreaLayerName,
-      subjectLayerName: row.subjectLayerName,
-      attributeLayerName: row.attributeLayerName
-  }));
-
-
-
-  const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-    border: 'none',
-    title: 'Procesy',
-    color:
-      theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.85)',
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    WebkitFontSmoothing: 'auto',
-    letterSpacing: 'normal',
-    //headerAlign: 'center',
-    align: 'center',
-    //'& .MuiDataGrid-columnsContainer': {
-    //  backgroundColor: theme.palette.mode === 'light' ? '#fafafa' : '#1d1d1d',         
-    //},
-    '& .MuiDataGrid-iconSeparator': {
-      display: 'none',
-    },
-    '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
-      borderBottom: `1px solid ${
-        theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'
-      }`,
-    },
-    '& .MuiDataGrid-cell': {
-      color:
-        theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.65)',
-    },
-    '& .MuiPaginationItem-root': {
-      borderRadius: 0,
-    },
-//...customCheckbox(theme),
-  }));
-
-return(
-
-  <StyledDataGrid
-                              rows={rows}
-                              columns={columns}
-                              //pageSize={100}
-                              //rowsPerPageOptions={[12]}
-                              checkboxSelection={false}
-                              disableSelectionOnClick
-                              getRowId={(row) => row.idProcess}
-                              height="100%"
-                              direction="rtl"
-                              /> 
-);
+  return (
+    <TableContainer component={Paper}>
+    <Table sx={{ minWidth: 650 }} aria-label="simple table">                                     
+      <TableBody>                                     
+        {columns.map((row) => 
+        (processDetails != null && processDetails.length != 0) ?
+        (
+          <TableRow
+            key={row.field}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+          >
+            <TableCell component="th" scope="row">
+              {row.headerName}
+            </TableCell>
+            <TableCell>{rows.filter(x => x.id === row.id)[0].name}</TableCell>
+          </TableRow>
+        )
+        :
+        (
+          <TableRow
+            key={row.field}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+          >                                           
+          <TableCell component="th" scope="row">
+          {row.headerName}
+        </TableCell>
+        </TableRow>
+        )
+        )
+        }
+      </TableBody>
+    </Table>
+</TableContainer>
+  );
 }
 
 export default ProcessDetails;

@@ -15,24 +15,25 @@ import { DataSaverOff } from '@mui/icons-material';
 import Avatar from '@mui/material/Avatar';
 import DiagramRender from './DiagramRender';
 
+
 import { ProcessContext , useProcessContext} from './ProcessContext';
 
 
-const Diagram = ({selectedIndex}) => {
+const Diagram = () => {
   const [data, setData] = useState();
 
   const {selectedProcessId, setSelectedProcessId} = useProcessContext();  
 
 
   useEffect(() => {
-    if(selectedIndex != undefined && parseInt(selectedIndex) != 0)
+    if(selectedProcessId != undefined && parseInt(selectedProcessId) != 0)
     {
-      loadProcessDiagramActivity(selectedIndex).then(x => setData(x));
+      loadProcessDiagramActivity(selectedProcessId).then(x => setData(x));
     }
     else{
       setData([]);
     }     
-  }, [selectedIndex]);
+  }, [selectedProcessId]);
 
   const renderDiagram = (params) => {
     return <DiagramRender params={params} />;
@@ -46,9 +47,6 @@ const columnsActivity =[
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   border: 'none',
   title: 'Procesy',
-  position: '-webkit-sticky',
-  position: 'sticky', left: 0,
-  zIndex: 1,
   color:
     theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.85)',
   fontFamily: [

@@ -18,16 +18,13 @@ namespace KPIProject.Mapper.Profiles
 
         public MenuProfile()
         {
-            CreateMap<DimensionsDictionary, DimensionsDictionaryDTO > ().ReverseMap();
-            
+            CreateMap<DimensionsDictionary, DimensionsDictionaryDTO > ().ReverseMap();          
             CreateMap<FGetListOfProcess_Result, FGetListOfProcess_ResultDTO>().ReverseMap();
             CreateMap<FGetListOfColumToShowByRole_Result, FGetListOfColumToShowByRole_ResultDTO>().ReverseMap();
             CreateMap<FGetListOfProcessActivity_Result, FGetListOfProcessActivity_ResultDTO>().ReverseMap();
             CreateMap<FGetListOfProcessLayers_Result, FGetListOfProcessLayers_ResultDTO>().ReverseMap();
             CreateMap<FGetTierListByDim_Result, FGetTierListByDim_ResultDTO>().ReverseMap();
-
             CreateMap<FGetProcessActivityDiagramTier_Result, FGetProcessActivityDiagramTier_ResultDTO>().ForMember(dest => dest.ListProcessActivityXml, opt => opt.MapFrom(src => src.ProcessActivityXml.DeSerializeFromXML<ProcessDetails>()));
-
             CreateMap<FGetListOfSystemDictionary_Result, FGetListOfSystemDictionary_ResultDTO>().ReverseMap();
 
         }
