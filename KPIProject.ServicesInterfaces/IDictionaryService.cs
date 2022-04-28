@@ -1,4 +1,5 @@
-﻿using KPIProject.DTO.Dictionary;
+﻿using KPIProject.DataCore.Models;
+using KPIProject.DTO.Dictionary;
 using KPIProject.DTO.Menu;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,10 @@ namespace KPIProject.ServicesInterfaces
         Task<IEnumerable<FGetTierListByDim_ResultDTO>> GetTierDictionaryToDimension(short? dimensionId);
         Task<string> SaveLayers(List<LayersToAddDTO> layers, int systemId);
         Task<IEnumerable<FGetListOfSystemDictionary_ResultDTO>> GetListOfSystemDictionary();
+        Task<IEnumerable<FGetListOfKpiDictionary_ResultDTO>> GetListOfKpiDictionary();
+        Task<IEnumerable<FGetListOfCriticalToDictionary_ResultDTO>> GetListOfCriticalToDictionary();
+
+
 
 
     }

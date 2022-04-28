@@ -40,5 +40,12 @@ namespace KPIProject.WebApi.Controllers
         [Route("GetDictSystem")]
         public async Task<IActionResult> FGetListOfSystemDictionary() => Ok(await dictService.GetListOfSystemDictionary());
 
+        [HttpGet]
+        [Route("GetDictKpi")]
+        public async Task<IActionResult> FGetListOfKpiDictionary() => Ok(await dictService.GetListOfKpiDictionary());
+
+        [HttpGet]
+        [Route("GetDictCriticalTo")]
+        public async Task<IActionResult> FGetListOfCriticalToTo() => Ok(await dictService.GetListOfCriticalToDictionary());
     }
 }

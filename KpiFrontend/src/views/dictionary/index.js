@@ -7,6 +7,9 @@ import { gridSpacing } from 'store/constant';
 import { Grid } from '@mui/material';
 
 import MainTier from './MainTier';
+import KpiAddingPanel from './kpiDictionary/KpiAddingPanel';
+import KpiGrid from './kpiDictionary/KpiGrid';
+
 
 
 
@@ -18,6 +21,8 @@ const Dictionary = () => (
                 <Grid container spacing={gridSpacing}>
                     <Grid item lg={12} md={6} sm={6} xs={12}>
                     <MainTier/>
+                    <KpiAddingPanel/>
+                    <KpiGrid/>
                     </Grid>
                 </Grid>
             </Grid>

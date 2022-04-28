@@ -80,3 +80,21 @@ export const saveLayers = async (layersToAdd, systemId)  => {
 };
 
 
+export const loadDictKpi = async () => {
+    try {
+        return await getApi('/Dictionary/GetDictKpi')
+            .then((res) => {
+                if (res.status === 200) {
+                    return Promise.resolve(res.data);
+                }
+                return Promise.resolve([]);
+            })
+            .catch((error) => {
+                const responseMsg = error.message;
+                console.log(responseMsg);
+                return Promise.reject(responseMsg);
+            });
+    } catch (e) {
+        return Promise.reject(e);
+    }
+};
