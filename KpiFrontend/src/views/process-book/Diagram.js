@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 
 // material-ui
 import { Typography } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
@@ -58,10 +58,7 @@ return(
       rowHeight={100}
       autoPageSize={false}
       width="100%"
-      disableExtendRowFullWidth={true}
-      
-
-      
+      disableExtendRowFullWidth={true}     
       />
 );
 }

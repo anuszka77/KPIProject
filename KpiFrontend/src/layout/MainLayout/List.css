@@ -29,3 +29,9 @@
 .MuiDataGrid-footerContainer{
     height: 50px!important;
 }
+
+.css-g8plc8-MuiListItem-root{
+    border: solid 1px;
+    margin: 20px;
+
+}

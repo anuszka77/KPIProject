@@ -29,9 +29,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     padding: 0,
-    border: "solid 1px",
-    borderRight: "solid 1px",
-    borderColor: "#17202e"
+    //border: "solid 1px",
+    //borderRight: "solid 1px",
+    borderColor: "#17202e",
+    margin: "5px 0",
+    justifyContent: "space-between"  
   }
 }));
 
@@ -41,9 +43,9 @@ const DiagramRender = ( {params} ) => {
 
 return(
   
-      <List  className={classes.root}  >
+      <List className={classes.root} >
       {params.row.listProcessActivityXml.map((rowData) => (
-           <ListItem
+           <ListItem 
            //id={rowData.tierId}
            //onClick={handleListItemClick}               
            >                
@@ -53,8 +55,6 @@ return(
             />
             <ListItemAvatar style={{marginLeft: "20px"}}>
             <Avatar> <ArrowForward /></Avatar>
-           
-
            </ListItemAvatar>  
            </ListItem>
 
