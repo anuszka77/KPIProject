@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     padding: 0,
     border: "solid 1px",
+    borderRight: "solid 1px",
     borderColor: "#17202e"
   }
 }));
@@ -48,7 +49,7 @@ return(
            >                
            <ListItemText 
            primary={rowData.actionStepName} 
-           secondary={"obecny tier: " + rowData.tierIdToDiagram}
+           secondary={"obecny tier: " + rowData.activityTierId}
             />
             <ListItemAvatar style={{marginLeft: "20px"}}>
             <Avatar> <ArrowForward /></Avatar>
