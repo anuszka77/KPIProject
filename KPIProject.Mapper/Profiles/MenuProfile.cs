@@ -28,8 +28,10 @@ namespace KPIProject.Mapper.Profiles
             CreateMap<FGetListOfSystemDictionary_Result, FGetListOfSystemDictionary_ResultDTO>().ReverseMap();
             CreateMap<FGetListOfKpiDictionary_Result, FGetListOfKpiDictionary_ResultDTO>().ReverseMap();
             CreateMap<FGetListOfCriticalToDictionary_Result, FGetListOfCriticalToDictionary_ResultDTO>().ReverseMap();
+            CreateMap<FGetListOfNameSimplyDictionary_Result, FGetListOfNameSimplyDictionary_ResultDTO>().ReverseMap();
 
         }
+        
 
         #endregion Constructors
     }

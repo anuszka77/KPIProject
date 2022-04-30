@@ -55,6 +55,12 @@ namespace KPIProject.Services
         }
 
 
+        public async Task<IEnumerable<FGetListOfNameSimplyDictionary_ResultDTO>> GetListOfNameSimplyDictionary()
+        {
+            return await mapper.ProjectTo<FGetListOfNameSimplyDictionary_ResultDTO>(context.FGetListOfNameSimplyDictionary()).ToListAsync();
+        }
+        
+
         public async Task<string> SaveLayers(List<LayersToAddDTO> layers, int systemId)
         {
             List<SqlParameter> parms = new()

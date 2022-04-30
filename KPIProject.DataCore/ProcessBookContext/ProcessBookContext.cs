@@ -46,7 +46,8 @@ namespace KPIProject.DataCore.ProcessBookContext
 
         public IQueryable<FGetListOfKpiDictionary_Result> FGetListOfKpiDictionary() => FromExpression(() => FGetListOfKpiDictionary());
         public IQueryable<FGetListOfCriticalToDictionary_Result> FGetListOfCriticalToDictionary() => FromExpression(() => FGetListOfCriticalToDictionary());
-       
+        public IQueryable<FGetListOfNameSimplyDictionary_Result> FGetListOfNameSimplyDictionary() => FromExpression(() => FGetListOfNameSimplyDictionary());
+
         #endregion Properties
 
         #region Methods
@@ -96,6 +97,9 @@ namespace KPIProject.DataCore.ProcessBookContext
 
             modelBuilder.Entity<FGetListOfCriticalToDictionary_Result>().HasNoKey();
             modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfCriticalToDictionary))).HasSchema("PbApp");
+
+            modelBuilder.Entity<FGetListOfNameSimplyDictionary_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfNameSimplyDictionary))).HasSchema("PbApp");
 
             modelBuilder.Entity<DimensionsDictionary>(entity =>
             {

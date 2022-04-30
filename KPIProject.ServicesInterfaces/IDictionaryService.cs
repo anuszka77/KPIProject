@@ -17,8 +17,7 @@ namespace KPIProject.ServicesInterfaces
         Task<IEnumerable<FGetListOfSystemDictionary_ResultDTO>> GetListOfSystemDictionary();
         Task<IEnumerable<FGetListOfKpiDictionary_ResultDTO>> GetListOfKpiDictionary();
         Task<IEnumerable<FGetListOfCriticalToDictionary_ResultDTO>> GetListOfCriticalToDictionary();
-
-
+        Task<IEnumerable<FGetListOfNameSimplyDictionary_ResultDTO>> GetListOfNameSimplyDictionary();
 
 
     }
