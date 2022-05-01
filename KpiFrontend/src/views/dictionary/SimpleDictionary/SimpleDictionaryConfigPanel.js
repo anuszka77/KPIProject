@@ -1,5 +1,3 @@
-// project imports
-import * as React from 'react';
 import { gridSpacing } from 'store/constant';
 import { Grid } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -10,15 +8,15 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
-import { loadDictListOfSimpleDictionary, loadDictKpi } from '../../../services/dictionaryService';
+import { loadDictListOfSimpleDictionary } from '../../../services/dictionaryService';
 import MainCard from 'ui-component/cards/MainCard';
-import SimpleDictionaryGrid from './SimpleDictionaryGrid';
 import { getColumnConfig } from './SimpleDictionaryColumnsToGrid';
 import {getDataToGrid} from './SimplyDictionaryGetDataBySelectedValue'
+import { useSimpleDictionaryContext} from './SimpleDictionaryContext';
 
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
-    const [idSimpleDictionarySelected, setIdSimpleDictionarySelected] = useState([]);
+    const {idSimpleDictionarySelected, setIdSimpleDictionarySelected} = useSimpleDictionaryContext();  
 
     useEffect(() => {
         loadDictListOfSimpleDictionary().then((x) => {
@@ -98,7 +96,6 @@ const SimpleDictionaryConfigPanel = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            <SimpleDictionaryGrid />
         </MainCard>
     );
 };

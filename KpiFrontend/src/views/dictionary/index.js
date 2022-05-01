@@ -1,6 +1,6 @@
 // material-ui
 import { Typography } from '@mui/material';
-
+import { useEffect, useState, useMemo } from 'react';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
@@ -9,27 +9,31 @@ import { Grid } from '@mui/material';
 import MainTier from './MainTier';
 import SimpleDictionaryConfigPanel from './SimpleDictionary/SimpleDictionaryConfigPanel';
 import SimpleDictionaryGrid from './SimpleDictionary/SimpleDictionaryGrid';
+import { SimpleDictionaryContext, useSimpleDictionaryContext } from './SimpleDictionary/SimpleDictionaryContext';
 
 
 
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
-const Dictionary = () => (
-         <Grid container spacing={gridSpacing}>
-            <Grid item xs={12}>
-                <Grid container spacing={gridSpacing}>
-                    <Grid item lg={12} md={6} sm={6} xs={12}>
-                    <MainTier/>
-                    <SimpleDictionaryConfigPanel/>
-                    {/* <SimpleDictionaryGrid/> */}
+const Dictionary = () => {
+    const [idSimpleDictionarySelected, setIdSimpleDictionarySelected] = useState(0);
+    return (
+        <SimpleDictionaryContext.Provider value={{ idSimpleDictionarySelected, setIdSimpleDictionarySelected }}>
+            <Grid container spacing={gridSpacing}>
+                <Grid item xs={12}>
+                    <Grid container spacing={gridSpacing}>
+                        <Grid item lg={12} md={6} sm={6} xs={12}>
+                            <MainTier />
+                            <SimpleDictionaryConfigPanel />
+                            {idSimpleDictionarySelected !=0 && <SimpleDictionaryGrid/>}
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-            </Grid>
-      
-);
-
+        </SimpleDictionaryContext.Provider>
+    );
+}
 export default Dictionary;
 
 /*
