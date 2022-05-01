@@ -10,17 +10,18 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
-import { loadDictSystem,loadDictKpi } from '../../../services/dictionaryService';
+import { loadDictListOfSimpleDictionary,loadDictKpi } from '../../../services/dictionaryService';
 import MainCard from 'ui-component/cards/MainCard';
+import SimpleDictionaryGrid from './SimpleDictionaryGrid';
+import {getColumnConfig} from './SimpleDictionaryColumnsToGrid';
 
-
-const KpiAddingPanel = () => {
-    const [dictKpi, setDictKpi] = useState([]);
-    const [idKpiSelected, setIdKpiSelected] = useState([]);
+const SimpleDictionaryConfigPanel = () => {
+    const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
+    const [idSimpleDictionarySelected, setIdSimpleDictionarySelected] = useState([]);
 
     useEffect(() => {
-        loadDictKpi().then((x) => {
-            setDictKpi(x);
+        loadDictListOfSimpleDictionary().then((x) => {
+            setDictListOfSimpleDictionary(x);
             console.log(x);
         });
     }, []);
@@ -32,8 +33,10 @@ const KpiAddingPanel = () => {
         // saveLayers(list, systemValue).then(x=>alert(x));
     }
 
-    const onKpiChanged = (e) =>{
-        setIdKpiSelected(e.target.value);
+    const onSimpleDictionaryChanged = (e) =>{
+        setIdSimpleDictionarySelected(e.target.value);
+        
+        console.log(getColumnConfig(e.target.value));
     }
     
 
@@ -46,17 +49,17 @@ const KpiAddingPanel = () => {
                         <Grid item lg={3} md={6} sm={6} xs={12}>
                             <Box sx={{ minWidth: 12 }}>
                                 <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">System</InputLabel>
+                                    <InputLabel id="demo-simple-select-label">Wybierz słownik z listy</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         label="Kpi"
-                                         onChange={onKpiChanged}
-                                        value={idKpiSelected}
+                                         onChange={onSimpleDictionaryChanged}
+                                        value={idSimpleDictionarySelected}
                                     >
-                                        {dictKpi.map((row) => (
-                                            <MenuItem value={row.idKpi} key={row.Kpi}>
-                                                {row.systemName}
+                                        {dictListOfSimpleDictionary.map((row) => (
+                                            <MenuItem value={row.idNameSimpleDictionary} key={row.idNameSimpleDictionary}>
+                                                {row.nameSimpleDictionary}
                                             </MenuItem>
                                         ))}
 
@@ -68,7 +71,7 @@ const KpiAddingPanel = () => {
                             <FormControl fullWidth>
                                 <TextField
                                     id="outlined-basic"
-                                    label="Nazwa warstwy"
+                                    label="Nazwa nowej wartości"
                                     variant="outlined"
                                 // onChange={onLayerNameChanged}        
                                 />
@@ -89,9 +92,10 @@ const KpiAddingPanel = () => {
                     </Grid>
                 </Grid>
             </Grid>
+            <SimpleDictionaryGrid/>
         </MainCard>
     );
 };
-export default KpiAddingPanel;
+export default SimpleDictionaryConfigPanel;
 
 

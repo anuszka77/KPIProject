@@ -55,9 +55,9 @@ namespace KPIProject.Services
         }
 
 
-        public async Task<IEnumerable<FGetListOfNameSimplyDictionary_ResultDTO>> GetListOfNameSimplyDictionary()
+        public async Task<IEnumerable<FGetListOfNameSimpleDictionary_ResultDTO>> GetListOfNameSimpleDictionary()
         {
-            return await mapper.ProjectTo<FGetListOfNameSimplyDictionary_ResultDTO>(context.FGetListOfNameSimplyDictionary()).ToListAsync();
+            return await mapper.ProjectTo<FGetListOfNameSimpleDictionary_ResultDTO>(context.FGetListOfNameSimpleDictionary()).ToListAsync();
         }
         
 

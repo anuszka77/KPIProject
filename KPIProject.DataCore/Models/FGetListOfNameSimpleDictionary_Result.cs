@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace KPIProject.DataCore.Models
 {
-    public class FGetListOfNameSimplyDictionary_ResultDTO
+    public class FGetListOfNameSimpleDictionary_Result
     {
-        public byte IdNameSimplyDictionary { get; set; }
-        public string? NameSimplyDictionary { get; set; }
+        public byte IdNameSimpleDictionary { get; set; }
+        public string? NameSimpleDictionary { get; set; }
         public byte? SpecificSortingNumber { get; set; }
     }
 }
