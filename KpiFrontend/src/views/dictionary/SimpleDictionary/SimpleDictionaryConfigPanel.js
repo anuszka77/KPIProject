@@ -10,10 +10,11 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
-import { loadDictListOfSimpleDictionary,loadDictKpi } from '../../../services/dictionaryService';
+import { loadDictListOfSimpleDictionary, loadDictKpi } from '../../../services/dictionaryService';
 import MainCard from 'ui-component/cards/MainCard';
 import SimpleDictionaryGrid from './SimpleDictionaryGrid';
-import {getColumnConfig} from './SimpleDictionaryColumnsToGrid';
+import { getColumnConfig } from './SimpleDictionaryColumnsToGrid';
+import {getDataToGrid} from './SimplyDictionaryGetDataBySelectedValue'
 
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
@@ -26,19 +27,24 @@ const SimpleDictionaryConfigPanel = () => {
         });
     }, []);
 
+    
+  useEffect(() => {
+    getDataToGrid();
+  }, [idSimpleDictionarySelected]);
 
 
-    const onSaveButtonClick = (e) =>{
+
+    const onSaveButtonClick = (e) => {
         // var list = [{dimensionId: dimensionValue, tierId: tierValue, name: layerName}];
         // saveLayers(list, systemValue).then(x=>alert(x));
     }
 
-    const onSimpleDictionaryChanged = (e) =>{
+    const onSimpleDictionaryChanged = (e) => {
         setIdSimpleDictionarySelected(e.target.value);
-        
+
         console.log(getColumnConfig(e.target.value));
     }
-    
+
 
 
     return (
@@ -54,7 +60,7 @@ const SimpleDictionaryConfigPanel = () => {
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         label="Kpi"
-                                         onChange={onSimpleDictionaryChanged}
+                                        onChange={onSimpleDictionaryChanged}
                                         value={idSimpleDictionarySelected}
                                     >
                                         {dictListOfSimpleDictionary.map((row) => (
@@ -79,20 +85,20 @@ const SimpleDictionaryConfigPanel = () => {
                         </Grid>
 
                         <Grid item lg={1} md={6} sm={6} xs={12} alignItems="flex-end">
-                        <Box sx={{ minWidth: 12}}>
-                            <FormControl fullWidth>
-                            <Button 
-                            variant="contained"
-                            onClick={onSaveButtonClick}
-                            >Zapisz
-                            </Button>
-                            </FormControl>
-                        </Box>
-                    </Grid>
+                            <Box sx={{ minWidth: 12 }}>
+                                <FormControl fullWidth>
+                                    <Button
+                                        variant="contained"
+                                        onClick={onSaveButtonClick}
+                                    >Zapisz
+                                    </Button>
+                                </FormControl>
+                            </Box>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-            <SimpleDictionaryGrid/>
+            <SimpleDictionaryGrid />
         </MainCard>
     );
 };
