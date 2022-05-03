@@ -34,6 +34,11 @@ const columnsDepartmentDictionary: DefinedColumnsType[] = [
     { field: "departmentName", headerName: "Nazwa CriticalTo", width: WIDTH_COL2 }
 ]
 
+// const columnsSystemDictionary: DefinedColumnsType[] = [
+//     { field: "idSystem", headerName: "Nr System", width: WIDTH_COL1 },
+//     { field: "systemName", headerName: "Nazwa System", width: WIDTH_COL2 }
+// ]
+
 const columnsSystemDictionary: DefinedColumnsType[] = [
     { field: "idSystem", headerName: "Nr System", width: WIDTH_COL1 },
     { field: "systemName", headerName: "Nazwa System", width: WIDTH_COL2 }
