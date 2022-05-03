@@ -15,8 +15,7 @@ export const getDataToGrid = async () => {
             Name: row.kpiName
 
         }));
-        console.log("rows")
-        console.log(rows);
+
         // setRowsLoaded(rows?.sort((x1: number, x2: number) => x1.idKpi > x2.idKpi));
     });
 }
