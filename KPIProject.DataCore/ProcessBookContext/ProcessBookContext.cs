@@ -42,11 +42,18 @@ namespace KPIProject.DataCore.ProcessBookContext
 
         public IQueryable<FGetProcessActivityDiagramTier_Result> FGetProcessActivityDiagramTier(int? processId) => FromExpression(() => FGetProcessActivityDiagramTier(processId));
 
-        public IQueryable<FGetListOfSystemDictionary_Result> FGetListOfSystemDictionary() => FromExpression(() => FGetListOfSystemDictionary());
 
-        public IQueryable<FGetListOfKpiDictionary_Result> FGetListOfKpiDictionary() => FromExpression(() => FGetListOfKpiDictionary());
-        public IQueryable<FGetListOfCriticalToDictionary_Result> FGetListOfCriticalToDictionary() => FromExpression(() => FGetListOfCriticalToDictionary());
+        //Proste słowniki_start
         public IQueryable<FGetListOfNameSimpleDictionary_Result> FGetListOfNameSimpleDictionary() => FromExpression(() => FGetListOfNameSimpleDictionary());
+        public IQueryable<FGetListOfActivityHierarchyDictionary_Result> FGetListOfActivityHierarchyDictionary() => FromExpression(() => FGetListOfActivityHierarchyDictionary());
+        public IQueryable<FGetListOfBussinesValueAddedDictionary_Result> FGetListOfBussinesValueAddedDictionary() => FromExpression(() => FGetListOfBussinesValueAddedDictionary());
+        public IQueryable<FGetListOfCriticalToDictionary_Result> FGetListOfCriticalToDictionary() => FromExpression(() => FGetListOfCriticalToDictionary());
+        public IQueryable<FGetListOfDepartmentDictionary_Result> FGetListOfDepartmentDictionary() => FromExpression(() => FGetListOfDepartmentDictionary());
+        public IQueryable<FGetListOfKpiDictionary_Result> FGetListOfKpiDictionary() => FromExpression(() => FGetListOfKpiDictionary());
+        public IQueryable<FGetListOfSystemDictionary_Result> FGetListOfSystemDictionary() => FromExpression(() => FGetListOfSystemDictionary());
+        //Proste słowniki_end
+
+
 
         #endregion Properties
 
@@ -89,17 +96,32 @@ namespace KPIProject.DataCore.ProcessBookContext
             modelBuilder.Entity<FGetProcessActivityDiagramTier_Result>().HasNoKey();
             modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetProcessActivityDiagramTier), new[] { typeof(int?) })).HasSchema("PbApp");
 
-            modelBuilder.Entity<FGetListOfSystemDictionary_Result>().HasNoKey();
-            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfSystemDictionary))).HasSchema("PbApp");
+            //Proste słowniki_start
+            modelBuilder.Entity<FGetListOfNameSimpleDictionary_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfNameSimpleDictionary))).HasSchema("PbApp");
 
-            modelBuilder.Entity<FGetListOfKpiDictionary_Result>().HasNoKey();
-            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfKpiDictionary))).HasSchema("PbApp");
+            modelBuilder.Entity<FGetListOfActivityHierarchyDictionary_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfActivityHierarchyDictionary))).HasSchema("PbApp");
+
+            modelBuilder.Entity<FGetListOfBussinesValueAddedDictionary_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfBussinesValueAddedDictionary))).HasSchema("PbApp");
 
             modelBuilder.Entity<FGetListOfCriticalToDictionary_Result>().HasNoKey();
             modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfCriticalToDictionary))).HasSchema("PbApp");
 
-            modelBuilder.Entity<FGetListOfNameSimpleDictionary_Result>().HasNoKey();
-            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfNameSimpleDictionary))).HasSchema("PbApp");
+            modelBuilder.Entity<FGetListOfDepartmentDictionary_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfDepartmentDictionary))).HasSchema("PbApp");
+
+            modelBuilder.Entity<FGetListOfKpiDictionary_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfKpiDictionary))).HasSchema("PbApp");
+
+            modelBuilder.Entity<FGetListOfSystemDictionary_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfSystemDictionary))).HasSchema("PbApp");
+            //Proste słowniki_end
+
+
+
+
 
             modelBuilder.Entity<DimensionsDictionary>(entity =>
             {
@@ -119,12 +141,6 @@ namespace KPIProject.DataCore.ProcessBookContext
                         .HasColumnName("SysEndTime");
                 }
              ));
-
-
-
-
-
-
 
                 entity.Property(e => e.DimensionDescription).HasMaxLength(512);
 

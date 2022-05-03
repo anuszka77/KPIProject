@@ -36,21 +36,35 @@ namespace KPIProject.WebApi.Controllers
         [Route("SaveLayers/{systemId:int}")]
         public async Task<IActionResult> SaveLayers([FromBody] List<LayersToAddDTO> layers, int systemId) => Ok(await dictService.SaveLayers(layers, systemId));
 
+        //Proste słowniki_start
         [HttpGet]
-        [Route("GetDictSystem")]
-        public async Task<IActionResult> FGetListOfSystemDictionary() => Ok(await dictService.GetListOfSystemDictionary());
+        [Route("GetDictListOfNameSimpleDictionary")]
+        public async Task<IActionResult> FGetListOfNameSimpleDictionary() => Ok(await dictService.GetListOfNameSimpleDictionary());
+
+        [HttpGet]
+        [Route("GetDictActivityHierarchy")]
+        public async Task<IActionResult> FGetListOfActivityHierarchyDictionary() => Ok(await dictService.GetListOfActivityHierarchyDictionary());
+
+        [HttpGet]
+        [Route("GetDictBussinesValueAdded")]
+        public async Task<IActionResult> FGetListOfBussinesValueAddedDictionary() => Ok(await dictService.GetListOfBussinesValueAddedDictionary());
+      
+        [HttpGet]
+        [Route("GetDictCriticalTo")]
+        public async Task<IActionResult> FGetListOfCriticalToDictionary() => Ok(await dictService.GetListOfCriticalToDictionary());
+
+        [HttpGet]
+        [Route("GetDictDepartment")]
+        public async Task<IActionResult> FGetListOfDepartmentDictionary() => Ok(await dictService.GetListOfDepartmentDictionary());
 
         [HttpGet]
         [Route("GetDictKpi")]
         public async Task<IActionResult> FGetListOfKpiDictionary() => Ok(await dictService.GetListOfKpiDictionary());
 
         [HttpGet]
-        [Route("GetDictCriticalTo")]
-        public async Task<IActionResult> FGetListOfCriticalToTo() => Ok(await dictService.GetListOfCriticalToDictionary());
+        [Route("GetDictSystem")]
+        public async Task<IActionResult> FGetListOfSystemDictionary() => Ok(await dictService.GetListOfSystemDictionary());
 
-        [HttpGet]
-        [Route("GetDictListOfNameSimpleDictionary")]
-        public async Task<IActionResult> FGetListOfNameSimpleDictionary() => Ok(await dictService.GetListOfNameSimpleDictionary());
-        
+        //Proste słowniki_end
     }
 }

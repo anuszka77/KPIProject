@@ -38,28 +38,36 @@ namespace KPIProject.Services
             return await mapper.ProjectTo<FGetTierListByDim_ResultDTO>(context.FGetTierListByDim(dimensionId)).ToListAsync();
         }
 
-
-        public async Task<IEnumerable<FGetListOfSystemDictionary_ResultDTO>> GetListOfSystemDictionary()
-        {
-            return await mapper.ProjectTo<FGetListOfSystemDictionary_ResultDTO>(context.FGetListOfSystemDictionary()).ToListAsync();
-        }
-
-        public async Task<IEnumerable<FGetListOfKpiDictionary_ResultDTO>> GetListOfKpiDictionary()
-        {
-            return await mapper.ProjectTo<FGetListOfKpiDictionary_ResultDTO>(context.FGetListOfKpiDictionary()).ToListAsync();
-        }
-
-        public async Task<IEnumerable<FGetListOfCriticalToDictionary_ResultDTO>> GetListOfCriticalToDictionary()
-        {
-            return await mapper.ProjectTo<FGetListOfCriticalToDictionary_ResultDTO>(context.FGetListOfCriticalToDictionary()).ToListAsync();
-        }
-
-
+        //Proste słowniki_start
         public async Task<IEnumerable<FGetListOfNameSimpleDictionary_ResultDTO>> GetListOfNameSimpleDictionary()
         {
             return await mapper.ProjectTo<FGetListOfNameSimpleDictionary_ResultDTO>(context.FGetListOfNameSimpleDictionary()).ToListAsync();
         }
-        
+        public async Task<IEnumerable<FGetListOfActivityHierarchyDictionary_ResultDTO>> GetListOfActivityHierarchyDictionary()
+        {
+            return await mapper.ProjectTo<FGetListOfActivityHierarchyDictionary_ResultDTO>(context.FGetListOfActivityHierarchyDictionary()).ToListAsync();
+        }
+        public async Task<IEnumerable<FGetListOfBussinesValueAddedDictionary_ResultDTO>> GetListOfBussinesValueAddedDictionary()
+        {
+            return await mapper.ProjectTo<FGetListOfBussinesValueAddedDictionary_ResultDTO>(context.FGetListOfBussinesValueAddedDictionary()).ToListAsync();
+        }
+        public async Task<IEnumerable<FGetListOfCriticalToDictionary_ResultDTO>> GetListOfCriticalToDictionary()
+        {
+            return await mapper.ProjectTo<FGetListOfCriticalToDictionary_ResultDTO>(context.FGetListOfCriticalToDictionary()).ToListAsync();
+        }
+        public async Task<IEnumerable<FGetListOfDepartmentDictionary_ResultDTO>> GetListOfDepartmentDictionary()
+        {
+            return await mapper.ProjectTo<FGetListOfDepartmentDictionary_ResultDTO>(context.FGetListOfDepartmentDictionary()).ToListAsync();
+        }
+        public async Task<IEnumerable<FGetListOfKpiDictionary_ResultDTO>> GetListOfKpiDictionary()
+        {
+            return await mapper.ProjectTo<FGetListOfKpiDictionary_ResultDTO>(context.FGetListOfKpiDictionary()).ToListAsync();
+        }
+        public async Task<IEnumerable<FGetListOfSystemDictionary_ResultDTO>> GetListOfSystemDictionary()
+        {
+            return await mapper.ProjectTo<FGetListOfSystemDictionary_ResultDTO>(context.FGetListOfSystemDictionary()).ToListAsync();
+        }
+        //Proste słowniki_end
 
         public async Task<string> SaveLayers(List<LayersToAddDTO> layers, int systemId)
         {

@@ -25,13 +25,17 @@ namespace KPIProject.Mapper.Profiles
             CreateMap<FGetListOfProcessLayers_Result, FGetListOfProcessLayers_ResultDTO>().ReverseMap();
             CreateMap<FGetTierListByDim_Result, FGetTierListByDim_ResultDTO>().ReverseMap();
             CreateMap<FGetProcessActivityDiagramTier_Result, FGetProcessActivityDiagramTier_ResultDTO>().ForMember(dest => dest.ListProcessActivityXml, opt => opt.MapFrom(src => src.ProcessActivityXml.DeSerializeFromXML<ProcessDetails>()));
-            CreateMap<FGetListOfSystemDictionary_Result, FGetListOfSystemDictionary_ResultDTO>().ReverseMap();
-            CreateMap<FGetListOfKpiDictionary_Result, FGetListOfKpiDictionary_ResultDTO>().ReverseMap();
-            CreateMap<FGetListOfCriticalToDictionary_Result, FGetListOfCriticalToDictionary_ResultDTO>().ReverseMap();
+            //Proste słowniki_start
             CreateMap<FGetListOfNameSimpleDictionary_Result, FGetListOfNameSimpleDictionary_ResultDTO>().ReverseMap();
-
+            CreateMap<FGetListOfActivityHierarchyDictionary_Result, FGetListOfActivityHierarchyDictionary_ResultDTO>().ReverseMap();
+            CreateMap<FGetListOfBussinesValueAddedDictionary_Result, FGetListOfBussinesValueAddedDictionary_ResultDTO>().ReverseMap();
+            CreateMap<FGetListOfCriticalToDictionary_Result, FGetListOfCriticalToDictionary_ResultDTO>().ReverseMap();
+            CreateMap<FGetListOfDepartmentDictionary_Result, FGetListOfDepartmentDictionary_ResultDTO>().ReverseMap();
+            CreateMap<FGetListOfKpiDictionary_Result, FGetListOfKpiDictionary_ResultDTO>().ReverseMap();
+            CreateMap<FGetListOfSystemDictionary_Result, FGetListOfSystemDictionary_ResultDTO>().ReverseMap();
+            //Proste słowniki_end
         }
-        
+
 
         #endregion Constructors
     }
