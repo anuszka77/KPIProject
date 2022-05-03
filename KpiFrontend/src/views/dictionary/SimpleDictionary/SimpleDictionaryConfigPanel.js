@@ -11,12 +11,12 @@ import { useEffect, useState } from 'react';
 import { loadDictListOfSimpleDictionary } from '../../../services/dictionaryService';
 import MainCard from 'ui-component/cards/MainCard';
 import { getColumnConfig } from './SimpleDictionaryColumnsToGrid';
-import {getDataToGrid} from './SimplyDictionaryGetDataBySelectedValue'
-import { useSimpleDictionaryContext} from './SimpleDictionaryContext';
+import { getDataToGrid } from './SimplyDictionaryGetDataBySelectedValue'
+import { useSimpleDictionaryContext } from './SimpleDictionaryContext';
 
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
-    const {idSimpleDictionarySelected, setIdSimpleDictionarySelected} = useSimpleDictionaryContext();  
+    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected } = useSimpleDictionaryContext();
 
     useEffect(() => {
         loadDictListOfSimpleDictionary().then((x) => {
@@ -25,10 +25,10 @@ const SimpleDictionaryConfigPanel = () => {
         });
     }, []);
 
-    
-  useEffect(() => {
-    getDataToGrid();
-  }, [idSimpleDictionarySelected]);
+
+    useEffect(() => {
+        getDataToGrid();
+    }, [idSimpleDictionarySelected]);
 
 
 
@@ -46,7 +46,7 @@ const SimpleDictionaryConfigPanel = () => {
 
 
     return (
-        <MainCard title="Sownik Kpi">
+        <MainCard title="Słowniki">
             <Grid container spacing={gridSpacing}>
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>
@@ -57,7 +57,7 @@ const SimpleDictionaryConfigPanel = () => {
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
-                                        label="Kpi"
+                                        label="Wybierz słownik z listy"
                                         onChange={onSimpleDictionaryChanged}
                                         value={idSimpleDictionarySelected}
                                     >
