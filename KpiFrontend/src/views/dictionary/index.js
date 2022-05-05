@@ -26,7 +26,7 @@ const Dictionary = () => {
                         <Grid item lg={12} md={6} sm={6} xs={12}>
                             <MainTier />
                             <SimpleDictionaryConfigPanel />
-                            {idSimpleDictionarySelected !=0 && <SimpleDictionaryGrid/>}
+                            {idSimpleDictionarySelected != 0 && <SimpleDictionaryGrid />}
                         </Grid>
                     </Grid>
                 </Grid>

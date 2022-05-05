@@ -85,10 +85,6 @@ export const loadDictListOfSimpleDictionary = async () => {
     return await mainGetApiService('/Dictionary/GetDictListOfNameSimpleDictionary');
 };
 
-export const loadDictKpi = async () => {
-    return await mainGetApiService('/Dictionary/GetDictKpi');
-};
-
 export const loadDictActivityHierarchy = async () => {
     return await mainGetApiService('/Dictionary/GetDictActivityHierarchy');
 };
@@ -97,10 +93,17 @@ export const loadDictBussinesValueAdded = async () => {
     return await mainGetApiService('/Dictionary/GetDictBussinesValueAdded');
 };
 
+export const loadDictCriticalTo = async () => {
+    return await mainGetApiService('/Dictionary/GetDictCriticalTo');
+};
+
 export const loadDictDepartment = async () => {
     return await mainGetApiService('/Dictionary/GetDictDepartment');
 };
 
-export const loadDictCriticalTo = async () => {
-    return await mainGetApiService('/Dictionary/GetDictCriticalTo');
+export const loadDictKpi = async () => {
+    return await mainGetApiService('/Dictionary/GetDictKpi');
 };
+
+
+
