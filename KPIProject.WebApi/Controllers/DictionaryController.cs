@@ -32,10 +32,6 @@ namespace KPIProject.WebApi.Controllers
         public async Task<IActionResult> FGetTierListByDim(short? idDimension) => Ok(await dictService.GetTierDictionaryToDimension(idDimension));
 
 
-        [HttpPost]
-        [Route("SaveLayers/{systemId:int}")]
-        public async Task<IActionResult> SaveLayers([FromBody] List<LayersToAddDTO> layers, int systemId) => Ok(await dictService.SaveLayers(layers, systemId));
-
         //Proste słowniki_start
         [HttpGet]
         [Route("GetDictListOfNameSimpleDictionary")]
@@ -66,5 +62,19 @@ namespace KPIProject.WebApi.Controllers
         public async Task<IActionResult> FGetListOfSystemDictionary() => Ok(await dictService.GetListOfSystemDictionary());
 
         //Proste słowniki_end
+
+
+
+
+
+
+        [HttpPost]
+        [Route("SaveLayers/{systemId:int}")]
+        public async Task<IActionResult> SaveLayers([FromBody] List<LayersToAddDTO> layers, int systemId) => Ok(await dictService.SaveLayers(layers, systemId));
+
+        [HttpPost]
+        [Route("AddElementToSystemDictionary/{idSystem:int}/{systemName}")]
+        public async Task<IActionResult> AddElementToSystemDictionary(short idSystem, string systemName) => Ok(await dictService.AddElementToSystemDictionary(idSystem,systemName));
+
     }
 }

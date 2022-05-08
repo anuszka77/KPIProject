@@ -85,5 +85,21 @@ namespace KPIProject.Services
 
         }
 
+        public async Task<string> AddElementToSystemDictionary( short idSystem,string systemName )
+        {
+            List<SqlParameter> parms = new()
+            {
+                new SqlParameter { ParameterName = "@IdSystem", Value = idSystem },
+                new SqlParameter { ParameterName = "@SystemName", Value = systemName },
+                new SqlParameter("@ReturnMessage", SqlDbType.VarChar) { Direction = ParameterDirection.Output, Size = 512 },
+                new SqlParameter("@ReturnStatus", SqlDbType.SmallInt) { Direction = ParameterDirection.Output }
+            };
+
+            await context.Database.ExecuteSqlRawAsync("PbApp.AddElementToSystemDictionary @IdSystem,@SystemName, @ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
+            var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
+            return message.ToString();
+
+        }
+
     }
 }

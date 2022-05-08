@@ -18,5 +18,7 @@ namespace KPIProject.ServicesInterfaces
         Task<IEnumerable<FGetListOfKpiDictionary_ResultDTO>> GetListOfKpiDictionary();
         Task<IEnumerable<FGetListOfSystemDictionary_ResultDTO>> GetListOfSystemDictionary();
         //Proste słowniki_end
+
+        Task<string> AddElementToSystemDictionary(short idSystem,string systemName);
     }
 }
