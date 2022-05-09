@@ -76,5 +76,31 @@ namespace KPIProject.WebApi.Controllers
         [Route("AddElementToSystemDictionary/{idSystem:int}/{systemName}")]
         public async Task<IActionResult> AddElementToSystemDictionary(short idSystem, string systemName) => Ok(await dictService.AddElementToSystemDictionary(idSystem,systemName));
 
+
+        [HttpPost]
+        [Route("AddElementToDepartmentDictionary/{idDepartment:int}/{departmentName}")]
+        public async Task<IActionResult> AddElementToDepartmentDictionary(short idDepartment, string departmentName) => Ok(await dictService.AddElementToDepartmentDictionary(idDepartment, departmentName));
+
+
+        [HttpPost]
+        [Route("AddElementToActivityHierarchyDictionary/{idActivityHierarchy:int}/{activityHierarchyName}")]
+        public async Task<IActionResult> AddElementToActivityHierarchyDictionary(byte idActivityHierarchy, string activityHierarchyName) => Ok(await dictService.AddElementToActivityHierarchyDictionary(idActivityHierarchy, activityHierarchyName));
+
+
+        [HttpPost]
+        [Route("AddElementToBussinesValueAddedDictionary/{idBussinesValueAdded:int}/{bussinesValueAddedName}")]
+        public async Task<IActionResult> AddElementToBussinesValueAddedDictionary(byte idBussinesValueAdded, string bussinesValueAddedName) => Ok(await dictService.AddElementToBussinesValueAddedDictionary(idBussinesValueAdded, bussinesValueAddedName));
+
+
+        [HttpPost]
+        [Route("AddElementToCriticalToDictionary/{idCriticalTo:int}/{criticalToName}")]
+        public async Task<IActionResult> AddElementToCriticalToDictionary(byte idCriticalTo, string criticalToName) => Ok(await dictService.AddElementToCriticalToDictionary(idCriticalTo, criticalToName));
+
+
+        [HttpPost]
+        [Route("AddElementToKpiDictionary/{idKpi:int}/{kpi}")]
+        public async Task<IActionResult> AddElementToKpiDictionary(byte idKpi, string kpi) => Ok(await dictService.AddElementToKpiDictionary(idKpi, kpi));
+
+
     }
 }

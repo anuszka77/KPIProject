@@ -20,5 +20,10 @@ namespace KPIProject.ServicesInterfaces
         //Proste słowniki_end
 
         Task<string> AddElementToSystemDictionary(short idSystem,string systemName);
+        Task<string> AddElementToDepartmentDictionary(short idDepartment, string departmentName);
+        Task<string> AddElementToActivityHierarchyDictionary(byte idActivityHierarchy, string activityHierarchyName);
+        Task<string> AddElementToBussinesValueAddedDictionary(byte idBussinesValueAdded, string bussinesValueAddedName);
+        Task<string> AddElementToCriticalToDictionary(byte idCriticalTo, string criticalToName);
+        Task<string> AddElementToKpiDictionary(byte idKpi, string kpi);
     }
 }
