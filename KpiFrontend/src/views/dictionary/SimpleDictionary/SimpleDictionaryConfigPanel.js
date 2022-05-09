@@ -8,7 +8,7 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
-import { loadDictListOfSimpleDictionary } from '../../../services/dictionaryService';
+import { loadDictListOfSimpleDictionary, addElementToSystemDictionary } from '../../../services/dictionaryService';
 import MainCard from 'ui-component/cards/MainCard';
 import { getColumnConfig } from './SimpleDictionaryColumnsToGrid';
 import { getDataToGrid } from './SimplyDictionaryGetDataBySelectedValue'
@@ -17,6 +17,8 @@ import { useSimpleDictionaryContext } from './SimpleDictionaryContext';
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
     const { idSimpleDictionarySelected, setIdSimpleDictionarySelected } = useSimpleDictionaryContext();
+    const [idNewDictionarySelected, setIdNewDictionarySelected] = useState();
+    const [nameNewDictionarySelected, setNameNewDictionarySelected] = useState();
 
     useEffect(() => {
         loadDictListOfSimpleDictionary().then((x) => {
@@ -35,14 +37,22 @@ const SimpleDictionaryConfigPanel = () => {
     const onSaveButtonClick = (e) => {
         // var list = [{dimensionId: dimensionValue, tierId: tierValue, name: layerName}];
         // saveLayers(list, systemValue).then(x=>alert(x));
+        addElementToSystemDictionary(idNewDictionarySelected, nameNewDictionarySelected);
+
+
     }
 
     const onSimpleDictionaryChanged = (e) => {
         setIdSimpleDictionarySelected(e.target.value);
-
-        console.log(getColumnConfig(e.target.value));
     }
 
+    const onIdNewDictionaryChanged = (e) => {
+        setIdNewDictionarySelected(e.target.value);
+    }
+
+    const onNameNewDictionaryChanged = (e) => {
+        setNameNewDictionarySelected(e.target.value);
+    }
 
 
     return (
@@ -71,17 +81,27 @@ const SimpleDictionaryConfigPanel = () => {
                                 </FormControl>
                             </Box>
                         </Grid>
+                        <Grid item lg={2} md={6} sm={6} xs={12}>
+                            <FormControl fullWidth>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Id wartości (0- automat)"
+                                    variant="outlined"
+                                    type="number"
+                                    onChange={onIdNewDictionaryChanged}
+                                />
+                            </FormControl>
+                        </Grid>
                         <Grid item lg={3} md={6} sm={6} xs={12}>
                             <FormControl fullWidth>
                                 <TextField
                                     id="outlined-basic"
                                     label="Nazwa nowej wartości"
                                     variant="outlined"
-                                // onChange={onLayerNameChanged}        
+                                    onChange={onNameNewDictionaryChanged}
                                 />
                             </FormControl>
                         </Grid>
-
                         <Grid item lg={1} md={6} sm={6} xs={12} alignItems="flex-end">
                             <Box sx={{ minWidth: 12 }}>
                                 <FormControl fullWidth>

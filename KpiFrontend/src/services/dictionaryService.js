@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { getApi, postApi } from '../api/apiRequest';
 import {mainGetApiService} from '../services/mainGetApiService'
+import {mainPostApiService} from '../services/mainPostApiService'
 
 export const loadDimensions = async () => {
     try {
@@ -107,3 +108,7 @@ export const loadDictKpi = async () => {
 
 
 
+
+export const addElementToSystemDictionary = async (idSystem, systemName) => {
+    return await mainPostApiService("/Dictionary/AddElementToSystemDictionary/" + idSystem+ "/"+ systemName);
+};
