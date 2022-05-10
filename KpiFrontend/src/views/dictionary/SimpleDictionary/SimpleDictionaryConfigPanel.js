@@ -19,11 +19,11 @@ const SimpleDictionaryConfigPanel = () => {
     const { idSimpleDictionarySelected, setIdSimpleDictionarySelected } = useSimpleDictionaryContext();
     const [idNewDictionarySelected, setIdNewDictionarySelected] = useState();
     const [nameNewDictionarySelected, setNameNewDictionarySelected] = useState();
+    const [isButtonDisable, setIsButtonDisable] = useState(true);
 
     useEffect(() => {
         loadDictListOfSimpleDictionary().then((x) => {
             setDictListOfSimpleDictionary(x);
-            console.log(x);
         });
     }, []);
 
@@ -32,14 +32,40 @@ const SimpleDictionaryConfigPanel = () => {
         getDataToGrid();
     }, [idSimpleDictionarySelected]);
 
+    useEffect(() => {
+        checkIfSetEnableButton();
+    }, [idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected]);
 
+
+    const checkIfSetEnableButton = () => {
+        if (idSimpleDictionarySelected === 0 || idNewDictionarySelected === undefined || nameNewDictionarySelected === undefined) {
+            setIsButtonDisable(true);
+        } else {
+            setIsButtonDisable(false);
+        }
+
+    }
+
+    const clearFields = () =>{
+        setIdNewDictionarySelected("");
+        setNameNewDictionarySelected("");
+
+    }
 
     const onSaveButtonClick = (e) => {
         // var list = [{dimensionId: dimensionValue, tierId: tierValue, name: layerName}];
         // saveLayers(list, systemValue).then(x=>alert(x));
-        addElementToSystemDictionary(idNewDictionarySelected, nameNewDictionarySelected);
-
-
+        
+        
+        if (window.confirm('Czy na pewno chcesz dodać wpis?')) {
+            addElementToSystemDictionary(idNewDictionarySelected, nameNewDictionarySelected).then(x => alert(x));
+            clearFields();
+        }
+        else {
+            clearFields();
+            console.log(idNewDictionarySelected);
+            console.log(nameNewDictionarySelected);
+        }
     }
 
     const onSimpleDictionaryChanged = (e) => {
@@ -88,6 +114,7 @@ const SimpleDictionaryConfigPanel = () => {
                                     label="Id wartości (0- automat)"
                                     variant="outlined"
                                     type="number"
+                                    value={idNewDictionarySelected}
                                     onChange={onIdNewDictionaryChanged}
                                 />
                             </FormControl>
@@ -99,6 +126,7 @@ const SimpleDictionaryConfigPanel = () => {
                                     label="Nazwa nowej wartości"
                                     variant="outlined"
                                     onChange={onNameNewDictionaryChanged}
+                                    value={nameNewDictionarySelected}
                                 />
                             </FormControl>
                         </Grid>
@@ -108,6 +136,7 @@ const SimpleDictionaryConfigPanel = () => {
                                     <Button
                                         variant="contained"
                                         onClick={onSaveButtonClick}
+                                        disabled={isButtonDisable}
                                     >Zapisz
                                     </Button>
                                 </FormControl>
