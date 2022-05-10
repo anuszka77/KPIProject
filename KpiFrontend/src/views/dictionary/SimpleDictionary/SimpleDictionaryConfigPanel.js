@@ -10,24 +10,26 @@ import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
 import { loadDictListOfSimpleDictionary, addElementToSystemDictionary } from '../../../services/dictionaryService';
 import MainCard from 'ui-component/cards/MainCard';
-import { getColumnConfig } from './SimpleDictionaryColumnsToGrid';
 import { getDataToGrid } from './SimplyDictionaryGetDataBySelectedValue'
 import { useSimpleDictionaryContext } from './SimpleDictionaryContext';
+import AlertDialogButton from '../../../utils/AlertDialogButton';
+import AlertInformationPopup from '../../../utils/AlertInformationPopup';
+
 
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
     const { idSimpleDictionarySelected, setIdSimpleDictionarySelected } = useSimpleDictionaryContext();
-    const [idNewDictionarySelected, setIdNewDictionarySelected] = useState();
-    const [nameNewDictionarySelected, setNameNewDictionarySelected] = useState();
+    const [idNewDictionarySelected, setIdNewDictionarySelected] = useState("");
+    const [nameNewDictionarySelected, setNameNewDictionarySelected] = useState("");
     const [isButtonDisable, setIsButtonDisable] = useState(true);
+    const [informationFromDb, setInformationFromDb] = useState("");
+    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
         loadDictListOfSimpleDictionary().then((x) => {
             setDictListOfSimpleDictionary(x);
         });
     }, []);
-
-
     useEffect(() => {
         getDataToGrid();
     }, [idSimpleDictionarySelected]);
@@ -38,38 +40,35 @@ const SimpleDictionaryConfigPanel = () => {
 
 
     const checkIfSetEnableButton = () => {
-        if (idSimpleDictionarySelected === 0 || idNewDictionarySelected === undefined || nameNewDictionarySelected === undefined) {
-            setIsButtonDisable(true);
-        } else {
+        if (idSimpleDictionarySelected && idNewDictionarySelected && nameNewDictionarySelected) {
             setIsButtonDisable(false);
+        } else {
+            setIsButtonDisable(true);
         }
-
     }
 
-    const clearFields = () =>{
+    const clearFields = () => {
         setIdNewDictionarySelected("");
         setNameNewDictionarySelected("");
-
     }
 
-    const onSaveButtonClick = (e) => {
-        // var list = [{dimensionId: dimensionValue, tierId: tierValue, name: layerName}];
-        // saveLayers(list, systemValue).then(x=>alert(x));
-        
-        
-        if (window.confirm('Czy na pewno chcesz dodać wpis?')) {
-            addElementToSystemDictionary(idNewDictionarySelected, nameNewDictionarySelected).then(x => alert(x));
-            clearFields();
-        }
-        else {
-            clearFields();
-            console.log(idNewDictionarySelected);
-            console.log(nameNewDictionarySelected);
-        }
+    const onClosePopup = (e) => {
+        setShowPopup(false);
+        return false;
+    }
+
+    const onAgree = (e) => {
+        addElementToSystemDictionary(idNewDictionarySelected, nameNewDictionarySelected).then(x => {setInformationFromDb(x) ;setShowPopup(true)});
+   
+    }
+
+    const onDisagree = (e) => {
+        clearFields();
     }
 
     const onSimpleDictionaryChanged = (e) => {
         setIdSimpleDictionarySelected(e.target.value);
+        clearFields();
     }
 
     const onIdNewDictionaryChanged = (e) => {
@@ -109,10 +108,13 @@ const SimpleDictionaryConfigPanel = () => {
                         </Grid>
                         <Grid item lg={2} md={6} sm={6} xs={12}>
                             <FormControl fullWidth>
+
                                 <TextField
-                                    id="outlined-basic"
+
+                                    id="textFieldIdNewDictionary"
                                     label="Id wartości (0- automat)"
                                     variant="outlined"
+                                    hiddenLabel
                                     type="number"
                                     value={idNewDictionarySelected}
                                     onChange={onIdNewDictionaryChanged}
@@ -122,6 +124,7 @@ const SimpleDictionaryConfigPanel = () => {
                         <Grid item lg={3} md={6} sm={6} xs={12}>
                             <FormControl fullWidth>
                                 <TextField
+                                    autoComplete='off'
                                     id="outlined-basic"
                                     label="Nazwa nowej wartości"
                                     variant="outlined"
@@ -133,18 +136,19 @@ const SimpleDictionaryConfigPanel = () => {
                         <Grid item lg={1} md={6} sm={6} xs={12} alignItems="flex-end">
                             <Box sx={{ minWidth: 12 }}>
                                 <FormControl fullWidth>
-                                    <Button
-                                        variant="contained"
-                                        onClick={onSaveButtonClick}
-                                        disabled={isButtonDisable}
-                                    >Zapisz
-                                    </Button>
+                                    <AlertDialogButton
+                                        buttonName={"Zapisz"}
+                                        isDisabled={isButtonDisable}
+                                        onDisagree={onDisagree}
+                                        onAgree={onAgree} />
+                                  {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} onClosePopup={onClosePopup}/>}
                                 </FormControl>
                             </Box>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
+
         </MainCard>
     );
 };
