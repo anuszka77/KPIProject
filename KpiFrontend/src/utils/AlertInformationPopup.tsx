@@ -38,6 +38,7 @@ export default function AlertInformationPopup(props: InputParamsAlertProps) {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {props.information}
+            {/* <Alert severity="error">This is an error alert — check it out!</Alert> */}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -112,3 +112,8 @@ export const loadDictKpi = async () => {
 export const addElementToSystemDictionary = async (idSystem, systemName) => {
     return await mainPostApiService("/Dictionary/AddElementToSystemDictionary/" + idSystem+ "/"+ systemName);
 };
+
+export const addElementToSpecificDictionary = async (idSystem, systemName) => {
+    return await mainPostApiService("/Dictionary/AddElementToSystemDictionary/" + idSystem+ "/"+ systemName);
+};
+

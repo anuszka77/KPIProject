@@ -30,8 +30,8 @@ const columnsBussinesValueAddedDictionary: DefinedColumnsType[] = [
 ]
 
 const columnsDepartmentDictionary: DefinedColumnsType[] = [
-    { field: "idDepartment", headerName: "Nr CriticalTo", width: WIDTH_COL1 },
-    { field: "departmentName", headerName: "Nazwa CriticalTo", width: WIDTH_COL2 }
+    { field: "idDepartment", headerName: "Nr Departamentu", width: WIDTH_COL1 },
+    { field: "departmentName", headerName: "Nazwa Departamentu", width: WIDTH_COL2 }
 ]
 
 const columnsSystemDictionary: DefinedColumnsType[] = [
