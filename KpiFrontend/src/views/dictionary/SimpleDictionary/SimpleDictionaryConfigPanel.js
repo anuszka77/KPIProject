@@ -14,7 +14,7 @@ import { getDataToGrid } from './SimplyDictionaryGetDataBySelectedValue'
 import { useSimpleDictionaryContext } from './SimpleDictionaryContext';
 import AlertDialogButton from '../../../utils/AlertDialogButton';
 import AlertInformationPopup from '../../../utils/AlertInformationPopup';
-import {setData} from './SimpleDictionaryAddToDatabase/setData';
+import { simpleDictionaryAddToDatabase } from './SimpleDictionaryAddToDatabase';
 
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
@@ -58,16 +58,8 @@ const SimpleDictionaryConfigPanel = () => {
     }
 
     const onAgree = (e) => {
-        console.log("idNewDictionarySelected");
-        console.log("idNewDictionarySelected");
-        console.log("idNewDictionarySelected");
-        console.log(idNewDictionarySelected);
-        console.log("nameNewDictionarySelected");
-        console.log(nameNewDictionarySelected);
 
-         addElementToSystemDictionary(idNewDictionarySelected, nameNewDictionarySelected).then(x => {setInformationFromDb(x) ;setShowPopup(true)});
-        //  SimpleDictionaryAddToDatabase(idNewDictionarySelected,nameNewDictionarySelected).then(x => {setInformationFromDb(x) ;setShowPopup(true)});
-         setInformationFromDb(setData(idNewDictionarySelected,nameNewDictionarySelected)).then(x => setShowPopup(true));
+        simpleDictionaryAddToDatabase(idNewDictionarySelected, nameNewDictionarySelected, idSimpleDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
 
         clearFields();
         getDataToGrid();
@@ -153,8 +145,8 @@ const SimpleDictionaryConfigPanel = () => {
                                         isDisabled={isButtonDisable}
                                         onDisagree={onDisagree}
                                         onAgree={onAgree} />
-                                  {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} onClosePopup={onClosePopup}/>}
-                                  
+                                    {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} onClosePopup={onClosePopup} />}
+
                                 </FormControl>
                             </Box>
                         </Grid>
