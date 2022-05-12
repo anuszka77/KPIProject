@@ -6,11 +6,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+
 import { useEffect, useState } from 'react';
 import { loadDictListOfSimpleDictionary, addElementToSystemDictionary } from '../../../services/dictionaryService';
 import MainCard from 'ui-component/cards/MainCard';
-import { getDataToGrid } from './SimplyDictionaryGetDataBySelectedValue'
+import SimpleDictionaryGrid from './SimpleDictionaryGrid'
 import { useSimpleDictionaryContext } from './SimpleDictionaryContext';
 import AlertDialogButton from '../../../utils/AlertDialogButton';
 import AlertInformationPopup from '../../../utils/AlertInformationPopup';
@@ -31,7 +31,7 @@ const SimpleDictionaryConfigPanel = () => {
         });
     }, []);
     useEffect(() => {
-        getDataToGrid();
+
     }, [idSimpleDictionarySelected]);
 
     useEffect(() => {
@@ -58,12 +58,8 @@ const SimpleDictionaryConfigPanel = () => {
     }
 
     const onAgree = (e) => {
-
         simpleDictionaryAddToDatabase(idNewDictionarySelected, nameNewDictionarySelected, idSimpleDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
-
         clearFields();
-        getDataToGrid();
-
     }
 
     const onDisagree = (e) => {
@@ -120,6 +116,7 @@ const SimpleDictionaryConfigPanel = () => {
                                     variant="outlined"
                                     hiddenLabel
                                     type="number"
+                                    InputProps={{ inputProps:  {min: 0 } }}
                                     value={idNewDictionarySelected}
                                     onChange={onIdNewDictionaryChanged}
                                 />

@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { getApi, postApi } from '../api/apiRequest';
-import {mainGetApiService} from '../services/mainGetApiService'
-import {mainPostApiService} from '../services/mainPostApiService'
+import { mainGetApiService } from '../services/mainGetApiService'
+import { mainPostApiService } from '../services/mainPostApiService'
 
 export const loadDimensions = async () => {
     try {
@@ -107,13 +107,27 @@ export const loadDictKpi = async () => {
 };
 
 
-
-
-export const addElementToSystemDictionary = async (idSystem, systemName) => {
-    return await mainPostApiService("/Dictionary/AddElementToSystemDictionary/" + idSystem+ "/"+ systemName);
+export const addElementToSystemDictionary = async (id, name) => {
+    return await mainPostApiService("/Dictionary/AddElementToSystemDictionary/" + id + "/" + name);
 };
 
-export const addElementToSpecificDictionary = async (idSystem, systemName) => {
-    return await mainPostApiService("/Dictionary/AddElementToSystemDictionary/" + idSystem+ "/"+ systemName);
+export const addElementToActivityHierarchyDictionary = async (idSystem, systemName) => {
+    return await mainPostApiService("/Dictionary/AddElementToActivityHierarchyDictionary/" + idSystem + "/" + systemName);
+};
+
+export const addElementToDepartmentDictionary = async (idSystem, systemName) => {
+    return await mainPostApiService("/Dictionary/AddElementToDepartmentDictionary/" + idSystem + "/" + systemName);
+};
+
+export const addElementToBussinesValueAddedDictionary = async (idSystem, systemName) => {
+    return await mainPostApiService("/Dictionary/AddElementToBussinesValueAddedDictionary/" + idSystem + "/" + systemName);
+};
+
+export const addElementToCriticalToDictionary = async (idSystem, systemName) => {
+    return await mainPostApiService("/Dictionary/AddElementToCriticalToDictionary/" + idSystem + "/" + systemName);
+};
+
+export const addElementToKpiDictionary = async (idSystem, systemName) => {
+    return await mainPostApiService("/Dictionary/AddElementToKpiDictionary/" + idSystem + "/" + systemName);
 };
 
