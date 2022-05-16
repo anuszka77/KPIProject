@@ -18,7 +18,7 @@ import { simpleDictionaryAddToDatabase } from './SimpleDictionaryAddToDatabase';
 
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
-    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected } = useSimpleDictionaryContext();
+    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected,idTest,setIdTest } = useSimpleDictionaryContext();
     const [idNewDictionarySelected, setIdNewDictionarySelected] = useState("");
     const [nameNewDictionarySelected, setNameNewDictionarySelected] = useState("");
     const [isButtonDisable, setIsButtonDisable] = useState(true);
@@ -33,6 +33,14 @@ const SimpleDictionaryConfigPanel = () => {
     useEffect(() => {
 
     }, [idSimpleDictionarySelected]);
+
+    
+
+    useEffect(() => {
+        console.log("idTest")
+        console.log(idTest)
+    }, [idTest]);
+
 
     useEffect(() => {
         checkIfSetEnableButton();

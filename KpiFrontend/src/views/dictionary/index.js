@@ -9,6 +9,7 @@ import { Grid } from '@mui/material';
 import MainTier from './MainTier';
 import SimpleDictionaryConfigPanel from './SimpleDictionary/SimpleDictionaryConfigPanel';
 import SimpleDictionaryGrid from './SimpleDictionary/SimpleDictionaryGrid';
+import SimpleDictionaryGrid2 from './SimpleDictionary/SimpleDictionaryGrid2';
 import { SimpleDictionaryContext, useSimpleDictionaryContext } from './SimpleDictionary/SimpleDictionaryContext';
 
 
@@ -18,15 +19,17 @@ import { SimpleDictionaryContext, useSimpleDictionaryContext } from './SimpleDic
 
 const Dictionary = () => {
     const [idSimpleDictionarySelected, setIdSimpleDictionarySelected] = useState(0);
+    const [idTest, setIdTest] = useState([]);
     return (
-        <SimpleDictionaryContext.Provider value={{ idSimpleDictionarySelected, setIdSimpleDictionarySelected }}>
+        <SimpleDictionaryContext.Provider value={{ idSimpleDictionarySelected, setIdSimpleDictionarySelected,idTest,setIdTest }}>
             <Grid container spacing={gridSpacing}>
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>
                         <Grid item lg={12} md={6} sm={6} xs={12}>
                             <MainTier />
                             <SimpleDictionaryConfigPanel />
-                            {idSimpleDictionarySelected != 0 && <SimpleDictionaryGrid />}
+                            {/* {idSimpleDictionarySelected != 0 && <SimpleDictionaryGrid />} */}
+                            {idSimpleDictionarySelected != 0 && <SimpleDictionaryGrid2 />}
                         </Grid>
                     </Grid>
                 </Grid>
