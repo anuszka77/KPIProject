@@ -6,3 +6,9 @@ export enum simpleDictionaryEnum {
   KpiDictionary = 5,
   SystemDictionary = 6,
 };
+
+export enum operationEnum {
+  Add = 1,
+  Update = 2,
+  Delete = 3,
+};

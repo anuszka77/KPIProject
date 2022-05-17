@@ -10,7 +10,7 @@ import { DataGrid, GridSelectionModel, GridToolbar } from '@mui/x-data-grid';
 
 export default function SimpleDictionaryGrid2() {
 
-  const { idSimpleDictionarySelected, setIdSimpleDictionarySelected,idTest,setIdTest } = useSimpleDictionaryContext();
+  const { idSimpleDictionarySelected, setIdSimpleDictionarySelected,idSelectedRow,setIdSelectedRow } = useSimpleDictionaryContext();
   const [rowsSimpleDictionaryData, setRowsSimpleDictionaryData] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
 
@@ -22,7 +22,7 @@ export default function SimpleDictionaryGrid2() {
   useEffect(() => {
     // console.log("selectedRows");
     // console.log(selectedRows);
-    setIdTest(selectedRows)
+    setIdSelectedRow(selectedRows)
   }, [selectedRows]);
 
   // useEffect(() => {

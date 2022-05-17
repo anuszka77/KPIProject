@@ -8,23 +8,27 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 
 import { useEffect, useState } from 'react';
-import { loadDictListOfSimpleDictionary, addElementToSystemDictionary } from '../../../services/dictionaryService';
+import { loadDictListOfSimpleDictionary } from '../../../services/dictionaryService';
 import MainCard from 'ui-component/cards/MainCard';
-import SimpleDictionaryGrid from './SimpleDictionaryGrid'
 import { useSimpleDictionaryContext } from './SimpleDictionaryContext';
 import AlertDialogButton from '../../../utils/AlertDialogButton';
 import AlertInformationPopup from '../../../utils/AlertInformationPopup';
 import { simpleDictionaryAddToDatabase } from './SimpleDictionaryAddToDatabase';
+import { operationEnum } from "./SimpleDictionaryEnum";
+import { element } from 'prop-types';
+
 
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
-    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected,idTest,setIdTest } = useSimpleDictionaryContext();
+    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();
     const [idNewDictionarySelected, setIdNewDictionarySelected] = useState("");
     const [nameNewDictionarySelected, setNameNewDictionarySelected] = useState("");
     const [isButtonDisable, setIsButtonDisable] = useState(true);
+    const [buttonName, setButtonName] = useState("Zapisz");
     const [informationFromDb, setInformationFromDb] = useState("");
     const [showPopup, setShowPopup] = useState(false);
-
+    const [oparation, setOperation] = useState(operationEnum.Add);
+    
     useEffect(() => {
         loadDictListOfSimpleDictionary().then((x) => {
             setDictListOfSimpleDictionary(x);
@@ -34,21 +38,28 @@ const SimpleDictionaryConfigPanel = () => {
 
     }, [idSimpleDictionarySelected]);
 
-    
+
 
     useEffect(() => {
-        console.log("idTest")
-        console.log(idTest)
-    }, [idTest]);
+        console.log("idSelectedRow")
+        console.log(idSelectedRow)
+        nameButtonSelect();
+          
+        if (idSelectedRow.length === 1){
+            // setIdNewDictionarySelected(idSelectedRow.find(element => element))
+            console.log(idSelectedRow.find(element => element[0]))
+        }
+
+    }, [idSelectedRow,idNewDictionarySelected]);
 
 
     useEffect(() => {
         checkIfSetEnableButton();
-    }, [idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected]);
+    }, [idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected,oparation]);
 
 
     const checkIfSetEnableButton = () => {
-        if (idSimpleDictionarySelected && idNewDictionarySelected && nameNewDictionarySelected) {
+        if ((idSimpleDictionarySelected && idNewDictionarySelected && nameNewDictionarySelected) || oparation ===3) {
             setIsButtonDisable(false);
         } else {
             setIsButtonDisable(true);
@@ -85,6 +96,24 @@ const SimpleDictionaryConfigPanel = () => {
 
     const onNameNewDictionaryChanged = (e) => {
         setNameNewDictionarySelected(e.target.value);
+    }
+
+    const nameButtonSelect = () => {
+        if (idSelectedRow.length === 0){
+            console.log("Zapisz")
+            setButtonName("Zapisz")
+            setOperation(operationEnum.Add);
+        } else if (idSelectedRow.length === 1 && nameNewDictionarySelected.length>0 ){
+            console.log("zmień nazwę")
+            setButtonName("Aktualizuj")
+            setOperation(operationEnum.Update);
+        }else if (idSelectedRow.length > 0) {
+            console.log("Usuń")
+            setButtonName("Usuń")
+            setOperation(operationEnum.Delete);
+        }
+    
+
     }
 
 
@@ -124,7 +153,7 @@ const SimpleDictionaryConfigPanel = () => {
                                     variant="outlined"
                                     hiddenLabel
                                     type="number"
-                                    InputProps={{ inputProps:  {min: 0 } }}
+                                    InputProps={{ inputProps: { min: 0 } }}
                                     value={idNewDictionarySelected}
                                     onChange={onIdNewDictionaryChanged}
                                 />
@@ -146,7 +175,7 @@ const SimpleDictionaryConfigPanel = () => {
                             <Box sx={{ minWidth: 12 }}>
                                 <FormControl fullWidth>
                                     <AlertDialogButton
-                                        buttonName={"Zapisz"}
+                                        buttonName={buttonName}
                                         isDisabled={isButtonDisable}
                                         onDisagree={onDisagree}
                                         onAgree={onAgree} />

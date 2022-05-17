@@ -1,14 +1,11 @@
 // material-ui
-import { Typography } from '@mui/material';
-import { useEffect, useState, useMemo } from 'react';
+import { useState } from 'react';
 // project imports
-import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import { Grid } from '@mui/material';
 
 import MainTier from './MainTier';
 import SimpleDictionaryConfigPanel from './SimpleDictionary/SimpleDictionaryConfigPanel';
-import SimpleDictionaryGrid from './SimpleDictionary/SimpleDictionaryGrid';
 import SimpleDictionaryGrid2 from './SimpleDictionary/SimpleDictionaryGrid2';
 import { SimpleDictionaryContext, useSimpleDictionaryContext } from './SimpleDictionary/SimpleDictionaryContext';
 
@@ -19,9 +16,9 @@ import { SimpleDictionaryContext, useSimpleDictionaryContext } from './SimpleDic
 
 const Dictionary = () => {
     const [idSimpleDictionarySelected, setIdSimpleDictionarySelected] = useState(0);
-    const [idTest, setIdTest] = useState([]);
+    const [idSelectedRow, setIdSelectedRow] = useState([]);
     return (
-        <SimpleDictionaryContext.Provider value={{ idSimpleDictionarySelected, setIdSimpleDictionarySelected,idTest,setIdTest }}>
+        <SimpleDictionaryContext.Provider value={{ idSimpleDictionarySelected, setIdSimpleDictionarySelected,idSelectedRow,setIdSelectedRow }}>
             <Grid container spacing={gridSpacing}>
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>
