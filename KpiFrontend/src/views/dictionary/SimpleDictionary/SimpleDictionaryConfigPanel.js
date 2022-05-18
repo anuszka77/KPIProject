@@ -21,36 +21,37 @@ import { element } from 'prop-types';
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
     const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();
-    const [idNewDictionarySelected, setIdNewDictionarySelected] = useState("");
+    const [idNewDictionarySelected, setIdNewDictionarySelected] = useState(0);
     const [nameNewDictionarySelected, setNameNewDictionarySelected] = useState("");
     const [isButtonDisable, setIsButtonDisable] = useState(true);
     const [buttonName, setButtonName] = useState("Zapisz");
     const [informationFromDb, setInformationFromDb] = useState("");
     const [showPopup, setShowPopup] = useState(false);
     const [oparation, setOperation] = useState(operationEnum.Add);
+    const [dicIdSelectedFromGrid,setDicIdSelectedFromGrid] = useState(0);
+    // const [isPossibleToWriteIdNewDictionary,setIsPossibleToWriteIdNewDictionary] = useState(true);
     
     useEffect(() => {
         loadDictListOfSimpleDictionary().then((x) => {
             setDictListOfSimpleDictionary(x);
         });
     }, []);
-    useEffect(() => {
-
-    }, [idSimpleDictionarySelected]);
-
-
 
     useEffect(() => {
         console.log("idSelectedRow")
         console.log(idSelectedRow)
         nameButtonSelect();
-          
-        if (idSelectedRow.length === 1){
-            // setIdNewDictionarySelected(idSelectedRow.find(element => element))
-            console.log(idSelectedRow.find(element => element[0]))
-        }
 
-    }, [idSelectedRow,idNewDictionarySelected]);
+        if (idSelectedRow.length === 1){
+            console.log(idSelectedRow[0].id)
+            setIdNewDictionarySelected(idSelectedRow[0].id)
+
+        } else {
+            setIdNewDictionarySelected(0);
+        }
+              
+
+    }, [idSelectedRow]);
 
 
     useEffect(() => {
