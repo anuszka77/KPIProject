@@ -6,7 +6,6 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-
 import { useEffect, useState } from 'react';
 import { loadDictListOfSimpleDictionary } from '../../../services/dictionaryService';
 import MainCard from 'ui-component/cards/MainCard';
@@ -15,7 +14,6 @@ import AlertDialogButton from '../../../utils/AlertDialogButton';
 import AlertInformationPopup from '../../../utils/AlertInformationPopup';
 import { simpleDictionaryAddToDatabase } from './SimpleDictionaryAddToDatabase';
 import { operationEnum } from "./SimpleDictionaryEnum";
-import { element } from 'prop-types';
 
 
 const SimpleDictionaryConfigPanel = () => {
@@ -28,9 +26,7 @@ const SimpleDictionaryConfigPanel = () => {
     const [informationFromDb, setInformationFromDb] = useState("");
     const [showPopup, setShowPopup] = useState(false);
     const [oparation, setOperation] = useState(operationEnum.Add);
-    const [dicIdSelectedFromGrid,setDicIdSelectedFromGrid] = useState(0);
-    // const [isPossibleToWriteIdNewDictionary,setIsPossibleToWriteIdNewDictionary] = useState(true);
-    
+
     useEffect(() => {
         loadDictListOfSimpleDictionary().then((x) => {
             setDictListOfSimpleDictionary(x);
@@ -42,25 +38,25 @@ const SimpleDictionaryConfigPanel = () => {
         console.log(idSelectedRow)
         nameButtonSelect();
 
-        if (idSelectedRow.length === 1){
+        if (idSelectedRow.length === 1) {
             console.log(idSelectedRow[0].id)
             setIdNewDictionarySelected(idSelectedRow[0].id)
 
         } else {
             setIdNewDictionarySelected(0);
         }
-              
 
-    }, [idSelectedRow]);
+
+    }, [idSelectedRow, nameNewDictionarySelected]);
 
 
     useEffect(() => {
         checkIfSetEnableButton();
-    }, [idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected,oparation]);
+    }, [idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected, oparation]);
 
 
     const checkIfSetEnableButton = () => {
-        if ((idSimpleDictionarySelected && idNewDictionarySelected && nameNewDictionarySelected) || oparation ===3) {
+        if ((idSimpleDictionarySelected && idNewDictionarySelected >= 0 && nameNewDictionarySelected) || oparation === 3) {
             setIsButtonDisable(false);
         } else {
             setIsButtonDisable(true);
@@ -78,7 +74,18 @@ const SimpleDictionaryConfigPanel = () => {
     }
 
     const onAgree = (e) => {
-        simpleDictionaryAddToDatabase(idNewDictionarySelected, nameNewDictionarySelected, idSimpleDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
+        switch (oparation) {
+            case operationEnum.Add
+                : simpleDictionaryAddToDatabase(idNewDictionarySelected, nameNewDictionarySelected, idSimpleDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
+                break;
+            case operationEnum.Update
+                : console.log("Update")
+                break;
+            case operationEnum.Delete
+                : console.log("Delete")
+                break;
+        }
+
         clearFields();
     }
 
@@ -100,22 +107,18 @@ const SimpleDictionaryConfigPanel = () => {
     }
 
     const nameButtonSelect = () => {
-        if (idSelectedRow.length === 0){
-            console.log("Zapisz")
-            setButtonName("Zapisz")
+        if (idSelectedRow.length === 0) {
             setOperation(operationEnum.Add);
-        } else if (idSelectedRow.length === 1 && nameNewDictionarySelected.length>0 ){
-            console.log("zmień nazwę")
-            setButtonName("Aktualizuj")
+            setButtonName("Zapisz");
+        } else if (idSelectedRow.length === 1 && nameNewDictionarySelected.length > 0) {
             setOperation(operationEnum.Update);
-        }else if (idSelectedRow.length > 0) {
-            console.log("Usuń")
-            setButtonName("Usuń")
+            setButtonName("Aktualizuj");
+        } else if (idSelectedRow.length > 0) {
             setOperation(operationEnum.Delete);
+            setButtonName("Usuń");
         }
-    
-
     }
+
 
 
     return (
