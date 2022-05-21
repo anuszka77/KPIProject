@@ -131,3 +131,6 @@ export const addElementToKpiDictionary = async (idSystem, systemName) => {
     return await mainPostApiService("/Dictionary/AddElementToKpiDictionary/" + idSystem + "/" + systemName);
 };
 
+export const modifySpecificDictionary = async (idNameSimpleDictionary,idOfDictionary, newNameOfDictionary) => {
+    return await mainPostApiService("/Dictionary/ModifySpecificDictionary/" + idNameSimpleDictionary + "/" + idOfDictionary+"/"+newNameOfDictionary);
+};

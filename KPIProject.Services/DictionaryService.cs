@@ -179,7 +179,22 @@ namespace KPIProject.Services
             await context.Database.ExecuteSqlRawAsync("PbApp.AddElementToKpiDictionary @IdKpi,@Kpi, @ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
             var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
             return message.ToString();
+        }
 
+        public async Task<string> ModifySpecificDictionary(byte idNameSimpleDictionary, int idOfDictionary, string newNameOfDictionary)
+        {
+            List<SqlParameter> parms = new()
+            {
+                new SqlParameter { ParameterName = "@IdNameSimpleDictionary", Value = idNameSimpleDictionary },
+                new SqlParameter { ParameterName = "@IdOfDictionary", Value = idOfDictionary },
+                new SqlParameter { ParameterName = "@NewNameOfDictionary", Value = newNameOfDictionary },
+                new SqlParameter("@ReturnMessage", SqlDbType.VarChar) { Direction = ParameterDirection.Output, Size = 512 },
+                new SqlParameter("@ReturnStatus", SqlDbType.SmallInt) { Direction = ParameterDirection.Output }
+            };
+
+            await context.Database.ExecuteSqlRawAsync("PbApp.ModifySpecificDictionary @IdNameSimpleDictionary,@IdOfDictionary,@NewNameOfDictionary, @ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
+            var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
+            return message.ToString();
         }
 
     }

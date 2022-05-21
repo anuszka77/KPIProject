@@ -6,7 +6,7 @@ import { Grid } from '@mui/material';
 
 import MainTier from './MainTier';
 import SimpleDictionaryConfigPanel from './SimpleDictionary/SimpleDictionaryConfigPanel';
-import SimpleDictionaryGrid2 from './SimpleDictionary/SimpleDictionaryGrid2';
+import SimpleDictionaryGrid from './SimpleDictionary/SimpleDictionaryGrid';
 import { SimpleDictionaryContext, useSimpleDictionaryContext } from './SimpleDictionary/SimpleDictionaryContext';
 
 
@@ -25,8 +25,7 @@ const Dictionary = () => {
                         <Grid item lg={12} md={6} sm={6} xs={12}>
                             <MainTier />
                             <SimpleDictionaryConfigPanel />
-                            {/* {idSimpleDictionarySelected != 0 && <SimpleDictionaryGrid />} */}
-                            {idSimpleDictionarySelected != 0 && <SimpleDictionaryGrid2 />}
+                            {idSimpleDictionarySelected != 0 && <SimpleDictionaryGrid />}
                         </Grid>
                     </Grid>
                 </Grid>

@@ -101,6 +101,9 @@ namespace KPIProject.WebApi.Controllers
         [Route("AddElementToKpiDictionary/{idKpi:int}/{kpi}")]
         public async Task<IActionResult> AddElementToKpiDictionary(byte idKpi, string kpi) => Ok(await dictService.AddElementToKpiDictionary(idKpi, kpi));
 
+        [HttpPost]
+        [Route("ModifySpecificDictionary/{idNameSimpleDictionary:int}/{idOfDictionary:int}/{newNameOfDictionary}")]
+        public async Task<IActionResult> ModifySpecificDictionary(byte idNameSimpleDictionary, int idOfDictionary, string newNameOfDictionary) => Ok(await dictService.ModifySpecificDictionary(idNameSimpleDictionary, idOfDictionary, newNameOfDictionary));
 
     }
 }
