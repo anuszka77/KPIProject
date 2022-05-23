@@ -26,5 +26,6 @@ namespace KPIProject.ServicesInterfaces
         Task<string> AddElementToCriticalToDictionary(byte idCriticalTo, string criticalToName);
         Task<string> AddElementToKpiDictionary(byte idKpi, string kpi);
         Task<string> ModifySpecificDictionary(byte idNameSimpleDictionary, int idOfDictionary, string newNameOfDictionary);
+        Task<string> DeleteSpecificDictionary(byte idNameSimpleDictionary, int idOfDictionary);
     }
 }

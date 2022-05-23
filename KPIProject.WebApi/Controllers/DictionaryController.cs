@@ -105,5 +105,10 @@ namespace KPIProject.WebApi.Controllers
         [Route("ModifySpecificDictionary/{idNameSimpleDictionary:int}/{idOfDictionary:int}/{newNameOfDictionary}")]
         public async Task<IActionResult> ModifySpecificDictionary(byte idNameSimpleDictionary, int idOfDictionary, string newNameOfDictionary) => Ok(await dictService.ModifySpecificDictionary(idNameSimpleDictionary, idOfDictionary, newNameOfDictionary));
 
+
+        [HttpPost]
+        [Route("DeleteSpecificDictionary/{idNameSimpleDictionary:int}/{idOfDictionary:int}")]
+        public async Task<IActionResult> DeleteSpecificDictionary(byte idNameSimpleDictionary, int idOfDictionary) => Ok(await dictService.DeleteSpecificDictionary(idNameSimpleDictionary, idOfDictionary));
+        
     }
 }

@@ -197,5 +197,21 @@ namespace KPIProject.Services
             return message.ToString();
         }
 
+        public async Task<string> DeleteSpecificDictionary(byte idNameSimpleDictionary, int idOfDictionary)
+        {
+            List<SqlParameter> parms = new()
+            {
+                new SqlParameter { ParameterName = "@IdNameSimpleDictionary", Value = idNameSimpleDictionary },
+                new SqlParameter { ParameterName = "@IdOfDictionary", Value = idOfDictionary },
+                new SqlParameter("@ReturnMessage", SqlDbType.VarChar) { Direction = ParameterDirection.Output, Size = 512 },
+                new SqlParameter("@ReturnStatus", SqlDbType.SmallInt) { Direction = ParameterDirection.Output }
+            };
+
+            await context.Database.ExecuteSqlRawAsync("PbApp.DeleteSpecificDictionary @IdNameSimpleDictionary,@IdOfDictionary,@ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
+            var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
+            return message.ToString();
+        }
+
+
     }
 }

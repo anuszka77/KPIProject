@@ -7,13 +7,14 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
-import { loadDictListOfSimpleDictionary,modifySpecificDictionary } from '../../../services/dictionaryService';
+import { loadDictListOfSimpleDictionary, modifySpecificDictionary } from '../../../services/dictionaryService';
 import MainCard from 'ui-component/cards/MainCard';
 import { useSimpleDictionaryContext } from './SimpleDictionaryContext';
 import AlertDialogButton from '../../../utils/AlertDialogButton';
 import AlertInformationPopup from '../../../utils/AlertInformationPopup';
 import { simpleDictionaryAddToDatabase } from './SimpleDictionaryAddToDatabase';
 import { operationEnum } from "./SimpleDictionaryEnum";
+import Button from '@mui/material/Button';
 
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
@@ -75,15 +76,16 @@ const SimpleDictionaryConfigPanel = () => {
     const onAgree = (e) => {
         switch (oparation) {
             case operationEnum.Add
-                : simpleDictionaryAddToDatabase(idNewDictionarySelected, nameNewDictionarySelected, idSimpleDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
+                : simpleDictionaryAddToDatabase(idNewDictionarySelected, nameNewDictionarySelected, idSimpleDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true); setIdSimpleDictionarySelected(""); });
                 break;
             case operationEnum.Update
-                : modifySpecificDictionary(idSimpleDictionarySelected,idNewDictionarySelected,nameNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
+                : modifySpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
                 break;
             case operationEnum.Delete
                 : console.log("Delete")
                 break;
         }
+       
         clearFields();
     }
 

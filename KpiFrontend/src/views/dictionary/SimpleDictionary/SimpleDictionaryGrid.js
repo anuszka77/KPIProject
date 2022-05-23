@@ -10,7 +10,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 export default function SimpleDictionaryGrid() {
 
-  const { idSimpleDictionarySelected, setIdSimpleDictionarySelected,idSelectedRow,setIdSelectedRow } = useSimpleDictionaryContext();
+  const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();
   const [rowsSimpleDictionaryData, setRowsSimpleDictionaryData] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
 
@@ -20,16 +20,8 @@ export default function SimpleDictionaryGrid() {
   }, [idSimpleDictionarySelected]);
 
   useEffect(() => {
-    // console.log("selectedRows");
-    // console.log(selectedRows);
     setIdSelectedRow(selectedRows)
   }, [selectedRows]);
-
-  // useEffect(() => {
-  //    console.log("idTest");
-  //    console.log(idTest);
-
-  // }, [idTest]);
 
 
   const getSimpleDictionaryData = async (idSimpleDictionarySelected) => {
@@ -55,7 +47,6 @@ export default function SimpleDictionaryGrid() {
           const rows =
             z.map((item) =>
               ({ id: item.idCriticalTo, idCriticalTo: item.idCriticalTo, criticalToName: item.criticalToName }))
-          // setRowsSimpleDictionaryData(rows);
           setRowsSimpleDictionaryData(rows?.sort((x1, x2) => x1.idCriticalTo - x2.idCriticalTo));
         })
         break;
@@ -81,7 +72,6 @@ export default function SimpleDictionaryGrid() {
             z.map((item) =>
               ({ id: item.idSystem, idSystem: item.idSystem, systemName: item.systemName }))
           setRowsSimpleDictionaryData(rows?.sort((x1, x2) => x1.idSystem - x2.idSystem));
-          // setRowsActivity(rows?.sort((x1,x2)=>x1.stepId-x2.stepId));
         });
         break;
     }
@@ -90,10 +80,8 @@ export default function SimpleDictionaryGrid() {
 
 
 
-   const getSelectedRow = (idDic) => {
+  const getSelectedRow = (idDic) => {
     const selectedIDs = new Set(idDic);
-    // console.log("idDic")
-    // console.log(idDic)
     const selectedRows = rowsSimpleDictionaryData.filter((row) =>
       selectedIDs.has(row.id),
     );
@@ -109,11 +97,11 @@ export default function SimpleDictionaryGrid() {
         columns={getColumnConfig(idSimpleDictionarySelected)}
         getRowId={(row) => row.id}
         checkboxSelection={true}
-        onSelectionModelChange = {(idDic) => {getSelectedRow(idDic)}}
+        onSelectionModelChange={(idDic) => { getSelectedRow(idDic) }}
         components={{
           Toolbar: GridToolbar
         }}
-        
+
 
       />
       <pre style={{ fontSize: 10 }}>
