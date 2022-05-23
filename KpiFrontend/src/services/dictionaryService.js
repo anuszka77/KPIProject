@@ -111,26 +111,30 @@ export const addElementToSystemDictionary = async (id, name) => {
     return await mainPostApiService("/Dictionary/AddElementToSystemDictionary/" + id + "/" + name);
 };
 
-export const addElementToActivityHierarchyDictionary = async (idSystem, systemName) => {
-    return await mainPostApiService("/Dictionary/AddElementToActivityHierarchyDictionary/" + idSystem + "/" + systemName);
+export const addElementToActivityHierarchyDictionary = async (id, name) => {
+    return await mainPostApiService("/Dictionary/AddElementToActivityHierarchyDictionary/" + id + "/" + name);
 };
 
-export const addElementToDepartmentDictionary = async (idSystem, systemName) => {
-    return await mainPostApiService("/Dictionary/AddElementToDepartmentDictionary/" + idSystem + "/" + systemName);
+export const addElementToDepartmentDictionary = async (id, name) => {
+    return await mainPostApiService("/Dictionary/AddElementToDepartmentDictionary/" + id + "/" + name);
 };
 
-export const addElementToBussinesValueAddedDictionary = async (idSystem, systemName) => {
-    return await mainPostApiService("/Dictionary/AddElementToBussinesValueAddedDictionary/" + idSystem + "/" + systemName);
+export const addElementToBussinesValueAddedDictionary = async (id, name) => {
+    return await mainPostApiService("/Dictionary/AddElementToBussinesValueAddedDictionary/" + id + "/" + name);
 };
 
-export const addElementToCriticalToDictionary = async (idSystem, systemName) => {
-    return await mainPostApiService("/Dictionary/AddElementToCriticalToDictionary/" + idSystem + "/" + systemName);
+export const addElementToCriticalToDictionary = async (id, name) => {
+    return await mainPostApiService("/Dictionary/AddElementToCriticalToDictionary/" + id + "/" + name);
 };
 
-export const addElementToKpiDictionary = async (idSystem, systemName) => {
-    return await mainPostApiService("/Dictionary/AddElementToKpiDictionary/" + idSystem + "/" + systemName);
+export const addElementToKpiDictionary = async (id, name) => {
+    return await mainPostApiService("/Dictionary/AddElementToKpiDictionary/" + id + "/" + name);
 };
 
 export const modifySpecificDictionary = async (idNameSimpleDictionary,idOfDictionary, newNameOfDictionary) => {
     return await mainPostApiService("/Dictionary/ModifySpecificDictionary/" + idNameSimpleDictionary + "/" + idOfDictionary+"/"+newNameOfDictionary);
+};
+
+export const deleteSpecificDictionary = async (idNameSimpleDictionary,idOfDictionary) => {
+    return await mainPostApiService("/Dictionary/DeleteSpecificDictionary/" + idNameSimpleDictionary + "/" + idOfDictionary);
 };

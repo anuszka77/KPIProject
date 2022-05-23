@@ -101,7 +101,7 @@ export default function SimpleDictionaryGrid() {
         components={{
           Toolbar: GridToolbar
         }}
-
+        
 
       />
       <pre style={{ fontSize: 10 }}>

@@ -7,14 +7,13 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
-import { loadDictListOfSimpleDictionary, modifySpecificDictionary } from '../../../services/dictionaryService';
+import { loadDictListOfSimpleDictionary, modifySpecificDictionary, deleteSpecificDictionary } from '../../../services/dictionaryService';
 import MainCard from 'ui-component/cards/MainCard';
 import { useSimpleDictionaryContext } from './SimpleDictionaryContext';
 import AlertDialogButton from '../../../utils/AlertDialogButton';
 import AlertInformationPopup from '../../../utils/AlertInformationPopup';
 import { simpleDictionaryAddToDatabase } from './SimpleDictionaryAddToDatabase';
 import { operationEnum } from "./SimpleDictionaryEnum";
-import Button from '@mui/material/Button';
 
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
@@ -32,7 +31,7 @@ const SimpleDictionaryConfigPanel = () => {
             setDictListOfSimpleDictionary(x);
         });
     }, []);
-
+    let text = "";
     useEffect(() => {
         console.log("idSelectedRow")
         console.log(idSelectedRow)
@@ -42,13 +41,13 @@ const SimpleDictionaryConfigPanel = () => {
             console.log(idSelectedRow[0].id)
             setIdNewDictionarySelected(idSelectedRow[0].id)
 
-        } else {
+        } else if (idSelectedRow.length === 0) {
             setIdNewDictionarySelected(0);
+        } else {
+            idSelectedRow.forEach((element) => { text += element.id + ";" })
+            setIdNewDictionarySelected(text)
         }
-
-
-    }, [idSelectedRow, nameNewDictionarySelected]);
-
+    }, [idSelectedRow]);
 
     useEffect(() => {
         checkIfSetEnableButton();
@@ -73,7 +72,7 @@ const SimpleDictionaryConfigPanel = () => {
         return false;
     }
 
-    const onAgree = (e) => {
+    const onAgree = () => {
         switch (oparation) {
             case operationEnum.Add
                 : simpleDictionaryAddToDatabase(idNewDictionarySelected, nameNewDictionarySelected, idSimpleDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true); setIdSimpleDictionarySelected(""); });
@@ -82,14 +81,14 @@ const SimpleDictionaryConfigPanel = () => {
                 : modifySpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
                 break;
             case operationEnum.Delete
-                : console.log("Delete")
+                : deleteSpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
                 break;
         }
-       
+
         clearFields();
     }
 
-    const onDisagree = (e) => {
+    const onDisagree = () => {
         clearFields();
     }
 
@@ -156,7 +155,7 @@ const SimpleDictionaryConfigPanel = () => {
                                     label="Id wartości (0- automat)"
                                     variant="outlined"
                                     hiddenLabel
-                                    type="number"
+                                    // type="number"
                                     InputProps={{ inputProps: { min: 0 } }}
                                     value={idNewDictionarySelected}
                                     onChange={onIdNewDictionaryChanged}

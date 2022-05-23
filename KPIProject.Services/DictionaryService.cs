@@ -197,7 +197,7 @@ namespace KPIProject.Services
             return message.ToString();
         }
 
-        public async Task<string> DeleteSpecificDictionary(byte idNameSimpleDictionary, int idOfDictionary)
+        public async Task<string> DeleteSpecificDictionary(byte idNameSimpleDictionary, string idOfDictionary)
         {
             List<SqlParameter> parms = new()
             {
