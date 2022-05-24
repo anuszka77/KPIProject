@@ -13,7 +13,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { loadDimensions, loadTierList, saveLayers, loadDictSystem } from '../../services/dictionaryService';
+import { loadDimensions, loadTierList, saveLayers, loadDictSystem } from '../../../services/dictionaryService';
 import { useEffect, useState } from 'react';
 
 
@@ -52,6 +52,8 @@ const handleChange = (event) => {
     loadTierList(event.target.value).then((x)=>{
         setTierList(x);
     })
+    console.log(event.target.value)
+    console.log(tierValue)
  };
 
  const handleChangeTier = (event) => {

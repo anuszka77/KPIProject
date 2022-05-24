@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { gridSpacing } from 'store/constant';
 import { Grid } from '@mui/material';
 
-import MainTier from './MainTier';
+import MainTier from './LayerDictionary/MainTier';
 import SimpleDictionaryConfigPanel from './SimpleDictionary/SimpleDictionaryConfigPanel';
 import SimpleDictionaryGrid from './SimpleDictionary/SimpleDictionaryGrid';
 import { SimpleDictionaryContext, useSimpleDictionaryContext } from './SimpleDictionary/SimpleDictionaryContext';
@@ -39,8 +39,8 @@ const Dictionary = () => {
                                 <TabContext value={value}>
                                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                         <TabList onChange={handleChange} >
-                                            <Tab label="Szczegóły procesu" value="1" />
-                                            <Tab label="Czynności" value="2" />
+                                            <Tab label="Słowniki layerów" value="1" />
+                                            <Tab label="Słowniki proste" value="2" />
                                         </TabList>
                                     </Box>
                                     <TabPanel value="1" style={{ height: `inherit` }} >
@@ -52,10 +52,6 @@ const Dictionary = () => {
                                     {idSimpleDictionarySelected != 0 && <SimpleDictionaryGrid />}
                                     </TabPanel>
                                 </TabContext>
-                         
-                       
-                            {/* <SimpleDictionaryConfigPanel />
-                            {idSimpleDictionarySelected != 0 && <SimpleDictionaryGrid />} */}
                         </Grid>
                     </Grid>
                 </Grid>
