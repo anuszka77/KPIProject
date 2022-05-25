@@ -165,8 +165,9 @@ const MainTier = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            <MainTierGrid idSystem={systemValue} idDimension={dimensionValue} idTier = {tierValue} />
+            <MainTierGrid idSystem={systemValue} idDimension={dimensionValue} idTier={tierValue} />
         </MainCard>
+        
     );
 };
 export default MainTier;

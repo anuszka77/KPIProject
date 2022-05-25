@@ -31,10 +31,10 @@ const SimpleDictionaryConfigPanel = () => {
             setDictListOfSimpleDictionary(x);
         });
     }, []);
+    
     let text = "";
+
     useEffect(() => {
-        console.log("idSelectedRow")
-        console.log(idSelectedRow)
         nameButtonSelect();
 
         if (idSelectedRow.length === 1) {
@@ -47,7 +47,7 @@ const SimpleDictionaryConfigPanel = () => {
             idSelectedRow.forEach((element) => { text += element.id + ";" })
             setIdNewDictionarySelected(text)
         }
-    }, [idSelectedRow]);
+    }, [idSelectedRow,nameNewDictionarySelected]);
 
     useEffect(() => {
         checkIfSetEnableButton();

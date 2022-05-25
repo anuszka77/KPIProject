@@ -15,7 +15,7 @@ export default function SimpleDictionaryGrid() {
 
 
   useEffect(() => {
-    getSimpleDictionaryData(idSimpleDictionarySelected);;
+    getSimpleDictionaryData(idSimpleDictionarySelected).then(x=> console.log(x));;
   }, [idSimpleDictionarySelected]);
 
   useEffect(() => {
