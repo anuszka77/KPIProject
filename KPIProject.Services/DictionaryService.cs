@@ -3,6 +3,7 @@ using KPIProject.DataCore.Models;
 using KPIProject.DataCore.ProcessBookContext;
 using KPIProject.DTO.Dictionary;
 using KPIProject.DTO.Menu;
+using KPIProject.DTO.ResultMessages;
 using KPIProject.Services.Helpers;
 using KPIProject.ServicesInterfaces;
 using Microsoft.Data.SqlClient;
@@ -74,20 +75,28 @@ namespace KPIProject.Services
             return await mapper.ProjectTo<FGetLayersBySysDimTier_ResultDTO>(context.FGetLayersBySysDimTier(systemId, dimensionId, tierId)).ToListAsync();
         }
 
-        public async Task<string> SaveLayers(List<LayersToAddDTO> layers, int systemId)
+        public async Task<CallResultDTO> SaveLayers(List<LayersToAddDTO> layers, int systemId)
         {
-            List<SqlParameter> parms = new()
+                List<SqlParameter> parms = new()
+                {
+                    new SqlParameter { ParameterName = "@Input", Value = layers.ToDataTable(), TypeName = "PbApp.IntKIntKVarcharK" },
+                    new SqlParameter { ParameterName = "@SystemId", Value = systemId },
+                    new SqlParameter("@ReturnMessage", SqlDbType.VarChar) { Direction = ParameterDirection.Output, Size = 512 },
+                    new SqlParameter("@ReturnStatus", SqlDbType.SmallInt) { Direction = ParameterDirection.Output }
+                };
+
+                await context.Database.ExecuteSqlRawAsync("PbApp.AddLayers @Input, @SystemId, @ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
+                string message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value.ToString();
+                short status =  (short)parms.FirstOrDefault(d => d.ParameterName == "@ReturnStatus").Value;
+
+
+            return new CallResultDTO
             {
-                new SqlParameter { ParameterName = "@Input", Value = layers.ToDataTable(), TypeName = "PbApp.IntKIntKVarcharK" },
-                new SqlParameter { ParameterName = "@SystemId", Value = systemId },
-                new SqlParameter("@ReturnMessage", SqlDbType.VarChar) { Direction = ParameterDirection.Output, Size = 512},
-                new SqlParameter("@ReturnStatus", SqlDbType.SmallInt) { Direction = ParameterDirection.Output}
+                ReturnStatus = status,
+                ReturnMessage = message,
+                IsSuccess = status == 1 ? true : false
             };
-
-            await context.Database.ExecuteSqlRawAsync("PbApp.AddLayers @Input, @SystemId, @ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
-            var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
-            return message.ToString();
-
+          
         }
 
         public async Task<string> AddElementToSystemDictionary( short idSystem,string systemName )

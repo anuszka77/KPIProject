@@ -1,6 +1,7 @@
 ﻿using KPIProject.DataCore.Models;
 using KPIProject.DTO.Dictionary;
 using KPIProject.DTO.Menu;
+using KPIProject.DTO.ResultMessages;
 
 namespace KPIProject.ServicesInterfaces
 {
@@ -8,7 +9,7 @@ namespace KPIProject.ServicesInterfaces
     {
         Task<IEnumerable<DimensionsDictionaryDTO>> GetDimensionsDictionary();
         Task<IEnumerable<FGetTierListByDim_ResultDTO>> GetTierDictionaryToDimension(short? dimensionId);
-        Task<string> SaveLayers(List<LayersToAddDTO> layers, int systemId);
+        Task<CallResultDTO> SaveLayers(List<LayersToAddDTO> layers, int systemId);
         //Proste słowniki_start
         Task<IEnumerable<FGetListOfNameSimpleDictionary_ResultDTO>> GetListOfNameSimpleDictionary();
         Task<IEnumerable<FGetListOfActivityHierarchyDictionary_ResultDTO>> GetListOfActivityHierarchyDictionary();

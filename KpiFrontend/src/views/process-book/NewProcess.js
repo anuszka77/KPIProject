@@ -41,6 +41,19 @@ export default function BasicModal() {
   const [area, setArea]=useState();
 
 
+  const [tierValues, setTierValues] = useState({
+    mainTierId: '',
+    areaId: '',
+    subAreaId: '',
+    categoryId: '',
+    subjectId: '',
+    objectId: '',
+    attributeId: ''
+  })
+
+
+
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
     
@@ -49,7 +62,26 @@ export default function BasicModal() {
     loadTierDictionary().then(x=>setTierDict(x));
     }, []);
 
+    const tierDictionary =[
+      {id: 0, field: "mainTier", headerName: "Główny Tier"},
+      {id: 1, field: "areaTier", headerName: "Obszar"},
+      {id: 2, field: "subAreaTier", headerName: "Podobszar"},
+      {id: 3, field: "categoryTier", headerName: "Kategoria"},
+      {id: 4, field: "subjectTier", headerName: "Przedmiot"},
+      {id: 5, field: "objectTier", headerName: "Obiekt"},
+      {id: 6, field: "attributeTier", headerName: "Atrybut"},
+    ]
 
+    const setTierValue = (id) => {
+     // setTierValues
+    }
+
+    const handleChangeTier = (fieldId, value) => {
+      setTierValues(prev => ({
+          ...prev,
+          [fieldId]: value
+      }))
+  }
 
   return (
     <div>
@@ -76,22 +108,22 @@ export default function BasicModal() {
                     </Typography>
 
 
-                    {tierDict?.filter(x=>x.dimensionId===0).map((row) => (
+                    {tierDictionary?.map((row) => (
                     <Grid item xs={12}>               
                         <Grid container spacing={3} rowSpacing={2}> 
                                 <Grid item lg={6} md={6} sm={6} xs={12}>
                                   <Box sx={{ maxWidth: 350}}>
                                         <FormControl fullWidth>
-                                            <InputLabel id="demo-simple-select-label2">Główny tier</InputLabel>
+                                            <InputLabel id="demo-simple-select-label2">{row.headerName}</InputLabel>
                                                           <Select
                                                               labelId="demo-simple-select-label2"
                                                               id="demo-simple-select2"
-                                                              value={5}
-                                                              label="Główny tier"
+                                                              value={setTierValue(row.id)}
+                                                              label={row.headerName}
                                                               width="200px"
-                                                              //onChange={handleChangeTier}
+                                                              onChange={handleChangeTier}
                                                           >
-                                                            {tierDict?.filter(x=>x.dimensionId===0).map((row) => (
+                                                            {tierDict?.filter(x=>x.dimensionId===row.id).map((row) => (
                                                             <MenuItem value={row.tierName} key={row.idTier}>
                                                                 {row.tierName}
                                                             </MenuItem>

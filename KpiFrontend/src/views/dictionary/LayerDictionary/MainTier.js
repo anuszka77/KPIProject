@@ -61,7 +61,7 @@ const MainTier = () => {
 
     const onSaveButtonClick = (e) => {
         var list = [{ dimensionId: dimensionValue, tierId: tierValue, name: layerName }];
-        saveLayers(list, systemValue).then(x => alert(x));
+        saveLayers(list, systemValue).then(x => alert(x.returnMessage + x.isSuccess + x.returnStatus));
     }
 
 
