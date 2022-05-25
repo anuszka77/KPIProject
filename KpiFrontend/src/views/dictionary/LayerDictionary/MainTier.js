@@ -25,7 +25,7 @@ const MainTier = () => {
     const [tierValue, setTierValue] = React.useState('');
     const [layerName, setLayerName] = useState();
     const [dictSystem, setDictSystem] = useState([]);
-    const [systemValue, setSystemValue] = useState();
+    const [systemValue, setSystemValue] = useState('');
 
 
     useEffect(() => {
@@ -165,7 +165,7 @@ const MainTier = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            <MainTierGrid />
+            <MainTierGrid idSystem={systemValue} idDimension={dimensionValue} idTier = {tierValue} />
         </MainCard>
     );
 };
