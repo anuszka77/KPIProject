@@ -101,3 +101,23 @@ export const loadProcessDiagramActivity = async (processId ) => {
         return Promise.reject(e);
     }
 };
+
+
+export const loadTierDictionary = async (processId ) => {
+    try {
+        return await getApi('/ProcessBook/GetTierDictionary')
+            .then((res) => {
+                if (res.status === 200) {
+                    return Promise.resolve(res.data);
+                }
+                return Promise.resolve([]);
+            })
+            .catch((error) => {
+                const responseMsg = error.message;
+                console.log(responseMsg);
+                return Promise.reject(responseMsg);
+            });
+    } catch (e) {
+        return Promise.reject(e);
+    }
+};

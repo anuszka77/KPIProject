@@ -39,5 +39,11 @@ namespace KPIProject.Services
         {
             return await mapper.ProjectTo<FGetProcessActivityDiagramTier_ResultDTO>(context.FGetProcessActivityDiagramTier(processId)).ToListAsync();
         }
+
+
+        public async Task<IEnumerable<TiersDictionaryDTO>> GetTierDictionary()
+        {
+            return await mapper.ProjectTo<TiersDictionaryDTO>(context.TiersDictionaries).ToListAsync();
+        }
     }
 }

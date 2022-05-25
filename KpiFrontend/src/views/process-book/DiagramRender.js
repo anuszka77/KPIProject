@@ -27,13 +27,21 @@ import ListItem from '@mui/material/ListItem';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    flexDirection: "row",
+    //flexDirection: "row",
     padding: 0,
     //border: "solid 1px",
     //borderRight: "solid 1px",
     borderColor: "#17202e",
     margin: "5px 0",
-    justifyContent: "space-between"  
+    justifyContent: "space-between" ,
+    //width: '100%',
+    maxWidth: 11111,
+    bgcolor: 'background.paper',
+    position: 'relative',
+    overflow: 'auto',
+    //maxHeight: 640,
+    '& ul': { padding: 200 },
+    
   }
 }));
 

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -11,10 +12,14 @@ import { gridSpacing } from 'store/constant';
 import { Grid } from '@mui/material';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 
 
 import FormControl from '@mui/material/FormControl';
 import { ArrowForward } from '@mui/icons-material';
+
+import { loadTierDictionary} from '../../services/processBookService';
+
 
 const style = {
   position: 'absolute',
@@ -30,8 +35,21 @@ const style = {
 
 export default function BasicModal() {
   const [open, setOpen] = React.useState(false);
+  const [tierDict, setTierDict] = useState();
+  
+  const [mainTier, setMainTier]=useState();
+  const [area, setArea]=useState();
+
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+    
+
+  useEffect(() => {
+    loadTierDictionary().then(x=>setTierDict(x));
+    }, []);
+
+
 
   return (
     <div>
@@ -56,223 +74,38 @@ export default function BasicModal() {
                     <Typography id="modal-modal-title" variant="h3" component="h2">
                       Szczegóły procesu
                     </Typography>
-                    <Grid item xs={12}>
-                            <Grid container spacing={3} rowSpacing={2}>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
+
+
+                    {tierDict?.filter(x=>x.dimensionId===0).map((row) => (
+                    <Grid item xs={12}>               
+                        <Grid container spacing={3} rowSpacing={2}> 
+                                <Grid item lg={6} md={6} sm={6} xs={12}>
                                   <Box sx={{ maxWidth: 350}}>
-                                      <FormControl fullWidth>
-                                          <TextField id="outlined-basic" label="Nazwa procesu" variant="outlined"/>
-                                      </FormControl>
-                                  </Box>
-                                  </Grid>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                        <Box sx={{ maxWidth: 350}}>
-                                                  <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select-label2">Nazwa tier</InputLabel>
+                                        <FormControl fullWidth>
+                                            <InputLabel id="demo-simple-select-label2">Główny tier</InputLabel>
                                                           <Select
                                                               labelId="demo-simple-select-label2"
                                                               id="demo-simple-select2"
                                                               value={5}
-                                                              label="Nazwa tier"
+                                                              label="Główny tier"
                                                               width="200px"
                                                               //onChange={handleChangeTier}
-                                                          ></Select>
-                                                  </FormControl>
-                                          </Box>
-                                    </Grid>
-                                  
+                                                          >
+                                                            {tierDict?.filter(x=>x.dimensionId===0).map((row) => (
+                                                            <MenuItem value={row.tierName} key={row.idTier}>
+                                                                {row.tierName}
+                                                            </MenuItem>
+                                                            ))}  
+                                                                                                                         
+                                                          </Select>                                     
+                                        </FormControl>
+                                    </Box>
+                                  </Grid>                                                                                                  
+                                 
                             </Grid>
                       </Grid> 
-                      <Grid item xs={12}>
-                            <Grid container spacing={2} rowSpacing={2}>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                  <Box sx={{ maxWidth: 350}}>
-                                      <FormControl fullWidth>
-                                          <TextField id="outlined-basic" label="Nazwa procesu" variant="outlined"/>
-                                      </FormControl>
-                                  </Box>
-                                  </Grid>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                        <Box sx={{ maxWidth: 350}}>
-                                                  <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select-label2">Nazwa tier</InputLabel>
-                                                          <Select
-                                                              labelId="demo-simple-select-label2"
-                                                              id="demo-simple-select2"
-                                                              value={5}
-                                                              label="Nazwa tier"
-                                                              width="200px"
-                                                              //onChange={handleChangeTier}
-                                                          ></Select>
-                                                  </FormControl>
-                                          </Box>
-                                    </Grid>
-                                  
-                            </Grid>
-                      </Grid> 
-                      <Grid item xs={12}>
-                            <Grid container spacing={2} rowSpacing={2}>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                  <Box sx={{ maxWidth: 350}}>
-                                      <FormControl fullWidth>
-                                          <TextField id="outlined-basic" label="Nazwa procesu" variant="outlined"/>
-                                      </FormControl>
-                                  </Box>
-                                  </Grid>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                        <Box sx={{ maxWidth: 350}}>
-                                                  <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select-label2">Nazwa tier</InputLabel>
-                                                          <Select
-                                                              labelId="demo-simple-select-label2"
-                                                              id="demo-simple-select2"
-                                                              value={5}
-                                                              label="Nazwa tier"
-                                                              width="200px"
-                                                              //onChange={handleChangeTier}
-                                                          ></Select>
-                                                  </FormControl>
-                                          </Box>
-                                    </Grid>
-                                  
-                            </Grid>
-                        </Grid> 
-                        <Grid item xs={12}>
-                            <Grid container spacing={2} rowSpacing={2}>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                  <Box sx={{ maxWidth: 350}}>
-                                      <FormControl fullWidth>
-                                          <TextField id="outlined-basic" label="Nazwa procesu" variant="outlined"/>
-                                      </FormControl>
-                                  </Box>
-                                  </Grid>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                        <Box sx={{ maxWidth: 350}}>
-                                                  <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select-label2">Nazwa tier</InputLabel>
-                                                          <Select
-                                                              labelId="demo-simple-select-label2"
-                                                              id="demo-simple-select2"
-                                                              value={5}
-                                                              label="Nazwa tier"
-                                                              width="200px"
-                                                              //onChange={handleChangeTier}
-                                                          ></Select>
-                                                  </FormControl>
-                                          </Box>
-                                    </Grid>
-                                  
-                            </Grid>
-                        </Grid> 
-                        <Grid item xs={12}>
-                            <Grid container spacing={2} rowSpacing={2}>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                  <Box sx={{ maxWidth: 350}}>
-                                      <FormControl fullWidth>
-                                          <TextField id="outlined-basic" label="Nazwa procesu" variant="outlined"/>
-                                      </FormControl>
-                                  </Box>
-                                  </Grid>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                        <Box sx={{ maxWidth: 350}}>
-                                                  <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select-label2">Nazwa tier</InputLabel>
-                                                          <Select
-                                                              labelId="demo-simple-select-label2"
-                                                              id="demo-simple-select2"
-                                                              value={5}
-                                                              label="Nazwa tier"
-                                                              width="200px"
-                                                              //onChange={handleChangeTier}
-                                                          ></Select>
-                                                  </FormControl>
-                                          </Box>
-                                    </Grid>
-                                  
-                            </Grid>
-                        </Grid> 
-                        <Grid item xs={12}>
-                            <Grid container spacing={2} rowSpacing={2}>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                  <Box sx={{ maxWidth: 350}}>
-                                      <FormControl fullWidth>
-                                          <TextField id="outlined-basic" label="Nazwa procesu" variant="outlined"/>
-                                      </FormControl>
-                                  </Box>
-                                  </Grid>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                        <Box sx={{ maxWidth: 350}}>
-                                                  <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select-label2">Nazwa tier</InputLabel>
-                                                          <Select
-                                                              labelId="demo-simple-select-label2"
-                                                              id="demo-simple-select2"
-                                                              value={5}
-                                                              label="Nazwa tier"
-                                                              width="200px"
-                                                              //onChange={handleChangeTier}
-                                                          ></Select>
-                                                  </FormControl>
-                                          </Box>
-                                    </Grid>
-                                  
-                            </Grid>
-                        </Grid> 
-                        <Grid item xs={12}>
-                            <Grid container spacing={2} rowSpacing={2}>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                  <Box sx={{ maxWidth: 350}}>
-                                      <FormControl fullWidth>
-                                          <TextField id="outlined-basic" label="Nazwa procesu" variant="outlined"/>
-                                      </FormControl>
-                                  </Box>
-                                  </Grid>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                        <Box sx={{ maxWidth: 350}}>
-                                                  <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select-label2">Nazwa tier</InputLabel>
-                                                          <Select
-                                                              labelId="demo-simple-select-label2"
-                                                              id="demo-simple-select2"
-                                                              value={5}
-                                                              label="Nazwa tier"
-                                                              width="200px"
-                                                              //onChange={handleChangeTier}
-                                                          ></Select>
-                                                  </FormControl>
-                                          </Box>
-                                    </Grid>
-                                  
-                            </Grid>
-                        </Grid> 
-                        <Grid item xs={12}>
-                            <Grid container spacing={2} rowSpacing={2}>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                  <Box sx={{ maxWidth: 350}}>
-                                      <FormControl fullWidth>
-                                          <TextField id="outlined-basic" label="Nazwa procesu" variant="outlined"/>
-                                      </FormControl>
-                                  </Box>
-                                  </Grid>
-                                  <Grid item lg={6} md={6} sm={6} xs={12}>
-                                        <Box sx={{ maxWidth: 350}}>
-                                                  <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select-label2">Nazwa tier</InputLabel>
-                                                          <Select
-                                                              labelId="demo-simple-select-label2"
-                                                              id="demo-simple-select2"
-                                                              value={5}
-                                                              label="Nazwa tier"
-                                                              width="200px"
-                                                              //onChange={handleChangeTier}
-                                                          ></Select>
-                                                  </FormControl>
-                                          </Box>
-                                    </Grid>
-                                  
-                            </Grid>
-                        </Grid> 
-                
+                ))}  
+
                         <IconButton 
                         color="primary" 
                         aria-label="upload picture" 

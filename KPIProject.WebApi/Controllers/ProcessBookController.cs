@@ -45,6 +45,10 @@ namespace KPIProject.WebApi.Controllers
         [Route("GetProcessActivityDiagram/{processId:int}")]
         public async Task<IActionResult> FGetProcessActivityDiaram(int processId) => Ok(await processBookService.GetProcessActivityDiagramTier(processId));
 
+        [HttpGet]
+        [Route("GetTierDictionary")]
+        public async Task<IActionResult> GetTierDictionary(int processId) => Ok(await processBookService.GetTierDictionary());
+
 
     }
 }

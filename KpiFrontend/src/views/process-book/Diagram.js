@@ -42,7 +42,7 @@ const Diagram = () => {
 
 const columnsActivity =[
   {field: "tierId", headerName: "Numer tier", width: 100, position: "sticky"},
-  {field: "listProcessActivityXml", headerName: "Przepływ procesu", width: 2000,  renderCell:(row) => row !=undefined  && row!=null?  renderDiagram(row) : null}
+  {field: "listProcessActivityXml", headerName: "Przepływ procesu", width: 1030,  renderCell:(row) => row !=undefined  && row!=null?  renderDiagram(row) : null}
 ]
 
 return(
@@ -55,10 +55,10 @@ return(
       getRowId={(row) => row.tierId}
       height="100%"
       direction="rtl"
-      rowHeight={100}
+      rowHeight={170}
       autoPageSize={false}
       width="100%"
-      disableExtendRowFullWidth={true}     
+      disableExtendRowFullWidth={true}   
       />
 );
 }

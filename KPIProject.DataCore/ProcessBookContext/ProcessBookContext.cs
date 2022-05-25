@@ -30,6 +30,8 @@ namespace KPIProject.DataCore.ProcessBookContext
 
         #region Properties
         public virtual DbSet<DimensionsDictionary> DimensionsDictionary { get; set; } = null!;
+                public virtual DbSet<TiersDictionary> TiersDictionaries { get; set; } = null!;
+
 
         public IQueryable<FGetListOfProcess_Result> FGetListOfProcess() => FromExpression(() => FGetListOfProcess());
         public IQueryable<FGetTierListByDim_Result> FGetTierListByDim(short? dimensionId) => FromExpression(() => FGetTierListByDim(dimensionId));
@@ -116,19 +118,33 @@ namespace KPIProject.DataCore.ProcessBookContext
                 }
              ));
 
-
-
-
-
-
-
                 entity.Property(e => e.DimensionDescription).HasMaxLength(512);
 
                 entity.Property(e => e.DimensionName).HasMaxLength(64);
             });
 
-            OnModelCreatingPartial(modelBuilder);
-        }
+            modelBuilder.Entity<TiersDictionary>(entity =>
+            {
+                entity.HasKey(e => new { e.DimensionId, e.IdTier })
+                    .HasName("PK_TiersDictionary_DimensionId_IdTier");
+
+                entity.ToTable("TiersDictionary", "Pb");
+
+                entity.ToTable(tb => tb.IsTemporal(ttb =>
+                {
+                    ttb.UseHistoryTable("TiersDictionaryHistory", "Pb");
+                    ttb
+                        .HasPeriodStart("SysStartTime")
+                        .HasColumnName("SysStartTime");
+                    ttb
+                        .HasPeriodEnd("SysEndTime")
+                        .HasColumnName("SysEndTime");
+                }
+              ));
+            });
+
+                OnModelCreatingPartial(modelBuilder);
+            }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
         #endregion Methods
