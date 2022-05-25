@@ -138,3 +138,7 @@ export const modifySpecificDictionary = async (idNameSimpleDictionary,idOfDictio
 export const deleteSpecificDictionary = async (idNameSimpleDictionary,idOfDictionary) => {
     return await mainPostApiService("/Dictionary/DeleteSpecificDictionary/" + idNameSimpleDictionary + "/" + idOfDictionary);
 };
+
+export const loadLayersBySysDimTier = async (systemId,dimensionId,tierId) => {
+    return await mainGetApiService("/Dictionary/GetLayersBySysDimTier/" + systemId + "/" + dimensionId+"/"+tierId);
+};

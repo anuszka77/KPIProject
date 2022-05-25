@@ -69,6 +69,11 @@ namespace KPIProject.Services
         }
         //Proste słowniki_end
 
+        public async Task<IEnumerable<FGetLayersBySysDimTier_ResultDTO>> GetLayersBySysDimTier(short systemId, byte dimensionId, byte tierId)
+        {
+            return await mapper.ProjectTo<FGetLayersBySysDimTier_ResultDTO>(context.FGetLayersBySysDimTier(systemId, dimensionId, tierId)).ToListAsync();
+        }
+
         public async Task<string> SaveLayers(List<LayersToAddDTO> layers, int systemId)
         {
             List<SqlParameter> parms = new()
@@ -211,6 +216,7 @@ namespace KPIProject.Services
             var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
             return message.ToString();
         }
+
 
 
     }

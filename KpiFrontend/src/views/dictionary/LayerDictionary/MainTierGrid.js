@@ -1,11 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getColumnConfig } from './SimpleDictionaryColumnsToGrid';
-import { useSimpleDictionaryContext } from './SimpleDictionaryContext';
-import { StyledDataGrid } from '../../../designed-components/StyledDataGrid';
-import { loadDictKpi, loadDictSystem, loadDictActivityHierarchy, loadDictBussinesValueAdded, loadDictDepartment, loadDictCriticalTo } from 'services/dictionaryService';
-import { SimpleDictionaryActivityHierarchyType, SimpleDictionaryBussinesValueAddedType, SimpleDictionaryCriticalToType, SimpleDictionaryDepartmentType, SimpleDictionaryKpiType, SimpleDictionarySystemType } from './SimpleDictionaryTableInterfaces';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-
+import {loadLayersBySysDimTier} from '../../../services/dictionaryService'
 const WIDTH_COL1 = 200;
 const WIDTH_COL2 = 400;
 
@@ -17,11 +12,11 @@ export default function MainTierGrid(props) {
 
     useEffect(() => {
         getLayersData(props.idSystem,props.idDimension,props.idTier);;
-    }, [idSimpleDictionarySelected]);
+    }, []);
 
-    useEffect(() => {
-        setIdSelectedRow(selectedRows)
-    }, [selectedRows]);
+    // useEffect(() => {
+    //     setIdSelectedRow(selectedRows)
+    // }, [selectedRows]);
 
 
     const columnsMainTier = [
@@ -32,7 +27,7 @@ export default function MainTierGrid(props) {
 
     const getLayersData = async (idSystem,idDimension,idTier) => {
 
-        loadDictActivityHierarchy().then((z) => {
+        loadLayersBySysDimTier(idSystem,idDimension,idTier).then((z) => {
             const rows =
                 z.map((item) =>
                     ({ id: item.IdLayer, idLayer: item.IdLayer, layerName: item.LayerName }))
@@ -42,7 +37,7 @@ export default function MainTierGrid(props) {
 
     const getSelectedRow = (idDic) => {
         const selectedIDs = new Set(idDic);
-        const selectedRows = rowsSimpleDictionaryData.filter((row) =>
+        const selectedRows = rowsMainTierData.filter((row) =>
             selectedIDs.has(row.id),
         );
         setSelectedRows(selectedRows);

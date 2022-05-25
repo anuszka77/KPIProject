@@ -63,6 +63,10 @@ namespace KPIProject.WebApi.Controllers
 
         //Proste słowniki_end
 
+        [HttpGet]
+        [Route("GetLayersBySysDimTier/{systemId:int}/{dimensionId:int}/{tierId:int}")]
+        public async Task<IActionResult> FGetLayersBySysDimTier(short systemId, byte dimensionId, byte tierId) => Ok(await dictService.GetLayersBySysDimTier(systemId, dimensionId, tierId));
+
 
 
 

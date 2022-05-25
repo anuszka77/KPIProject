@@ -7,7 +7,6 @@ import { SimpleDictionaryActivityHierarchyType, SimpleDictionaryBussinesValueAdd
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 
-
 export default function SimpleDictionaryGrid() {
 
   const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();

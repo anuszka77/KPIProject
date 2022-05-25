@@ -19,6 +19,8 @@ namespace KPIProject.ServicesInterfaces
         Task<IEnumerable<FGetListOfSystemDictionary_ResultDTO>> GetListOfSystemDictionary();
         //Proste słowniki_end
 
+        Task<IEnumerable<FGetLayersBySysDimTier_ResultDTO>> GetLayersBySysDimTier(short systemId, byte dimensionId, byte tierId);
+
         Task<string> AddElementToSystemDictionary(short idSystem,string systemName);
         Task<string> AddElementToDepartmentDictionary(short idDepartment, string departmentName);
         Task<string> AddElementToActivityHierarchyDictionary(byte idActivityHierarchy, string activityHierarchyName);

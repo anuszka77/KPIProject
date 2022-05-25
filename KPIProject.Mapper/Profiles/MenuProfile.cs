@@ -34,6 +34,7 @@ namespace KPIProject.Mapper.Profiles
             CreateMap<FGetListOfKpiDictionary_Result, FGetListOfKpiDictionary_ResultDTO>().ReverseMap();
             CreateMap<FGetListOfSystemDictionary_Result, FGetListOfSystemDictionary_ResultDTO>().ReverseMap();
             //Proste słowniki_end
+            CreateMap<FGetLayersBySysDimTier_Result, FGetLayersBySysDimTier_ResultDTO>().ReverseMap();
         }
 
 

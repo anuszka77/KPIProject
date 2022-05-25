@@ -53,7 +53,7 @@ namespace KPIProject.DataCore.ProcessBookContext
         public IQueryable<FGetListOfSystemDictionary_Result> FGetListOfSystemDictionary() => FromExpression(() => FGetListOfSystemDictionary());
         //Proste słowniki_end
 
-
+        public IQueryable<FGetLayersBySysDimTier_Result> FGetLayersBySysDimTier(short systemId, byte dimensionId, byte tierId) => FromExpression(() => FGetLayersBySysDimTier(systemId,dimensionId,tierId));
 
         #endregion Properties
 
@@ -119,6 +119,8 @@ namespace KPIProject.DataCore.ProcessBookContext
             modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetListOfSystemDictionary))).HasSchema("PbApp");
             //Proste słowniki_end
 
+            modelBuilder.Entity<FGetLayersBySysDimTier_Result>().HasNoKey();
+            modelBuilder.HasDbFunction(typeof(ProcessBookContext)?.GetMethod(nameof(FGetLayersBySysDimTier), new[] { typeof(short), typeof(byte), typeof(byte) } )).HasSchema("PbApp");
 
 
 
