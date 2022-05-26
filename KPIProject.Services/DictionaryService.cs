@@ -226,7 +226,29 @@ namespace KPIProject.Services
             return message.ToString();
         }
 
+        public async Task<CallResultDTO> DeleteSpecificLayer(short systemId, byte dimensionId, byte tierId, string layerId)
+        {
+            List<SqlParameter> parms = new()
+            {
+                new SqlParameter { ParameterName = "@SystemId", Value = systemId },
+                new SqlParameter { ParameterName = "@DimensionId", Value = dimensionId },
+                new SqlParameter { ParameterName = "@TierId", Value = tierId },
+                new SqlParameter { ParameterName = "@LayerId", Value = layerId },
+                new SqlParameter("@ReturnMessage", SqlDbType.VarChar) { Direction = ParameterDirection.Output, Size = 512 },
+                new SqlParameter("@ReturnStatus", SqlDbType.SmallInt) { Direction = ParameterDirection.Output }
+            };
 
+            await context.Database.ExecuteSqlRawAsync("PbApp.DeleteSpecificLayer @SystemId,@DimensionId,@TierId,@LayerId,@ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
+            string message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value.ToString();
+            short status = (short)parms.FirstOrDefault(d => d.ParameterName == "@ReturnStatus").Value;
+            
+            return new CallResultDTO
+            {
+                ReturnStatus = status,
+                ReturnMessage = message,
+                IsSuccess = status == 1 ? true : false
+            };
+        }
 
     }
 }

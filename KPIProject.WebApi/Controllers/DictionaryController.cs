@@ -113,6 +113,11 @@ namespace KPIProject.WebApi.Controllers
         [HttpPost]
         [Route("DeleteSpecificDictionary/{idNameSimpleDictionary:int}/{idOfDictionary}")]
         public async Task<IActionResult> DeleteSpecificDictionary(byte idNameSimpleDictionary, string idOfDictionary) => Ok(await dictService.DeleteSpecificDictionary(idNameSimpleDictionary, idOfDictionary));
-        
+
+
+        [HttpPost]
+        [Route("DeleteSpecificLayer/{systemId:int}/{dimensionId:int}/{tierId:int}/{layerId}")]
+        public async Task<IActionResult> DeleteSpecificLayer(short systemId, byte dimensionId, byte tierId, string layerId) => Ok(await dictService.DeleteSpecificLayer(systemId,dimensionId,tierId,layerId));
+
     }
 }
