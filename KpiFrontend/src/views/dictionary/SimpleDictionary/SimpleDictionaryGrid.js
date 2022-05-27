@@ -1,27 +1,19 @@
 import { useEffect, useState } from 'react';
 import { getColumnConfig } from './SimpleDictionaryColumnsToGrid';
 import { useSimpleDictionaryContext } from './SimpleDictionaryContext';
-import { StyledDataGrid } from '../../../designed-components/StyledDataGrid';
 import { loadDictKpi, loadDictSystem, loadDictActivityHierarchy, loadDictBussinesValueAdded, loadDictDepartment, loadDictCriticalTo } from 'services/dictionaryService';
-import { SimpleDictionaryActivityHierarchyType, SimpleDictionaryBussinesValueAddedType, SimpleDictionaryCriticalToType, SimpleDictionaryDepartmentType, SimpleDictionaryKpiType, SimpleDictionarySystemType } from './SimpleDictionaryTableInterfaces';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 
 export default function SimpleDictionaryGrid() {
 
-  const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();
+  const { idSimpleDictionarySelected, setIdSelectedRow } = useSimpleDictionaryContext();
   const [rowsSimpleDictionaryData, setRowsSimpleDictionaryData] = useState([]);
-  const [selectedRows, setSelectedRows] = useState([]);
-
 
   useEffect(() => {
     getSimpleDictionaryData(idSimpleDictionarySelected).then(x=> console.log(x));;
+    setIdSelectedRow("");
   }, [idSimpleDictionarySelected]);
-
-  useEffect(() => {
-    setIdSelectedRow(selectedRows)
-  }, [selectedRows]);
-
 
   const getSimpleDictionaryData = async (idSimpleDictionarySelected) => {
     switch (idSimpleDictionarySelected) {
@@ -84,10 +76,8 @@ export default function SimpleDictionaryGrid() {
     const selectedRows = rowsSimpleDictionaryData.filter((row) =>
       selectedIDs.has(row.id),
     );
-    setSelectedRows(selectedRows);
+    setIdSelectedRow(selectedRows);
   };
-
-
 
   return (
     <div style={{ height: 200, width: '100%' }}>
@@ -101,12 +91,7 @@ export default function SimpleDictionaryGrid() {
         components={{
           Toolbar: GridToolbar
         }}
-        
-
       />
-      <pre style={{ fontSize: 10 }}>
-        {JSON.stringify(selectedRows, null, 4)}
-      </pre>
     </div>
   );
 }

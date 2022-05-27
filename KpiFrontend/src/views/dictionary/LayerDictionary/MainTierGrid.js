@@ -1,58 +1,58 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import {loadLayersBySysDimTier} from '../../../services/dictionaryService'
+import { loadLayersBySysDimTier } from '../../../services/dictionaryService'
+import { useSimpleDictionaryContext } from '../SimpleDictionary/SimpleDictionaryContext';
+
 const WIDTH_COL1 = 200;
 const WIDTH_COL2 = 400;
 
 
 export default function MainTierGrid(props) {
-
+    const { idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();
     const [rowsMainTierData, setRowsMainTierData] = useState([]);
-    const [selectedRows, setSelectedRows] = useState([]);
+    // const [selectedRows, setSelectedRows] = useState([]);
 
     useEffect(() => {
-        if (props.idSystem && props.idDimension && props.idTier){ 
-        getLayersData(props.idSystem,props.idDimension,props.idTier);;
+        if (props.idSystem && props.idDimension && props.idTier) {
+            getLayersData(props.idSystem, props.idDimension, props.idTier);;
         }
-        console.log(rowsMainTierData.length)
-    }, [props.idSystem,props.idDimension,props.idTier]);
+        setIdSelectedRow("")
+    }, [props.idSystem, props.idDimension, props.idTier]);
 
-    // useEffect(() => {
-    //     setIdSelectedRow(selectedRows)
-    // }, [selectedRows]);
+
     const columnsMainTier = [
         { field: "idLayer", headerName: "Numer wartstwy", width: WIDTH_COL1 },
         { field: "layerName", headerName: "Nazwa warstwy", width: WIDTH_COL2 }
     ]
 
 
-    const getLayersData = async (idSystem,idDimension,idTier) => {
+    const getLayersData = async (idSystem, idDimension, idTier) => {
 
-        loadLayersBySysDimTier(idSystem,idDimension,idTier).then((z) => {
+        loadLayersBySysDimTier(idSystem, idDimension, idTier).then((z) => {
             const rows =
                 z.map((item) =>
                     ({ id: item.idLayer, idLayer: item.idLayer, layerName: item.layerName }))
-                    setRowsMainTierData(rows?.sort((x1, x2) => x1.idLayer - x2.idLayer));
+            setRowsMainTierData(rows?.sort((x1, x2) => x1.idLayer - x2.idLayer));
         })
     }
 
-    const getSelectedRow = (idDic) => {
-        const selectedIDs = new Set(idDic);
+    const getSelectedRow = (idSel) => {
+        const selectedIDs = new Set(idSel);
         const selectedRows = rowsMainTierData.filter((row) =>
             selectedIDs.has(row.id),
         );
-        setSelectedRows(selectedRows);
+        setIdSelectedRow(selectedRows);
     };
 
     return (
         <div style={{ height: 200, width: '100%' }}>
-            {"Ilość wierszy w bazie danych: " + rowsMainTierData.length }
+            {"Ilość wierszy w bazie danych: " + rowsMainTierData.length}
             <DataGrid
                 rows={rowsMainTierData}
                 columns={columnsMainTier}
                 getRowId={(row) => row.id}
                 checkboxSelection={true}
-                onSelectionModelChange={(idDic) => { getSelectedRow(idDic) }}
+                onSelectionModelChange={(idSel) => { getSelectedRow(idSel) }}
                 components={{
                     Toolbar: GridToolbar
                 }}
