@@ -14,7 +14,7 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { operationEnum } from '../SimpleDictionary/SimpleDictionaryEnum';
-import { loadDimensions, loadTierList, saveLayers, loadDictSystem } from '../../../services/dictionaryService';
+import { loadDimensions, loadTierList, saveLayers, loadDictSystem,deleteSpecificLayer } from '../../../services/dictionaryService';
 import { useEffect, useState } from 'react';
 import MainTierGrid from './MainTierGrid'
 import { useSimpleDictionaryContext } from '../SimpleDictionary/SimpleDictionaryContext';
@@ -33,7 +33,11 @@ const MainTier = () => {
     const [isButtonDisable, setIsButtonDisable] = useState(true);
     const [buttonName, setButtonName] = useState("Zapisz");
     const [oparation, setOperation] = useState(operationEnum.Add);
-    const [listOfSelectedRow, setListOfSelectedRow]=useState("")
+    const [listOfSelectedRowToRemove, setListOfSelectedRowToRemove] = useState("")
+    const [isVisibleTextFieldWithIdToRemove, setIsVisibleTextFieldWithIdToRemove] = useState(false)
+    const [informationFromDb, setInformationFromDb] = useState("");
+    const [showPopup, setShowPopup] = useState(false);
+
 
 
     useEffect(() => {
@@ -42,21 +46,21 @@ const MainTier = () => {
     }, []);
 
     let text = "";
-    
+
     useEffect(() => {
         nameButtonSelect();
 
         if (idSelectedRow.length === 1) {
             console.log(idSelectedRow[0].id)
-            setListOfSelectedRow(idSelectedRow[0].id)
+            setListOfSelectedRowToRemove(idSelectedRow[0].id)
 
         } else if (idSelectedRow.length === 0) {
-            setListOfSelectedRow("");
+            setListOfSelectedRowToRemove("");
         } else {
             idSelectedRow.forEach((element) => { text += element.id + ";" })
-            setListOfSelectedRow(text)
+            setListOfSelectedRowToRemove(text)
         }
-    }, [idSelectedRow,layerName]);
+    }, [idSelectedRow, layerName]);
 
 
     const getDimensions = async => {
@@ -102,38 +106,55 @@ const MainTier = () => {
         if (idSelectedRow.length === 0) {
             setOperation(operationEnum.Add);
             setButtonName("Zapisz");
+            setIsVisibleTextFieldWithIdToRemove(false);
         } else if (idSelectedRow.length === 1 && layerName.length > 0) {
             setOperation(operationEnum.Update);
             setButtonName("Aktualizuj");
+            setIsVisibleTextFieldWithIdToRemove(false);
         } else if (idSelectedRow.length > 0) {
             setOperation(operationEnum.Delete);
-            let newButtonName = "Usuń:"+ listOfSelectedRow;
-            setButtonName(newButtonName);
+            setButtonName("Usuń");
+            setIsVisibleTextFieldWithIdToRemove(true);
+        }
+    }
+
+    useEffect(() => {
+        checkIfSetEnableButton();
+    }, [systemValue, dimensionValue,tierValue,listOfSelectedRowToRemove, oparation]);
+
+    const checkIfSetEnableButton = () => {
+        if ((systemValue && dimensionValue && tierValue) || oparation === 3) {
+            setIsButtonDisable(false);
+        } else {
+            setIsButtonDisable(true);
         }
     }
 
     const onAgree = () => {
-        // switch (oparation) {
-        //     case operationEnum.Add
-        
-       
-        //         :  var list = [{ dimensionId: dimensionValue, tierId: tierValue, name: layerName }];
-        // saveLayers(list, systemValue).then(x => { setInformationFromDb(x); setShowPopup(true); setIdSimpleDictionarySelected(""); });
-        //         break;
-        //     case operationEnum.Update
-        //         : modifySpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
-        //         break;
-        //     case operationEnum.Delete
-        //         : deleteSpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
-        //         break;
-        // }
-
+        switch (oparation) {
+            case operationEnum.Add
+                : var list = [{ dimensionId: dimensionValue, tierId: tierValue, name: layerName }];
+                saveLayers(list, systemValue).then(x => { setInformationFromDb(x); setShowPopup(true) });
+                break;
+            // case operationEnum.Update
+            //     : modifySpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
+            //     break;
+            case operationEnum.Delete
+                : deleteSpecificLayer(systemValue, dimensionValue,tierValue,listOfSelectedRowToRemove).then(x => { setInformationFromDb(x); setShowPopup(true) });
+                break;
+        }
         // clearFields();
     }
 
     const onDisagree = () => {
         // clearFields();
     }
+
+    const onClosePopup = (e) => {
+        setShowPopup(false);
+        return false;
+    }
+
 
 
     return (
@@ -224,22 +245,34 @@ const MainTier = () => {
                                     </Button>
 
                                     <AlertDialogButton
-                                        buttonName={buttonName }
+                                        buttonName={buttonName}
                                         isDisabled={isButtonDisable}
                                         onDisagree={onDisagree}
                                         onAgree={onAgree} />
-                                    {/* {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} onClosePopup={onClosePopup} />} */}
-                             
+                                    {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} onClosePopup={onClosePopup} />}
+
                                 </FormControl>
+
                             </Box>
+
+                        </Grid>
+                        <Grid item lg={3} md={6} sm={6} xs={12}>
+                            <FormControl fullWidth>
+                                {isVisibleTextFieldWithIdToRemove && <TextField
+                                    id="outlined-basic"
+                                    label="Id do usunięcia"
+                                    variant="outlined"
+                                    disabled
+                                    value={listOfSelectedRowToRemove}
+                                />}
+                            </FormControl>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-            {"Lista zaznaczonych wierszy" +listOfSelectedRow}
             <MainTierGrid idSystem={systemValue} idDimension={dimensionValue} idTier={tierValue} />
         </MainCard>
-        
+
     );
 };
 export default MainTier;
