@@ -13,25 +13,50 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { operationEnum } from '../SimpleDictionary/SimpleDictionaryEnum';
 import { loadDimensions, loadTierList, saveLayers, loadDictSystem } from '../../../services/dictionaryService';
 import { useEffect, useState } from 'react';
 import MainTierGrid from './MainTierGrid'
+import { useSimpleDictionaryContext } from '../SimpleDictionary/SimpleDictionaryContext';
+import AlertDialogButton from '../../../utils/AlertDialogButton';
+import AlertInformationPopup from '../../../utils/AlertInformationPopup';
 
 const MainTier = () => {
-
+    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();
     const [dimension, setDimension] = useState([]);
     const [dimensionValue, setDimensionValue] = React.useState('');
     const [tierList, setTierList] = useState([]);
     const [tierValue, setTierValue] = React.useState('');
-    const [layerName, setLayerName] = useState();
+    const [layerName, setLayerName] = useState("");
     const [dictSystem, setDictSystem] = useState([]);
     const [systemValue, setSystemValue] = useState('');
+    const [isButtonDisable, setIsButtonDisable] = useState(true);
+    const [buttonName, setButtonName] = useState("Zapisz");
+    const [oparation, setOperation] = useState(operationEnum.Add);
+    const [listOfSelectedRow, setListOfSelectedRow]=useState("")
 
 
     useEffect(() => {
         getDimensions();
         getDictSystem();
     }, []);
+
+    let text = "";
+    
+    useEffect(() => {
+        nameButtonSelect();
+
+        if (idSelectedRow.length === 1) {
+            console.log(idSelectedRow[0].id)
+            setListOfSelectedRow(idSelectedRow[0].id)
+
+        } else if (idSelectedRow.length === 0) {
+            setListOfSelectedRow("");
+        } else {
+            idSelectedRow.forEach((element) => { text += element.id + ";" })
+            setListOfSelectedRow(text)
+        }
+    }, [idSelectedRow,layerName]);
 
 
     const getDimensions = async => {
@@ -72,6 +97,44 @@ const MainTier = () => {
     const onSystemChanged = (e) => {
         setSystemValue(e.target.value);
     }
+
+    const nameButtonSelect = () => {
+        if (idSelectedRow.length === 0) {
+            setOperation(operationEnum.Add);
+            setButtonName("Zapisz");
+        } else if (idSelectedRow.length === 1 && layerName.length > 0) {
+            setOperation(operationEnum.Update);
+            setButtonName("Aktualizuj");
+        } else if (idSelectedRow.length > 0) {
+            setOperation(operationEnum.Delete);
+            let newButtonName = "Usuń:"+ listOfSelectedRow;
+            setButtonName(newButtonName);
+        }
+    }
+
+    const onAgree = () => {
+        // switch (oparation) {
+        //     case operationEnum.Add
+        
+       
+        //         :  var list = [{ dimensionId: dimensionValue, tierId: tierValue, name: layerName }];
+        // saveLayers(list, systemValue).then(x => { setInformationFromDb(x); setShowPopup(true); setIdSimpleDictionarySelected(""); });
+        //         break;
+        //     case operationEnum.Update
+        //         : modifySpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
+        //         break;
+        //     case operationEnum.Delete
+        //         : deleteSpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
+        //         break;
+        // }
+
+        // clearFields();
+    }
+
+    const onDisagree = () => {
+        // clearFields();
+    }
+
 
     return (
         <MainCard title="Słowniki do księgi procesów">
@@ -159,12 +222,21 @@ const MainTier = () => {
                                         onClick={onSaveButtonClick}
                                     >Zapisz
                                     </Button>
+
+                                    <AlertDialogButton
+                                        buttonName={buttonName }
+                                        isDisabled={isButtonDisable}
+                                        onDisagree={onDisagree}
+                                        onAgree={onAgree} />
+                                    {/* {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} onClosePopup={onClosePopup} />} */}
+                             
                                 </FormControl>
                             </Box>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
+            {"Lista zaznaczonych wierszy" +listOfSelectedRow}
             <MainTierGrid idSystem={systemValue} idDimension={dimensionValue} idTier={tierValue} />
         </MainCard>
         

@@ -7,7 +7,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 export default function SimpleDictionaryGrid() {
 
-  const { idSimpleDictionarySelected, setIdSelectedRow } = useSimpleDictionaryContext();
+  const { idSimpleDictionarySelected,idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();
   const [rowsSimpleDictionaryData, setRowsSimpleDictionaryData] = useState([]);
 
   useEffect(() => {
@@ -82,6 +82,7 @@ export default function SimpleDictionaryGrid() {
   return (
     <div style={{ height: 200, width: '100%' }}>
       {"Ilość wierszy w bazie danych: " + rowsSimpleDictionaryData.length }
+      {"Zaznaczony wiersz: " + idSelectedRow}
       <DataGrid
         rows={rowsSimpleDictionaryData}
         columns={getColumnConfig(idSimpleDictionarySelected)}
