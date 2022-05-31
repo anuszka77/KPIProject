@@ -131,18 +131,18 @@ export const addElementToKpiDictionary = async (id, name) => {
     return await mainPostApiService("/Dictionary/AddElementToKpiDictionary/" + id + "/" + name);
 };
 
-export const modifySpecificDictionary = async (idNameSimpleDictionary,idOfDictionary, newNameOfDictionary) => {
-    return await mainPostApiService("/Dictionary/ModifySpecificDictionary/" + idNameSimpleDictionary + "/" + idOfDictionary+"/"+newNameOfDictionary);
+export const modifySpecificDictionary = async (idNameSimpleDictionary, idOfDictionary, newNameOfDictionary) => {
+    return await mainPostApiService("/Dictionary/ModifySpecificDictionary/" + idNameSimpleDictionary + "/" + idOfDictionary + "/" + newNameOfDictionary);
 };
 
-export const deleteSpecificDictionary = async (idNameSimpleDictionary,idOfDictionary) => {
+export const deleteSpecificDictionary = async (idNameSimpleDictionary, idOfDictionary) => {
     return await mainPostApiService("/Dictionary/DeleteSpecificDictionary/" + idNameSimpleDictionary + "/" + idOfDictionary);
 };
 
-export const loadLayersBySysDimTier = async (systemId,dimensionId,tierId) => {
-    return await mainGetApiService("/Dictionary/GetLayersBySysDimTier/" + systemId + "/" + dimensionId+"/"+tierId);
+export const loadLayersBySysDimTier = async (systemId, dimensionId, tierId) => {
+    return await mainGetApiService("/Dictionary/GetLayersBySysDimTier/" + systemId + "/" + dimensionId + "/" + tierId);
 };
 
-export const deleteSpecificLayer = async (systemId,dimensionId,tierId,layer) => {
-    return await mainGetApiService("/Dictionary/DeleteSpecificLayer/" + systemId + "/" + dimensionId+"/"+tierId+"/"+layer);
+export const deleteSpecificLayer = async (systemId, dimensionId, tierId, layer) => {
+    return await mainGetApiService("/Dictionary/DeleteSpecificLayer/" + systemId + "/" + dimensionId + "/" + tierId + "/" + layer);
 };

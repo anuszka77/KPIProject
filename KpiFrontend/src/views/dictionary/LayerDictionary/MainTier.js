@@ -14,7 +14,7 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { operationEnum } from '../SimpleDictionary/SimpleDictionaryEnum';
-import { loadDimensions, loadTierList, saveLayers, loadDictSystem,deleteSpecificLayer } from '../../../services/dictionaryService';
+import { loadDimensions, loadTierList, saveLayers, loadDictSystem, deleteSpecificLayer } from '../../../services/dictionaryService';
 import { useEffect, useState } from 'react';
 import MainTierGrid from './MainTierGrid'
 import { useSimpleDictionaryContext } from '../SimpleDictionary/SimpleDictionaryContext';
@@ -23,18 +23,21 @@ import AlertInformationPopup from '../../../utils/AlertInformationPopup';
 
 const MainTier = () => {
     const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();
-    const [dimension, setDimension] = useState([]);
-    const [dimensionValue, setDimensionValue] = React.useState('');
+    const [dimensionList, setDimensionList] = useState([]);
     const [tierList, setTierList] = useState([]);
-    const [tierValue, setTierValue] = React.useState('');
+    const [dictSystemList, setDictSystemList] = useState([]);
+
+    const [systemValueId, setSystemValueId] = useState('');
+    const [dimensionValueId, setDimensionValueId] = React.useState('');
+    const [tierValueId, setTierValueId] = React.useState('');
     const [layerName, setLayerName] = useState("");
-    const [dictSystem, setDictSystem] = useState([]);
-    const [systemValue, setSystemValue] = useState('');
+
     const [isButtonDisable, setIsButtonDisable] = useState(true);
     const [buttonName, setButtonName] = useState("Zapisz");
     const [oparation, setOperation] = useState(operationEnum.Add);
     const [listOfSelectedRowToRemove, setListOfSelectedRowToRemove] = useState("")
     const [isVisibleTextFieldWithIdToRemove, setIsVisibleTextFieldWithIdToRemove] = useState(false)
+
     const [informationFromDb, setInformationFromDb] = useState("");
     const [showPopup, setShowPopup] = useState(false);
 
@@ -44,6 +47,7 @@ const MainTier = () => {
         getDimensions();
         getDictSystem();
     }, []);
+
 
     let text = "";
 
@@ -62,44 +66,21 @@ const MainTier = () => {
         }
     }, [idSelectedRow, layerName]);
 
+    useEffect(() => {
+        checkIfSetEnableButton();
+    }, [systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove, oparation]);
 
     const getDimensions = async => {
         loadDimensions().then((x) => {
-            setDimension(x);
+            setDimensionList(x);
         });
     }
+
 
     const getDictSystem = async => {
         loadDictSystem().then((x) => {
-            setDictSystem(x);
+            setDictSystemList(x);
         });
-    }
-
-    const handleChange = (event) => {
-        setDimensionValue(event.target.value);
-        setTierValue(null);
-        loadTierList(event.target.value).then((x) => {
-            setTierList(x);
-        })
-    };
-
-    const handleChangeTier = (event) => {
-        setTierValue(event.target.value);
-    };
-
-
-    const onSaveButtonClick = (e) => {
-        var list = [{ dimensionId: dimensionValue, tierId: tierValue, name: layerName }];
-        saveLayers(list, systemValue).then(x => alert(x.returnMessage + x.isSuccess + x.returnStatus));
-    }
-
-
-    const onLayerNameChanged = (e) => {
-        setLayerName(e.target.value);
-    }
-
-    const onSystemChanged = (e) => {
-        setSystemValue(e.target.value);
     }
 
     const nameButtonSelect = () => {
@@ -118,29 +99,52 @@ const MainTier = () => {
         }
     }
 
-    useEffect(() => {
-        checkIfSetEnableButton();
-    }, [systemValue, dimensionValue,tierValue,listOfSelectedRowToRemove, oparation]);
-
     const checkIfSetEnableButton = () => {
-        if ((systemValue && dimensionValue && tierValue) || oparation === 3) {
+        if ((systemValueId && dimensionValueId && tierValueId) || oparation === 3) {
             setIsButtonDisable(false);
         } else {
             setIsButtonDisable(true);
         }
     }
 
+    const handleChange = (event) => {
+        setDimensionValueId(event.target.value);
+        setTierValueId(null);
+        loadTierList(event.target.value).then((x) => {
+            setTierList(x);
+        })
+    };
+
+    const handleChangeTier = (event) => {
+        setTierValueId(event.target.value);
+    };
+
+
+    const onSaveButtonClick = (e) => {
+        var list = [{ dimensionId: dimensionValueId, tierId: tierValueId, name: layerName }];
+        saveLayers(list, systemValueId).then(x => alert(x.returnMessage + x.isSuccess + x.returnStatus));
+    }
+
+
+    const onLayerNameChanged = (e) => {
+        setLayerName(e.target.value);
+    }
+
+    const onSystemChanged = (e) => {
+        setSystemValueId(e.target.value);
+    }
+
     const onAgree = () => {
         switch (oparation) {
             case operationEnum.Add
-                : var list = [{ dimensionId: dimensionValue, tierId: tierValue, name: layerName }];
-                saveLayers(list, systemValue).then(x => { setInformationFromDb(x); setShowPopup(true) });
+                : var list = [{ dimensionId: dimensionValueId, tierId: tierValueId, name: layerName }];
+                saveLayers(list, systemValueId).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
                 break;
             // case operationEnum.Update
             //     : modifySpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
             //     break;
             case operationEnum.Delete
-                : deleteSpecificLayer(systemValue, dimensionValue,tierValue,listOfSelectedRowToRemove).then(x => { setInformationFromDb(x); setShowPopup(true) });
+                : deleteSpecificLayer(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
                 break;
         }
         // clearFields();
@@ -154,8 +158,6 @@ const MainTier = () => {
         setShowPopup(false);
         return false;
     }
-
-
 
     return (
         <MainCard title="Słowniki do księgi procesów">
@@ -171,19 +173,17 @@ const MainTier = () => {
                                         id="demo-simple-select"
                                         label="System"
                                         onChange={onSystemChanged}
-                                        value={systemValue}
+                                        value={systemValueId}
                                     >
-                                        {dictSystem.map((row) => (
+                                        {dictSystemList.map((row) => (
                                             <MenuItem value={row.idSystem} key={row.idSystem}>
-                                                {row.systemName}
+                                                {row.systemName + " (" + row.idSystem + ")"}
                                             </MenuItem>
                                         ))}
-
                                     </Select>
                                 </FormControl>
                             </Box>
                         </Grid>
-
                         <Grid item lg={3} md={6} sm={6} xs={12}>
                             <Box sx={{ minWidth: 12 }}>
                                 <FormControl fullWidth>
@@ -193,14 +193,13 @@ const MainTier = () => {
                                         id="demo-simple-select"
                                         label="Nazwa wymiaru"
                                         onChange={handleChange}
-                                        value={dimensionValue}
+                                        value={dimensionValueId}
                                     >
-                                        {dimension.map((row) => (
+                                        {dimensionList.map((row) => (
                                             <MenuItem value={row.idDimension} key={row.idDimension}>
-                                                {row.dimensionDescription}
+                                                {row.dimensionDescription + " (" + row.idDimension + ")"}
                                             </MenuItem>
                                         ))}
-
                                     </Select>
                                 </FormControl>
                             </Box>
@@ -212,13 +211,12 @@ const MainTier = () => {
                                     <Select
                                         labelId="demo-simple-select-label2"
                                         id="demo-simple-select2"
-                                        value={tierValue}
+                                        value={tierValueId}
                                         label="Nazwa tier"
-                                        onChange={handleChangeTier}
-                                    >
+                                        onChange={handleChangeTier}>
                                         {tierList.map((row) => (
                                             <MenuItem value={row.tierId} key={row.tierId}>
-                                                {row.tierName}
+                                                {row.tierName + " (" + row.tierId + ")"}
                                             </MenuItem>
                                         ))}
                                     </Select>
@@ -250,11 +248,8 @@ const MainTier = () => {
                                         onDisagree={onDisagree}
                                         onAgree={onAgree} />
                                     {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} onClosePopup={onClosePopup} />}
-
                                 </FormControl>
-
                             </Box>
-
                         </Grid>
                         <Grid item lg={3} md={6} sm={6} xs={12}>
                             <FormControl fullWidth>
@@ -270,7 +265,7 @@ const MainTier = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            <MainTierGrid idSystem={systemValue} idDimension={dimensionValue} idTier={tierValue} />
+            <MainTierGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} />
         </MainCard>
 
     );

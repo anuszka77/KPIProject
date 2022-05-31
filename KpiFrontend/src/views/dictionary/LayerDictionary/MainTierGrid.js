@@ -6,11 +6,9 @@ import { useSimpleDictionaryContext } from '../SimpleDictionary/SimpleDictionary
 const WIDTH_COL1 = 200;
 const WIDTH_COL2 = 400;
 
-
 export default function MainTierGrid(props) {
-    const { idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();
+    const {setIdSelectedRow} = useSimpleDictionaryContext();
     const [rowsMainTierData, setRowsMainTierData] = useState([]);
-    // const [selectedRows, setSelectedRows] = useState([]);
 
     useEffect(() => {
         if (props.idSystem && props.idDimension && props.idTier) {
@@ -27,7 +25,6 @@ export default function MainTierGrid(props) {
 
 
     const getLayersData = async (idSystem, idDimension, idTier) => {
-
         loadLayersBySysDimTier(idSystem, idDimension, idTier).then((z) => {
             const rows =
                 z.map((item) =>
