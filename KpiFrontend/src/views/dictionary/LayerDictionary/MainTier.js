@@ -40,7 +40,7 @@ const MainTier = () => {
 
     const [informationFromDb, setInformationFromDb] = useState("");
     const [showPopup, setShowPopup] = useState(false);
-
+    const [reloadGrid,setReloadGrid] = useState(false);
 
 
     useEffect(() => {
@@ -55,9 +55,7 @@ const MainTier = () => {
         nameButtonSelect();
 
         if (idSelectedRow.length === 1) {
-            console.log(idSelectedRow[0].id)
             setListOfSelectedRowToRemove(idSelectedRow[0].id)
-
         } else if (idSelectedRow.length === 0) {
             setListOfSelectedRowToRemove("");
         } else {
@@ -68,7 +66,7 @@ const MainTier = () => {
 
     useEffect(() => {
         checkIfSetEnableButton();
-    }, [systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove, oparation]);
+    }, [systemValueId, dimensionValueId, tierValueId,layerName,listOfSelectedRowToRemove,oparation]);
 
     const getDimensions = async => {
         loadDimensions().then((x) => {
@@ -84,7 +82,7 @@ const MainTier = () => {
     }
 
     const nameButtonSelect = () => {
-        if (idSelectedRow.length === 0) {
+        if (idSelectedRow.length === 0 ) {
             setOperation(operationEnum.Add);
             setButtonName("Zapisz");
             setIsVisibleTextFieldWithIdToRemove(false);
@@ -100,7 +98,7 @@ const MainTier = () => {
     }
 
     const checkIfSetEnableButton = () => {
-        if ((systemValueId && dimensionValueId && tierValueId) || oparation === 3) {
+        if ((systemValueId && dimensionValueId && tierValueId && layerName) || oparation === 3) {
             setIsButtonDisable(false);
         } else {
             setIsButtonDisable(true);
@@ -119,13 +117,6 @@ const MainTier = () => {
         setTierValueId(event.target.value);
     };
 
-
-    const onSaveButtonClick = (e) => {
-        var list = [{ dimensionId: dimensionValueId, tierId: tierValueId, name: layerName }];
-        saveLayers(list, systemValueId).then(x => alert(x.returnMessage + x.isSuccess + x.returnStatus));
-    }
-
-
     const onLayerNameChanged = (e) => {
         setLayerName(e.target.value);
     }
@@ -139,12 +130,14 @@ const MainTier = () => {
             case operationEnum.Add
                 : var list = [{ dimensionId: dimensionValueId, tierId: tierValueId, name: layerName }];
                 saveLayers(list, systemValueId).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
+                setReloadGrid(!reloadGrid);
                 break;
             // case operationEnum.Update
             //     : modifySpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
             //     break;
             case operationEnum.Delete
                 : deleteSpecificLayer(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
+                setReloadGrid(!reloadGrid);
                 break;
         }
         // clearFields();
@@ -235,13 +228,7 @@ const MainTier = () => {
                         </Grid>
                         <Grid item lg={1} md={6} sm={6} xs={12} alignItems="flex-end">
                             <Box sx={{ minWidth: 12 }}>
-                                <FormControl fullWidth>
-                                    <Button
-                                        variant="contained"
-                                        onClick={onSaveButtonClick}
-                                    >Zapisz
-                                    </Button>
-
+                                <FormControl fullWidth>             
                                     <AlertDialogButton
                                         buttonName={buttonName}
                                         isDisabled={isButtonDisable}
@@ -265,7 +252,7 @@ const MainTier = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            <MainTierGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} />
+            <MainTierGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} reloadGrid = {reloadGrid}/>
         </MainCard>
 
     );

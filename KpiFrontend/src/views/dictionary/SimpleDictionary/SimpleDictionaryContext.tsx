@@ -6,6 +6,8 @@ export type SimpleDictionaryContextType = {
   setIdSimpleDictionarySelected: (inputValue: number) => void;
   idSelectedRow: number[];
   setIdSelectedRow: (inputValue: any) => void;
+  orderReloadGrid: boolean;
+  setOrderReloadGrid: (inputValue: boolean) => void;
 
 }
 
@@ -15,6 +17,8 @@ export const SimpleDictionaryContext = createContext<SimpleDictionaryContextType
     setIdSimpleDictionarySelected: idSimpleDictionarySelected => console.warn("ddd"),
     idSelectedRow: [0],
     setIdSelectedRow: idSelectedRow => console.warn("ddd"),
+    orderReloadGrid: false,
+    setOrderReloadGrid: setOrderReloadGrid => console.warn("ddd"),
   }
 );
 export const useSimpleDictionaryContext = () => useContext(SimpleDictionaryContext);

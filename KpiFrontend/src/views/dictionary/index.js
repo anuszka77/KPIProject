@@ -35,23 +35,22 @@ const Dictionary = () => {
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>
                         <Grid item lg={12} md={6} sm={6} xs={12}>
-                        
-                                <TabContext value={value}>
-                                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                        <TabList onChange={handleChange} >
-                                            <Tab label="Słowniki layerów" value="1" />
-                                            <Tab label="Słowniki proste" value="2" />
-                                        </TabList>
-                                    </Box>
-                                    <TabPanel value="1" style={{ height: `inherit` }} >
+
+                            <TabContext value={value}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                    <TabList onChange={handleChange} >
+                                        <Tab label="Słowniki layerów" value="1" />
+                                        <Tab label="Słowniki proste" value="2" />
+                                    </TabList>
+                                </Box>
+                                <TabPanel value="1" style={{ height: `inherit` }} >
                                     <MainTier />
-                                
-                                    </TabPanel>
-                                    <TabPanel value="2" style={{ height: `inherit` }} >
+                                </TabPanel>
+                                <TabPanel value="2" style={{ height: `inherit` }} >
                                     <SimpleDictionaryConfigPanel />
                                     {idSimpleDictionarySelected != 0 && <SimpleDictionaryGrid />}
-                                    </TabPanel>
-                                </TabContext>
+                                </TabPanel>
+                            </TabContext>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -60,33 +59,3 @@ const Dictionary = () => {
     );
 }
 export default Dictionary;
-
-/*
-
- <Grid container spacing={gridSpacing}>
-            <Grid item xs={12}>
-                <Grid container spacing={gridSpacing}>
-                    <Grid item lg={6} md={6} sm={6} xs={12}>
-                    <MainTier/>
-                    </Grid>
-                    <Grid item lg={6} md={6} sm={6} xs={12}>
-                        <MainTier/>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid item xs={12}>
-                <Grid container spacing={gridSpacing}>
-                    <Grid item lg={6} md={6} sm={6} xs={12}>
-                    <MainTier/>
-                    </Grid>
-                    <Grid item lg={6} md={6} sm={6} xs={12}>
-                        <MainTier/>
-                    </Grid>
-                </Grid>
-            </Grid>
-            </Grid>
-      
-
-
-
-*/

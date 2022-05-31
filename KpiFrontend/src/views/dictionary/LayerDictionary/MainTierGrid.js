@@ -15,7 +15,7 @@ export default function MainTierGrid(props) {
             getLayersData(props.idSystem, props.idDimension, props.idTier);;
         }
         setIdSelectedRow("")
-    }, [props.idSystem, props.idDimension, props.idTier]);
+    }, [props.idSystem, props.idDimension, props.idTier,props.reloadGrid]);
 
 
     const columnsMainTier = [

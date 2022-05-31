@@ -82,7 +82,6 @@ export default function SimpleDictionaryGrid() {
   return (
     <div style={{ height: 200, width: '100%' }}>
       {"Ilość wierszy w bazie danych: " + rowsSimpleDictionaryData.length }
-      {"Zaznaczony wiersz: " + idSelectedRow}
       <DataGrid
         rows={rowsSimpleDictionaryData}
         columns={getColumnConfig(idSimpleDictionarySelected)}
