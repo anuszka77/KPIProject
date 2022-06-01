@@ -20,6 +20,8 @@ import MainTierGrid from './MainTierGrid'
 import { useSimpleDictionaryContext } from '../SimpleDictionary/SimpleDictionaryContext';
 import AlertDialogButton from '../../../utils/AlertDialogButton';
 import AlertInformationPopup from '../../../utils/AlertInformationPopup';
+import { withStyles} from '@material-ui/core/styles';
+
 
 const MainTier = () => {
     const {idSelectedRow, orderReloadGrid,setOrderReloadGrid } = useSimpleDictionaryContext();
@@ -41,7 +43,11 @@ const MainTier = () => {
     const [informationFromDb, setInformationFromDb] = useState("");
     const [showPopup, setShowPopup] = useState(false);
 
-
+    const styles = theme => ({
+        buttonPadding: {    
+          padding: '30px',   
+        },
+      });
     useEffect(() => {
         getDictSystem();
         getDimensions();
@@ -154,13 +160,13 @@ const MainTier = () => {
     }
 
     return (
-        <MainCard title="Słowniki do księgi procesów">
-            <Grid container spacing={gridSpacing}>
-                <Grid item xs={12}>
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item lg={3} md={6} sm={6} xs={12}>
-                            <Box sx={{ minWidth: 12 }}>
-                                <FormControl fullWidth>
+        <MainCard  title="Słowniki do księgi procesów"  >
+            <Grid container spacing={gridSpacing}  >
+                <Grid item xs={12}  >
+                    <Grid container spacing={gridSpacing} >
+                        <Grid item lg={3} md={6} sm={6} xs={12} >
+                            <Box sx={{ minWidth: 12 }} >
+                                <FormControl fullWidth >
                                     <InputLabel id="demo-simple-select-label">System</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
@@ -178,7 +184,7 @@ const MainTier = () => {
                                 </FormControl>
                             </Box>
                         </Grid>
-                        <Grid item lg={3} md={6} sm={6} xs={12}>
+                        <Grid item lg={3} md={6} sm={6} xs={12} >
                             <Box sx={{ minWidth: 12 }}>
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Nazwa wymiaru</InputLabel>
@@ -252,10 +258,9 @@ const MainTier = () => {
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-            <MainTierGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} reloadGrid = {orderReloadGrid}/>
+            </Grid>   
+            <MainTierGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} reloadGrid = {orderReloadGrid}/>      
         </MainCard>
-
     );
 };
 export default MainTier;

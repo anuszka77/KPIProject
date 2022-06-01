@@ -17,7 +17,7 @@ import { operationEnum } from "./SimpleDictionaryEnum";
 
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
-    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow ,orderReloadGrid,setOrderReloadGrid} = useSimpleDictionaryContext();
+    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow ,orderReloadGrid,setOrderReloadGrid} = useSimpleDictionaryContext();
     const [idNewDictionarySelected, setIdNewDictionarySelected] = useState(0);
     const [nameNewDictionarySelected, setNameNewDictionarySelected] = useState("");
     const [isButtonDisable, setIsButtonDisable] = useState(true);

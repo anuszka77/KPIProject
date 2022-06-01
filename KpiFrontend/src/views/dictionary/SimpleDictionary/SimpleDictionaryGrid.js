@@ -7,29 +7,34 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 export default function SimpleDictionaryGrid() {
 
-  const { idSimpleDictionarySelected, setIdSelectedRow,orderReloadGrid } = useSimpleDictionaryContext();
+  const { idSimpleDictionarySelected, setIdSelectedRow, orderReloadGrid } = useSimpleDictionaryContext();
   const [rowsSimpleDictionaryData, setRowsSimpleDictionaryData] = useState([]);
 
   useEffect(() => {
     getSimpleDictionaryData(idSimpleDictionarySelected);;
     setIdSelectedRow("");
-  }, [idSimpleDictionarySelected,orderReloadGrid]);
+  }, [idSimpleDictionarySelected, orderReloadGrid]);
 
   const getSimpleDictionaryData = async (idSimpleDictionarySelected) => {
+    setRowsSimpleDictionaryData([]);
+
     switch (idSimpleDictionarySelected) {
       case 1:
         loadDictActivityHierarchy().then((z) => {
           const rows =
             z.map((item) =>
               ({ id: item.idActivityHierarchy, idActivityHierarchy: item.idActivityHierarchy, activityHierarchyName: item.activityHierarchyName }))
+
+          // setRowsSimpleDictionaryData([]);
           setRowsSimpleDictionaryData(rows);
         })
         break;
       case 2:
         loadDictBussinesValueAdded().then((z) => {
-          let rows =
+          const rows =
             z.map((item) =>
               ({ id: item.idBussinesValueAdded, idBussinesValueAdded: item.idBussinesValueAdded, bussinesValueAddedName: item.bussinesValueAddedName }))
+          // setRowsSimpleDictionaryData([]);
           setRowsSimpleDictionaryData(rows);
         })
         break;
@@ -38,6 +43,7 @@ export default function SimpleDictionaryGrid() {
           const rows =
             z.map((item) =>
               ({ id: item.idCriticalTo, idCriticalTo: item.idCriticalTo, criticalToName: item.criticalToName }))
+          // setRowsSimpleDictionaryData([]);
           setRowsSimpleDictionaryData(rows?.sort((x1, x2) => x1.idCriticalTo - x2.idCriticalTo));
         })
         break;
@@ -46,6 +52,7 @@ export default function SimpleDictionaryGrid() {
           const rows =
             z.map((item) =>
               ({ id: item.idDepartment, idDepartment: item.idDepartment, departmentName: item.departmentName }))
+          // setRowsSimpleDictionaryData([]);
           setRowsSimpleDictionaryData(rows);
         })
         break;
@@ -54,6 +61,7 @@ export default function SimpleDictionaryGrid() {
           const rows =
             z.map((item) =>
               ({ id: item.idKpi, idKpi: item.idKpi, kpi: item.kpi }))
+     
           setRowsSimpleDictionaryData(rows);
         })
         break;
@@ -81,7 +89,7 @@ export default function SimpleDictionaryGrid() {
 
   return (
     <div style={{ height: 200, width: '100%' }}>
-      {"Ilość wierszy w bazie danych: " + rowsSimpleDictionaryData.length }
+      {"Ilość wierszy w bazie danych: " + rowsSimpleDictionaryData.length}
       <DataGrid
         rows={rowsSimpleDictionaryData}
         columns={getColumnConfig(idSimpleDictionarySelected)}
