@@ -13,6 +13,8 @@ export default function MainTierGrid(props) {
     useEffect(() => {
         if (props.idSystem && props.idDimension && props.idTier) {
             getLayersData(props.idSystem, props.idDimension, props.idTier);;
+        } else {
+            setRowsMainTierData([]);
         }
         setIdSelectedRow("")
     }, [props.idSystem, props.idDimension, props.idTier,props.reloadGrid]);

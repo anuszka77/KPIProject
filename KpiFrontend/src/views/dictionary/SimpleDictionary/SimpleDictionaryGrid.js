@@ -7,13 +7,13 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 export default function SimpleDictionaryGrid() {
 
-  const { idSimpleDictionarySelected,idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();
+  const { idSimpleDictionarySelected, setIdSelectedRow,orderReloadGrid } = useSimpleDictionaryContext();
   const [rowsSimpleDictionaryData, setRowsSimpleDictionaryData] = useState([]);
 
   useEffect(() => {
-    getSimpleDictionaryData(idSimpleDictionarySelected).then(x=> console.log(x));;
+    getSimpleDictionaryData(idSimpleDictionarySelected);;
     setIdSelectedRow("");
-  }, [idSimpleDictionarySelected]);
+  }, [idSimpleDictionarySelected,orderReloadGrid]);
 
   const getSimpleDictionaryData = async (idSimpleDictionarySelected) => {
     switch (idSimpleDictionarySelected) {

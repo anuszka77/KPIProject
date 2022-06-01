@@ -21,6 +21,7 @@ import TabPanel from '@mui/lab/TabPanel';
 const Dictionary = () => {
     const [idSimpleDictionarySelected, setIdSimpleDictionarySelected] = useState(0);
     const [idSelectedRow, setIdSelectedRow] = useState([]);
+    const [orderReloadGrid, setOrderReloadGrid] = useState(false);
     const [value, setValue] = useState('1');
 
     const handleChange = (event, newValue) => {
@@ -30,7 +31,7 @@ const Dictionary = () => {
 
 
     return (
-        <SimpleDictionaryContext.Provider value={{ idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow }}>
+        <SimpleDictionaryContext.Provider value={{ idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow,orderReloadGrid,setOrderReloadGrid }}>
             <Grid container spacing={gridSpacing}>
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>

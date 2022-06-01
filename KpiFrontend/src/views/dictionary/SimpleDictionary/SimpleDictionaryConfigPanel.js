@@ -17,7 +17,7 @@ import { operationEnum } from "./SimpleDictionaryEnum";
 
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
-    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();
+    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow ,orderReloadGrid,setOrderReloadGrid} = useSimpleDictionaryContext();
     const [idNewDictionarySelected, setIdNewDictionarySelected] = useState(0);
     const [nameNewDictionarySelected, setNameNewDictionarySelected] = useState("");
     const [isButtonDisable, setIsButtonDisable] = useState(true);
@@ -75,13 +75,16 @@ const SimpleDictionaryConfigPanel = () => {
     const onAgree = () => {
         switch (oparation) {
             case operationEnum.Add
-                : simpleDictionaryAddToDatabase(idNewDictionarySelected, nameNewDictionarySelected, idSimpleDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true); setIdSimpleDictionarySelected(""); });
+                : simpleDictionaryAddToDatabase(idNewDictionarySelected, nameNewDictionarySelected, idSimpleDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true);});
+                 setOrderReloadGrid(!orderReloadGrid);
                 break;
             case operationEnum.Update
                 : modifySpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
+                setOrderReloadGrid(!orderReloadGrid);
                 break;
             case operationEnum.Delete
                 : deleteSpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
+                setOrderReloadGrid(!orderReloadGrid);
                 break;
         }
 

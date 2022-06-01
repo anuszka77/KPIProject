@@ -22,7 +22,7 @@ import AlertDialogButton from '../../../utils/AlertDialogButton';
 import AlertInformationPopup from '../../../utils/AlertInformationPopup';
 
 const MainTier = () => {
-    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();
+    const {idSelectedRow, orderReloadGrid,setOrderReloadGrid } = useSimpleDictionaryContext();
     const [dimensionList, setDimensionList] = useState([]);
     const [tierList, setTierList] = useState([]);
     const [dictSystemList, setDictSystemList] = useState([]);
@@ -40,12 +40,11 @@ const MainTier = () => {
 
     const [informationFromDb, setInformationFromDb] = useState("");
     const [showPopup, setShowPopup] = useState(false);
-    const [reloadGrid,setReloadGrid] = useState(false);
 
 
     useEffect(() => {
-        getDimensions();
         getDictSystem();
+        getDimensions();
     }, []);
 
 
@@ -105,13 +104,17 @@ const MainTier = () => {
         }
     }
 
-    const handleChange = (event) => {
+    const onDimensionChange = (event) => {
         setDimensionValueId(event.target.value);
         setTierValueId(null);
         loadTierList(event.target.value).then((x) => {
             setTierList(x);
         })
     };
+
+    const onSystemChanged = (e) => {
+        setSystemValueId(e.target.value);
+    }
 
     const handleChangeTier = (event) => {
         setTierValueId(event.target.value);
@@ -121,23 +124,21 @@ const MainTier = () => {
         setLayerName(e.target.value);
     }
 
-    const onSystemChanged = (e) => {
-        setSystemValueId(e.target.value);
-    }
+
 
     const onAgree = () => {
         switch (oparation) {
             case operationEnum.Add
                 : var list = [{ dimensionId: dimensionValueId, tierId: tierValueId, name: layerName }];
                 saveLayers(list, systemValueId).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
-                setReloadGrid(!reloadGrid);
+                setOrderReloadGrid(!orderReloadGrid);
                 break;
             // case operationEnum.Update
             //     : modifySpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
             //     break;
             case operationEnum.Delete
                 : deleteSpecificLayer(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
-                setReloadGrid(!reloadGrid);
+                setOrderReloadGrid(!orderReloadGrid);
                 break;
         }
         // clearFields();
@@ -185,7 +186,7 @@ const MainTier = () => {
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         label="Nazwa wymiaru"
-                                        onChange={handleChange}
+                                        onChange={onDimensionChange}
                                         value={dimensionValueId}
                                     >
                                         {dimensionList.map((row) => (
@@ -252,7 +253,7 @@ const MainTier = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            <MainTierGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} reloadGrid = {reloadGrid}/>
+            <MainTierGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} reloadGrid = {orderReloadGrid}/>
         </MainCard>
 
     );
