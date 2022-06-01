@@ -27,7 +27,7 @@ export default function SimpleDictionaryGrid() {
         break;
       case 2:
         loadDictBussinesValueAdded().then((z) => {
-          const rows =
+          let rows =
             z.map((item) =>
               ({ id: item.idBussinesValueAdded, idBussinesValueAdded: item.idBussinesValueAdded, bussinesValueAddedName: item.bussinesValueAddedName }))
           setRowsSimpleDictionaryData(rows);

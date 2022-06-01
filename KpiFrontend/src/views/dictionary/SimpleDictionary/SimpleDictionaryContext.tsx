@@ -16,7 +16,7 @@ export const SimpleDictionaryContext = createContext<SimpleDictionaryContextType
     idSimpleDictionarySelected: 0,
     setIdSimpleDictionarySelected: idSimpleDictionarySelected => console.warn("ddd"),
     idSelectedRow: [0],
-    setIdSelectedRow: idSelectedRow => console.warn("ddd"),
+    setIdSelectedRow: idSelectedRow => console.warn(idSelectedRow),
     orderReloadGrid: false,
     setOrderReloadGrid: setOrderReloadGrid => console.warn("ddd"),
   }
