@@ -238,7 +238,7 @@ namespace KPIProject.Services
                 new SqlParameter("@ReturnStatus", SqlDbType.SmallInt) { Direction = ParameterDirection.Output }
             };
 
-            await context.Database.ExecuteSqlRawAsync("PbApp.DeleteSpecificLayer @SystemId,@DimensionId,@TierId,@LayerId,@ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
+            await context.Database.ExecuteSqlRawAsync("PbApp.LayerDelete @SystemId,@DimensionId,@TierId,@LayerId,@ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
             string message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value.ToString();
             short status = (short)parms.FirstOrDefault(d => d.ParameterName == "@ReturnStatus").Value;
             
