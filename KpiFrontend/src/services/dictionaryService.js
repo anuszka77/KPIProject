@@ -146,3 +146,7 @@ export const loadLayersBySysDimTier = async (systemId, dimensionId, tierId) => {
 export const deleteSpecificLayer = async (systemId, dimensionId, tierId, layer) => {
     return await mainPostApiService("/Dictionary/DeleteSpecificLayer/" + systemId + "/" + dimensionId + "/" + tierId + "/" + layer);
 };
+
+export const layerModify = async (systemId, dimensionId, tierId, layerId,layerName) => {
+    return await mainPostApiService("/Dictionary/LayerModify/" + systemId + "/" + dimensionId + "/" + tierId + "/" + layerId +"/" + layerName);
+};

@@ -32,5 +32,6 @@ namespace KPIProject.ServicesInterfaces
         Task<string> DeleteSpecificDictionary(byte idNameSimpleDictionary, string idOfDictionary);
 
         Task<CallResultDTO> DeleteSpecificLayer(short systemId, byte dimensionId, byte tierId, string layerId);
+        Task<CallResultDTO> LayerModify(short systemId, byte dimensionId, byte tierId, int layerId, string layerName);
     }
 }

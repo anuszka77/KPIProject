@@ -14,17 +14,16 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { operationEnum } from '../SimpleDictionary/SimpleDictionaryEnum';
-import { loadDimensions, loadTierList, saveLayers, loadDictSystem, deleteSpecificLayer } from '../../../services/dictionaryService';
+import { loadDimensions, loadTierList, saveLayers, loadDictSystem, deleteSpecificLayer, layerModify } from '../../../services/dictionaryService';
 import { useEffect, useState } from 'react';
 import MainTierGrid from './MainTierGrid'
 import { useSimpleDictionaryContext } from '../SimpleDictionary/SimpleDictionaryContext';
 import AlertDialogButton from '../../../utils/AlertDialogButton';
 import AlertInformationPopup from '../../../utils/AlertInformationPopup';
-import { withStyles} from '@material-ui/core/styles';
 
 
 const MainTier = () => {
-    const {idSelectedRow, orderReloadGrid,setOrderReloadGrid } = useSimpleDictionaryContext();
+    const { idSelectedRow, orderReloadGrid, setOrderReloadGrid } = useSimpleDictionaryContext();
     const [dimensionList, setDimensionList] = useState([]);
     const [tierList, setTierList] = useState([]);
     const [dictSystemList, setDictSystemList] = useState([]);
@@ -43,11 +42,6 @@ const MainTier = () => {
     const [informationFromDb, setInformationFromDb] = useState("");
     const [showPopup, setShowPopup] = useState(false);
 
-    const styles = theme => ({
-        buttonPadding: {    
-          padding: '30px',   
-        },
-      });
     useEffect(() => {
         getDictSystem();
         getDimensions();
@@ -71,7 +65,8 @@ const MainTier = () => {
 
     useEffect(() => {
         checkIfSetEnableButton();
-    }, [systemValueId, dimensionValueId, tierValueId,layerName,listOfSelectedRowToRemove,oparation]);
+    }, [systemValueId, dimensionValueId, tierValueId, layerName, listOfSelectedRowToRemove, oparation]);
+
 
     const getDimensions = async => {
         loadDimensions().then((x) => {
@@ -87,7 +82,7 @@ const MainTier = () => {
     }
 
     const nameButtonSelect = () => {
-        if (idSelectedRow.length === 0 ) {
+        if (idSelectedRow.length === 0) {
             setOperation(operationEnum.Add);
             setButtonName("Zapisz");
             setIsVisibleTextFieldWithIdToRemove(false);
@@ -139,9 +134,10 @@ const MainTier = () => {
                 saveLayers(list, systemValueId).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
                 setOrderReloadGrid(!orderReloadGrid);
                 break;
-            // case operationEnum.Update
-            //     : modifySpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
-            //     break;
+            case operationEnum.Update
+                : layerModify(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove, layerName).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
+                setOrderReloadGrid(!orderReloadGrid);
+                break;
             case operationEnum.Delete
                 : deleteSpecificLayer(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
                 setOrderReloadGrid(!orderReloadGrid);
@@ -160,7 +156,7 @@ const MainTier = () => {
     }
 
     return (
-        <MainCard  title="Słowniki do księgi procesów"  >
+        <MainCard title="Słowniki do księgi procesów"  >
             <Grid container spacing={gridSpacing}  >
                 <Grid item xs={12}  >
                     <Grid container spacing={gridSpacing} >
@@ -235,7 +231,7 @@ const MainTier = () => {
                         </Grid>
                         <Grid item lg={1} md={6} sm={6} xs={12} alignItems="flex-end">
                             <Box sx={{ minWidth: 12 }}>
-                                <FormControl fullWidth>             
+                                <FormControl fullWidth>
                                     <AlertDialogButton
                                         buttonName={buttonName}
                                         isDisabled={isButtonDisable}
@@ -258,8 +254,8 @@ const MainTier = () => {
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>   
-            <MainTierGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} reloadGrid = {orderReloadGrid}/>      
+            </Grid>
+            <MainTierGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} reloadGrid={orderReloadGrid} />
         </MainCard>
     );
 };
