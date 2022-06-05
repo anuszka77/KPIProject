@@ -40,6 +40,7 @@ const MainTier = () => {
     const [isVisibleTextFieldWithIdToRemove, setIsVisibleTextFieldWithIdToRemove] = useState(false)
 
     const [informationFromDb, setInformationFromDb] = useState("");
+    const [statusFromDb, setStatusFromDb] = useState(0);
     const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
@@ -105,25 +106,32 @@ const MainTier = () => {
         }
     }
 
-    const onDimensionChange = (event) => {
+    const onDimensionChanged = (event) => {
         setDimensionValueId(event.target.value);
         setTierValueId(null);
+        setLayerName("");
         loadTierList(event.target.value).then((x) => {
             setTierList(x);
         })
+        console.log(layerName);
     };
 
     const onSystemChanged = (e) => {
+        setTierValueId(null);
+        setDimensionValueId(null);
+        setLayerName("");
         setSystemValueId(e.target.value);
     }
 
-    const handleChangeTier = (event) => {
+    const onTierChanged = (event) => {
         setTierValueId(event.target.value);
+        setLayerName("");
     };
 
     const onLayerNameChanged = (e) => {
         setLayerName(e.target.value);
     }
+
 
 
 
@@ -133,21 +141,24 @@ const MainTier = () => {
                 : var list = [{ dimensionId: dimensionValueId, tierId: tierValueId, name: layerName }];
                 saveLayers(list, systemValueId).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
                 setOrderReloadGrid(!orderReloadGrid);
+                setLayerName("");
                 break;
             case operationEnum.Update
                 : layerModify(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove, layerName).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
                 setOrderReloadGrid(!orderReloadGrid);
+                setLayerName("");
                 break;
             case operationEnum.Delete
                 : deleteSpecificLayer(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
                 setOrderReloadGrid(!orderReloadGrid);
+                setLayerName("");
                 break;
         }
-        // clearFields();
+        setLayerName("");
     }
 
     const onDisagree = () => {
-        // clearFields();
+        setLayerName("");
     }
 
     const onClosePopup = (e) => {
@@ -188,7 +199,7 @@ const MainTier = () => {
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         label="Nazwa wymiaru"
-                                        onChange={onDimensionChange}
+                                        onChange={onDimensionChanged}
                                         value={dimensionValueId}
                                     >
                                         {dimensionList.map((row) => (
@@ -209,7 +220,7 @@ const MainTier = () => {
                                         id="demo-simple-select2"
                                         value={tierValueId}
                                         label="Nazwa tier"
-                                        onChange={handleChangeTier}>
+                                        onChange={onTierChanged}>
                                         {tierList.map((row) => (
                                             <MenuItem value={row.tierId} key={row.tierId}>
                                                 {row.tierName + " (" + row.tierId + ")"}
@@ -225,6 +236,7 @@ const MainTier = () => {
                                     id="outlined-basic"
                                     label="Nazwa warstwy"
                                     variant="outlined"
+                                    value={layerName}
                                     onChange={onLayerNameChanged}
                                 />
                             </FormControl>

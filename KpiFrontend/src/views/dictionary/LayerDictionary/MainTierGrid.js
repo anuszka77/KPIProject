@@ -12,7 +12,8 @@ export default function MainTierGrid(props) {
 
     useEffect(() => {
         if (props.idSystem && props.idDimension && props.idTier) {
-            getLayersData(props.idSystem, props.idDimension, props.idTier);;
+            getLayersData(props.idSystem, props.idDimension, props.idTier);
+            setRowsMainTierData([]);
         } else {
             setRowsMainTierData([]);
         }
@@ -51,7 +52,7 @@ export default function MainTierGrid(props) {
                 columns={columnsMainTier}
                 getRowId={(row) => row.id}
                 checkboxSelection={true}
-                onSelectionModelChange={(idSel) => { getSelectedRow(idSel) }}
+                onSelectionModelChange={(idSel) => { getSelectedRow(idSel) ;  }}
                 components={{
                     Toolbar: GridToolbar
                 }}
