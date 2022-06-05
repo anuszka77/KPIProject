@@ -1,4 +1,4 @@
-import { getApi, postApi } from '../api/apiRequest';
+import {postApi } from '../api/apiRequest';
 
 export const mainPostApiService = async (apiPath) => {
 

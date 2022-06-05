@@ -17,11 +17,13 @@ import { operationEnum } from "./SimpleDictionaryEnum";
 
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
-    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow ,orderReloadGrid,setOrderReloadGrid} = useSimpleDictionaryContext();
+    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, orderReloadGrid, setOrderReloadGrid } = useSimpleDictionaryContext();
     const [idNewDictionarySelected, setIdNewDictionarySelected] = useState(0);
     const [nameNewDictionarySelected, setNameNewDictionarySelected] = useState("");
     const [isButtonDisable, setIsButtonDisable] = useState(true);
     const [buttonName, setButtonName] = useState("Zapisz");
+
+    const [statusFromDb, setStatusFromDb] = useState(0);
     const [informationFromDb, setInformationFromDb] = useState("");
     const [showPopup, setShowPopup] = useState(false);
     const [oparation, setOperation] = useState(operationEnum.Add);
@@ -31,7 +33,7 @@ const SimpleDictionaryConfigPanel = () => {
             setDictListOfSimpleDictionary(x);
         });
     }, []);
-    
+
     let text = "";
 
     useEffect(() => {
@@ -47,7 +49,7 @@ const SimpleDictionaryConfigPanel = () => {
             idSelectedRow.forEach((element) => { text += element.id + ";" })
             setIdNewDictionarySelected(text)
         }
-    }, [idSelectedRow,nameNewDictionarySelected]);
+    }, [idSelectedRow, nameNewDictionarySelected]);
 
     useEffect(() => {
         checkIfSetEnableButton();
@@ -75,15 +77,15 @@ const SimpleDictionaryConfigPanel = () => {
     const onAgree = () => {
         switch (oparation) {
             case operationEnum.Add
-                : simpleDictionaryAddToDatabase(idNewDictionarySelected, nameNewDictionarySelected, idSimpleDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true);});
-                 setOrderReloadGrid(!orderReloadGrid);
+                : simpleDictionaryAddToDatabase(idNewDictionarySelected, nameNewDictionarySelected, idSimpleDictionarySelected).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true);setStatusFromDb(x.returnStatus)});
+                setOrderReloadGrid(!orderReloadGrid);
                 break;
             case operationEnum.Update
-                : modifySpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
+                : modifySpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected, nameNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true);setStatusFromDb(x.returnStatus) });
                 setOrderReloadGrid(!orderReloadGrid);
                 break;
             case operationEnum.Delete
-                : deleteSpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true) });
+                : deleteSpecificDictionary(idSimpleDictionarySelected, idNewDictionarySelected).then(x => { setInformationFromDb(x); setShowPopup(true);setStatusFromDb(x.returnStatus) });
                 setOrderReloadGrid(!orderReloadGrid);
                 break;
         }
@@ -185,7 +187,7 @@ const SimpleDictionaryConfigPanel = () => {
                                         isDisabled={isButtonDisable}
                                         onDisagree={onDisagree}
                                         onAgree={onAgree} />
-                                    {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} onClosePopup={onClosePopup} />}
+                                    {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} statusFromDb={statusFromDb} onClosePopup={onClosePopup} />}
 
                                 </FormControl>
                             </Box>

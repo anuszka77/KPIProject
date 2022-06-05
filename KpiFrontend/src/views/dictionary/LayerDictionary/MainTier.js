@@ -139,17 +139,17 @@ const MainTier = () => {
         switch (oparation) {
             case operationEnum.Add
                 : var list = [{ dimensionId: dimensionValueId, tierId: tierValueId, name: layerName }];
-                saveLayers(list, systemValueId).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
+                saveLayers(list, systemValueId).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true);setStatusFromDb(x.returnStatus) });
                 setOrderReloadGrid(!orderReloadGrid);
                 setLayerName("");
                 break;
             case operationEnum.Update
-                : layerModify(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove, layerName).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
+                : layerModify(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove, layerName).then(x => { setInformationFromDb(x.returnMessage) ;setShowPopup(true) ;setStatusFromDb(x.returnStatus) });
                 setOrderReloadGrid(!orderReloadGrid);
                 setLayerName("");
                 break;
             case operationEnum.Delete
-                : deleteSpecificLayer(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true) });
+                : deleteSpecificLayer(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true); setStatusFromDb(x.returnStatus)});
                 setOrderReloadGrid(!orderReloadGrid);
                 setLayerName("");
                 break;
@@ -249,7 +249,7 @@ const MainTier = () => {
                                         isDisabled={isButtonDisable}
                                         onDisagree={onDisagree}
                                         onAgree={onAgree} />
-                                    {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} onClosePopup={onClosePopup} />}
+                                    {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} statusFromDb={statusFromDb} onClosePopup={onClosePopup} />}
                                 </FormControl>
                             </Box>
                         </Grid>
