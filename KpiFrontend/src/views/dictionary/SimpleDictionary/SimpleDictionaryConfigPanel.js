@@ -200,7 +200,6 @@ const SimpleDictionaryConfigPanel = () => {
                     </Grid>
                 </Grid>
             </Grid>
-
         </MainCard>
     );
 };

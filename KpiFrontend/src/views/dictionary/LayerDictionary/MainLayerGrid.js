@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import { useEffect, useState} from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { loadLayersBySysDimTier } from '../../../services/dictionaryService'
 import { useSimpleDictionaryContext } from '../SimpleDictionary/SimpleDictionaryContext';
@@ -6,16 +6,16 @@ import { useSimpleDictionaryContext } from '../SimpleDictionary/SimpleDictionary
 const WIDTH_COL1 = 200;
 const WIDTH_COL2 = 400;
 
-export default function MainTierGrid(props) {
+export default function MainLayerGrid(props) {
     const {setIdSelectedRow} = useSimpleDictionaryContext();
-    const [rowsMainTierData, setRowsMainTierData] = useState([]);
+    const [rowsMainLayerData, setrowsMainLayerData] = useState([]);
 
     useEffect(() => {
         if (props.idSystem && props.idDimension && props.idTier) {
             getLayersData(props.idSystem, props.idDimension, props.idTier);
-            setRowsMainTierData([]);
+            setrowsMainLayerData([]);
         } else {
-            setRowsMainTierData([]);
+            setrowsMainLayerData([]);
         }
         setIdSelectedRow("")
     }, [props.idSystem, props.idDimension, props.idTier,props.reloadGrid]);
@@ -32,13 +32,13 @@ export default function MainTierGrid(props) {
             const rows =
                 z.map((item) =>
                     ({ id: item.idLayer, idLayer: item.idLayer, layerName: item.layerName }))
-            setRowsMainTierData(rows?.sort((x1, x2) => x1.idLayer - x2.idLayer));
+            setrowsMainLayerData(rows?.sort((x1, x2) => x1.idLayer - x2.idLayer));
         })
     }
 
     const getSelectedRow = (idSel) => {
         const selectedIDs = new Set(idSel);
-        const selectedRows = rowsMainTierData.filter((row) =>
+        const selectedRows = rowsMainLayerData.filter((row) =>
             selectedIDs.has(row.id),
         );
         setIdSelectedRow(selectedRows);
@@ -46,9 +46,9 @@ export default function MainTierGrid(props) {
 
     return (
         <div style={{ height: 200, width: '100%' }}>
-            {"Ilość wierszy w bazie danych: " + rowsMainTierData.length}
+            {"Ilość wierszy w bazie danych: " + rowsMainLayerData.length}
             <DataGrid
-                rows={rowsMainTierData}
+                rows={rowsMainLayerData}
                 columns={columnsMainTier}
                 getRowId={(row) => row.id}
                 checkboxSelection={true}

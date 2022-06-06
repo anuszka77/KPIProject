@@ -4,10 +4,11 @@ import { useState } from 'react';
 import { gridSpacing } from 'store/constant';
 import { Grid } from '@mui/material';
 
-import MainTier from './LayerDictionary/MainTier';
+import MainLayer from './LayerDictionary/MainLayer';
 import SimpleDictionaryConfigPanel from './SimpleDictionary/SimpleDictionaryConfigPanel';
 import SimpleDictionaryGrid from './SimpleDictionary/SimpleDictionaryGrid';
-import { SimpleDictionaryContext, useSimpleDictionaryContext } from './SimpleDictionary/SimpleDictionaryContext';
+import MainTier from './TierDictionary/MainTier'
+import { SimpleDictionaryContext } from './SimpleDictionary/SimpleDictionaryContext';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import TabContext from '@mui/lab/TabContext';
@@ -42,14 +43,18 @@ const Dictionary = () => {
                                     <TabList onChange={handleChange} >
                                         <Tab label="Słowniki layerów" value="1" />
                                         <Tab label="Słowniki proste" value="2" />
+                                        <Tab label="Tiery" value="3" />
                                     </TabList>
                                 </Box>
                                 <TabPanel value="1" style={{ height: `inherit` }} >
-                                    <MainTier />
+                                    <MainLayer />
                                 </TabPanel>
                                 <TabPanel value="2" style={{ height: `inherit` }} >
                                     <SimpleDictionaryConfigPanel />
-                                    {idSimpleDictionarySelected != 0 && <SimpleDictionaryGrid />}
+                                    {idSimpleDictionarySelected !== 0 && <SimpleDictionaryGrid />}
+                                </TabPanel>
+                                <TabPanel value="3" style={{ height: `inherit` }} >
+                                <MainTier/>
                                 </TabPanel>
                             </TabContext>
                         </Grid>

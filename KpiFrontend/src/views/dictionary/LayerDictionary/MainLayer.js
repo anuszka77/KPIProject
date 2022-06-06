@@ -12,17 +12,16 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import { operationEnum } from '../SimpleDictionary/SimpleDictionaryEnum';
 import { loadDimensions, loadTierList, saveLayers, loadDictSystem, deleteSpecificLayer, layerModify } from '../../../services/dictionaryService';
 import { useEffect, useState } from 'react';
-import MainTierGrid from './MainTierGrid'
+import MainLayerGrid from './MainLayerGrid'
 import { useSimpleDictionaryContext } from '../SimpleDictionary/SimpleDictionaryContext';
 import AlertDialogButton from '../../../utils/AlertDialogButton';
 import AlertInformationPopup from '../../../utils/AlertInformationPopup';
 
 
-const MainTier = () => {
+const MainLayer = () => {
     const { idSelectedRow, orderReloadGrid, setOrderReloadGrid } = useSimpleDictionaryContext();
     const [dimensionList, setDimensionList] = useState([]);
     const [tierList, setTierList] = useState([]);
@@ -171,109 +170,112 @@ const MainTier = () => {
     }
 
     return (
-        <MainCard title="Słowniki do księgi procesów"  >
-            <Grid container spacing={gridSpacing}  >
-                <Grid item xs={12}  >
-                    <Grid container spacing={gridSpacing} >
-                        <Grid item lg={3} md={6} sm={6} xs={12} >
-                            <Box sx={{ minWidth: 12 }} >
-                                <FormControl fullWidth >
-                                    <InputLabel id="demo-simple-select-label">System</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        label="System"
-                                        onChange={onSystemChanged}
-                                        value={systemValueId}
-                                    >
-                                        {dictSystemList.map((row) => (
-                                            <MenuItem value={row.idSystem} key={row.idSystem}>
-                                                {row.systemName + " (" + row.idSystem + ")"}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                        <Grid item lg={3} md={6} sm={6} xs={12} >
-                            <Box sx={{ minWidth: 12 }}>
+        <div>
+            <MainCard title="Słowniki do księgi procesów"  >
+                <Grid container spacing={gridSpacing}  >
+                    <Grid item xs={12}  >
+                        <Grid container spacing={gridSpacing} >
+                            <Grid item lg={3} md={6} sm={6} xs={12} >
+                                <Box sx={{ minWidth: 12 }} >
+                                    <FormControl fullWidth >
+                                        <InputLabel id="demo-simple-select-label">System</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            label="System"
+                                            onChange={onSystemChanged}
+                                            value={systemValueId}
+                                        >
+                                            {dictSystemList.map((row) => (
+                                                <MenuItem value={row.idSystem} key={row.idSystem}>
+                                                    {row.systemName + " (" + row.idSystem + ")"}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                            <Grid item lg={2} md={6} sm={6} xs={12} >
+                                <Box sx={{ minWidth: 12 }}>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">Nazwa wymiaru</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            label="Nazwa wymiaru"
+                                            onChange={onDimensionChanged}
+                                            value={dimensionValueId}
+                                        >
+                                            {dimensionList.map((row) => (
+                                                <MenuItem value={row.idDimension} key={row.idDimension}>
+                                                    {row.dimensionDescription + " (" + row.idDimension + ")"}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                            <Grid item lg={3} md={6} sm={6} xs={12}>
+                                <Box sx={{ minWidth: 12 }}>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label2">Nazwa tier</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-label2"
+                                            id="demo-simple-select2"
+                                            value={tierValueId}
+                                            label="Nazwa tier"
+                                            onChange={onTierChanged}>
+                                            {tierList.map((row) => (
+                                                <MenuItem value={row.tierId} key={row.tierId}>
+                                                    {row.tierName + " (" + row.tierId + ")"}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                            <Grid item lg={3} md={6} sm={6} xs={12}>
                                 <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">Nazwa wymiaru</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        label="Nazwa wymiaru"
-                                        onChange={onDimensionChanged}
-                                        value={dimensionValueId}
-                                    >
-                                        {dimensionList.map((row) => (
-                                            <MenuItem value={row.idDimension} key={row.idDimension}>
-                                                {row.dimensionDescription + " (" + row.idDimension + ")"}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
+                                    <TextField
+                                        id="outlined-basic"
+                                        label="Nazwa warstwy"
+                                        variant="outlined"
+                                        value={layerName}
+                                        onChange={onLayerNameChanged}
+                                    />
                                 </FormControl>
-                            </Box>
-                        </Grid>
-                        <Grid item lg={3} md={6} sm={6} xs={12}>
-                            <Box sx={{ minWidth: 12 }}>
+                            </Grid>
+                            <Grid item lg={1} md={6} sm={6} xs={12} alignItems="flex-end">
+                                <Box sx={{ minWidth: 12 }}>
+                                    <FormControl fullWidth>
+                                        <AlertDialogButton
+                                            buttonName={buttonName}
+                                            isDisabled={isButtonDisable}
+                                            dialogQuestion={dialogQuestion}
+                                            onDisagree={onDisagree}
+                                            onAgree={onAgree} />
+                                        {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} statusFromDb={statusFromDb} onClosePopup={onClosePopup} />}
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                            <Grid item lg={3} md={6} sm={6} xs={12}>
                                 <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label2">Nazwa tier</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-label2"
-                                        id="demo-simple-select2"
-                                        value={tierValueId}
-                                        label="Nazwa tier"
-                                        onChange={onTierChanged}>
-                                        {tierList.map((row) => (
-                                            <MenuItem value={row.tierId} key={row.tierId}>
-                                                {row.tierName + " (" + row.tierId + ")"}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
+                                    {isVisibleTextFieldWithIdToRemove && <TextField
+                                        id="outlined-basic"
+                                        label="Id do usunięcia"
+                                        variant="outlined"
+                                        disabled
+                                        value={listOfSelectedRowToRemove}
+                                    />}
                                 </FormControl>
-                            </Box>
-                        </Grid>
-                        <Grid item lg={3} md={6} sm={6} xs={12}>
-                            <FormControl fullWidth>
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Nazwa warstwy"
-                                    variant="outlined"
-                                    value={layerName}
-                                    onChange={onLayerNameChanged}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item lg={1} md={6} sm={6} xs={12} alignItems="flex-end">
-                            <Box sx={{ minWidth: 12 }}>
-                                <FormControl fullWidth>
-                                    <AlertDialogButton
-                                        buttonName={buttonName}
-                                        isDisabled={isButtonDisable}
-                                        dialogQuestion={dialogQuestion}
-                                        onDisagree={onDisagree}
-                                        onAgree={onAgree} />
-                                    {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} statusFromDb={statusFromDb} onClosePopup={onClosePopup} />}
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                        <Grid item lg={3} md={6} sm={6} xs={12}>
-                            <FormControl fullWidth>
-                                {isVisibleTextFieldWithIdToRemove && <TextField
-                                    id="outlined-basic"
-                                    label="Id do usunięcia"
-                                    variant="outlined"
-                                    disabled
-                                    value={listOfSelectedRowToRemove}
-                                />}
-                            </FormControl>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-            <MainTierGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} reloadGrid={orderReloadGrid} />
-        </MainCard>
+
+            </MainCard>
+            <MainLayerGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} reloadGrid={orderReloadGrid} />
+        </div>
     );
 };
-export default MainTier;
+export default MainLayer;
