@@ -35,6 +35,7 @@ const MainTier = () => {
 
     const [isButtonDisable, setIsButtonDisable] = useState(true);
     const [buttonName, setButtonName] = useState("Zapisz");
+    const [dialogQuestion, setDialogQuestion] = useState("");
     const [oparation, setOperation] = useState(operationEnum.Add);
     const [listOfSelectedRowToRemove, setListOfSelectedRowToRemove] = useState("")
     const [isVisibleTextFieldWithIdToRemove, setIsVisibleTextFieldWithIdToRemove] = useState(false)
@@ -86,14 +87,17 @@ const MainTier = () => {
         if (idSelectedRow.length === 0) {
             setOperation(operationEnum.Add);
             setButtonName("Zapisz");
+            setDialogQuestion("Czy na pewno chcesz zapisać nowe dane w bazie?")
             setIsVisibleTextFieldWithIdToRemove(false);
         } else if (idSelectedRow.length === 1 && layerName.length > 0) {
             setOperation(operationEnum.Update);
             setButtonName("Aktualizuj");
+            setDialogQuestion("Czy na pewno chcesz zaktualizować dane?")
             setIsVisibleTextFieldWithIdToRemove(false);
         } else if (idSelectedRow.length > 0) {
             setOperation(operationEnum.Delete);
             setButtonName("Usuń");
+            setDialogQuestion("Czy na pewno chcesz wykasować dane z bazy?")
             setIsVisibleTextFieldWithIdToRemove(true);
         }
     }
@@ -139,17 +143,17 @@ const MainTier = () => {
         switch (oparation) {
             case operationEnum.Add
                 : var list = [{ dimensionId: dimensionValueId, tierId: tierValueId, name: layerName }];
-                saveLayers(list, systemValueId).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true);setStatusFromDb(x.returnStatus) });
+                saveLayers(list, systemValueId).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true); setStatusFromDb(x.returnStatus) });
                 setOrderReloadGrid(!orderReloadGrid);
                 setLayerName("");
                 break;
             case operationEnum.Update
-                : layerModify(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove, layerName).then(x => { setInformationFromDb(x.returnMessage) ;setShowPopup(true) ;setStatusFromDb(x.returnStatus) });
+                : layerModify(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove, layerName).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true); setStatusFromDb(x.returnStatus) });
                 setOrderReloadGrid(!orderReloadGrid);
                 setLayerName("");
                 break;
             case operationEnum.Delete
-                : deleteSpecificLayer(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true); setStatusFromDb(x.returnStatus)});
+                : deleteSpecificLayer(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true); setStatusFromDb(x.returnStatus) });
                 setOrderReloadGrid(!orderReloadGrid);
                 setLayerName("");
                 break;
@@ -247,6 +251,7 @@ const MainTier = () => {
                                     <AlertDialogButton
                                         buttonName={buttonName}
                                         isDisabled={isButtonDisable}
+                                        dialogQuestion={dialogQuestion}
                                         onDisagree={onDisagree}
                                         onAgree={onAgree} />
                                     {showPopup && <AlertInformationPopup information={informationFromDb} isOpen={showPopup} statusFromDb={statusFromDb} onClosePopup={onClosePopup} />}

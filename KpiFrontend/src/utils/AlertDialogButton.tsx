@@ -5,12 +5,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Alert, AlertTitle } from '@mui/material';
+
 
 type InputParamsButton = {
-  buttonName : string
-  isDisabled : boolean
-  onDisagree : () => any
-  onAgree : () => any
+  buttonName: string
+  isDisabled: boolean
+  onDisagree: () => any
+  onAgree: () => any
+  dialogQuestion:string
 };
 
 export default function AlertDialogButton(props: InputParamsButton) {
@@ -27,32 +30,33 @@ export default function AlertDialogButton(props: InputParamsButton) {
 
   return (
     <div>
-      <Button 
-        variant="outlined" 
+      <Button
+        variant="outlined"
         onClick={handleClickOpen}
-        disabled = {props.isDisabled}>
+        disabled={props.isDisabled}>
 
         {props.buttonName}
 
       </Button>
       <Dialog
-         open={open}
+        open={open}
 
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Potwierdzenie"}
-        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-           Czy na pewno zapisać do bazy wprowadzone dane?
+            <Alert variant="filled" severity="info">
+              <AlertTitle>Info</AlertTitle>
+              {props.dialogQuestion}
+            </Alert>
+
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => {props.onDisagree(); setOpen(false);}}>Anuluj</Button>
-          <Button onClick={() => {props.onAgree(); setOpen(false);}}>Tak </Button>
+          <Button onClick={() => { props.onDisagree(); setOpen(false); }}>Anuluj</Button>
+          <Button onClick={() => { props.onAgree(); setOpen(false); }}>Tak </Button>
         </DialogActions>
       </Dialog>
     </div>

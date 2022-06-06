@@ -99,7 +99,7 @@ namespace KPIProject.Services
           
         }
 
-        public async Task<string> AddElementToSystemDictionary( short idSystem,string systemName )
+        public async Task<CallResultDTO> AddElementToSystemDictionary( short idSystem,string systemName )
         {
             List<SqlParameter> parms = new()
             {
@@ -110,13 +110,21 @@ namespace KPIProject.Services
             };
 
             await context.Database.ExecuteSqlRawAsync("PbApp.AddElementToSystemDictionary @IdSystem,@SystemName, @ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
-            var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
-            return message.ToString();
+            string message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value.ToString();
+            short status = (short)parms.FirstOrDefault(d => d.ParameterName == "@ReturnStatus").Value;
+
+
+            return new CallResultDTO
+            {
+                ReturnStatus = status,
+                ReturnMessage = message,
+                IsSuccess = status == 1 ? true : false
+            };
 
         }
 
 
-        public async Task<string> AddElementToDepartmentDictionary(short idDepartment, string departmentName)
+        public async Task<CallResultDTO> AddElementToDepartmentDictionary(short idDepartment, string departmentName)
         {
             List<SqlParameter> parms = new()
             {
@@ -127,12 +135,20 @@ namespace KPIProject.Services
             };
 
             await context.Database.ExecuteSqlRawAsync("PbApp.AddElementToDepartmentDictionary @IdDepartment,@DepartmentName, @ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
-            var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
-            return message.ToString();
+            string message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value.ToString();
+            short status = (short)parms.FirstOrDefault(d => d.ParameterName == "@ReturnStatus").Value;
+
+
+            return new CallResultDTO
+            {
+                ReturnStatus = status,
+                ReturnMessage = message,
+                IsSuccess = status == 1 ? true : false
+            };
 
         }
      
-        public async Task<string> AddElementToActivityHierarchyDictionary(byte idActivityHierarchy, string activityHierarchyName)
+        public async Task<CallResultDTO> AddElementToActivityHierarchyDictionary(byte idActivityHierarchy, string activityHierarchyName)
         {
             List<SqlParameter> parms = new()
             {
@@ -143,12 +159,20 @@ namespace KPIProject.Services
             };
 
             await context.Database.ExecuteSqlRawAsync("PbApp.AddElementToActivityHierarchyDictionary @IdActivityHierarchy,@ActivityHierarchy, @ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
-            var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
-            return message.ToString();
+            string message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value.ToString();
+            short status = (short)parms.FirstOrDefault(d => d.ParameterName == "@ReturnStatus").Value;
+
+
+            return new CallResultDTO
+            {
+                ReturnStatus = status,
+                ReturnMessage = message,
+                IsSuccess = status == 1 ? true : false
+            };
 
         }
 
-        public async Task<string> AddElementToBussinesValueAddedDictionary(byte idBussinesValueAdded, string bussinesValueAddedName)
+        public async Task<CallResultDTO> AddElementToBussinesValueAddedDictionary(byte idBussinesValueAdded, string bussinesValueAddedName)
         {
             List<SqlParameter> parms = new()
             {
@@ -159,12 +183,18 @@ namespace KPIProject.Services
             };
 
             await context.Database.ExecuteSqlRawAsync("PbApp.AddElementToBussinesValueAddedDictionary @IdBussinesValueAdded,@BussinesValueAddedName, @ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
-            var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
-            return message.ToString();
+            string message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value.ToString();
+            short status = (short)parms.FirstOrDefault(d => d.ParameterName == "@ReturnStatus").Value;
 
+            return new CallResultDTO
+            {
+                ReturnStatus = status,
+                ReturnMessage = message,
+                IsSuccess = status == 1 ? true : false
+            };
         }
 
-        public async Task<string> AddElementToCriticalToDictionary(byte idCriticalTo, string criticalToName)
+        public async Task<CallResultDTO> AddElementToCriticalToDictionary(byte idCriticalTo, string criticalToName)
         {
             List<SqlParameter> parms = new()
             {
@@ -175,12 +205,19 @@ namespace KPIProject.Services
             };
 
             await context.Database.ExecuteSqlRawAsync("PbApp.AddElementToCriticalToDictionary @IdCriticalTo,@CriticalToName, @ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
-            var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
-            return message.ToString();
+            string message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value.ToString();
+            short status = (short)parms.FirstOrDefault(d => d.ParameterName == "@ReturnStatus").Value;
+           
+            return new CallResultDTO
+            {
+                ReturnStatus = status,
+                ReturnMessage = message,
+                IsSuccess = status == 1 ? true : false
+            };
 
         }
 
-        public async Task<string> AddElementToKpiDictionary(byte idKpi, string kpi)
+        public async Task<CallResultDTO> AddElementToKpiDictionary(byte idKpi, string kpi)
         {
             List<SqlParameter> parms = new()
             {
@@ -191,11 +228,18 @@ namespace KPIProject.Services
             };
 
             await context.Database.ExecuteSqlRawAsync("PbApp.AddElementToKpiDictionary @IdKpi,@Kpi, @ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
-            var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
-            return message.ToString();
+            string message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value.ToString();
+            short status = (short)parms.FirstOrDefault(d => d.ParameterName == "@ReturnStatus").Value;
+
+            return new CallResultDTO
+            {
+                ReturnStatus = status,
+                ReturnMessage = message,
+                IsSuccess = status == 1 ? true : false
+            };
         }
 
-        public async Task<string> ModifySpecificDictionary(byte idNameSimpleDictionary, int idOfDictionary, string newNameOfDictionary)
+        public async Task<CallResultDTO> ModifySpecificDictionary(byte idNameSimpleDictionary, int idOfDictionary, string newNameOfDictionary)
         {
             List<SqlParameter> parms = new()
             {
@@ -207,11 +251,18 @@ namespace KPIProject.Services
             };
 
             await context.Database.ExecuteSqlRawAsync("PbApp.ModifySpecificDictionary @IdNameSimpleDictionary,@IdOfDictionary,@NewNameOfDictionary, @ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
-            var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
-            return message.ToString();
+            string message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value.ToString();
+            short status = (short)parms.FirstOrDefault(d => d.ParameterName == "@ReturnStatus").Value;
+
+            return new CallResultDTO
+            {
+                ReturnStatus = status,
+                ReturnMessage = message,
+                IsSuccess = status == 1 ? true : false
+            };
         }
 
-        public async Task<string> DeleteSpecificDictionary(byte idNameSimpleDictionary, string idOfDictionary)
+        public async Task<CallResultDTO> DeleteSpecificDictionary(byte idNameSimpleDictionary, string idOfDictionary)
         {
             List<SqlParameter> parms = new()
             {
@@ -222,8 +273,15 @@ namespace KPIProject.Services
             };
 
             await context.Database.ExecuteSqlRawAsync("PbApp.DeleteSpecificDictionary @IdNameSimpleDictionary,@IdOfDictionary,@ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
-            var message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value;
-            return message.ToString();
+            string message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value.ToString();
+            short status = (short)parms.FirstOrDefault(d => d.ParameterName == "@ReturnStatus").Value;
+
+            return new CallResultDTO
+            {
+                ReturnStatus = status,
+                ReturnMessage = message,
+                IsSuccess = status == 1 ? true : false
+            };
         }
 
         public async Task<CallResultDTO> DeleteSpecificLayer(short systemId, byte dimensionId, byte tierId, string layerId)
@@ -266,6 +324,7 @@ namespace KPIProject.Services
             await context.Database.ExecuteSqlRawAsync("PbApp.LayerModify @SystemId,@DimensionId,@TierId,@LayerId,@LayerName, @ReturnMessage OUTPUT, @ReturnStatus OUTPUT", parms);
             string message = parms.FirstOrDefault(d => d.ParameterName == "@ReturnMessage").Value.ToString();
             short status = (short)parms.FirstOrDefault(d => d.ParameterName == "@ReturnStatus").Value;
+            
             return new CallResultDTO
             {
                 ReturnStatus = status,
