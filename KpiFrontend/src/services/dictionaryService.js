@@ -24,6 +24,7 @@ export const loadDimensions = async () => {
 
 
 export const loadTierList = async (idDimension) => {
+    // console.log("idDimension" + idDimension)
     try {
         return await getApi('/Dictionary/GetTierDictionaryToDimension/' + idDimension)
             .then((res) => {

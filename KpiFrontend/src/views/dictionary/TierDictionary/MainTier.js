@@ -9,16 +9,13 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { loadDimensions, loadTierList } from '../../../services/dictionaryService';
+import { loadDimensions } from '../../../services/dictionaryService';
 import { useEffect, useState } from 'react';
-import { useSimpleDictionaryContext } from '../SimpleDictionary/SimpleDictionaryContext';
-
 import MainTierGrid from './MainTierGrid'
 
 const MainTier = () => {
-
     const [dimensionList, setDimensionList] = useState([]);
-    const [dimensionValueId, setDimensionValueId] = React.useState('');
+    const [dimensionValueId, setDimensionValueId] = React.useState(-1);
     useEffect(() => {
         getDimensions();
     }, []);
@@ -54,7 +51,7 @@ const MainTier = () => {
                                         >
                                             {dimensionList.map((row) => (
                                                 <MenuItem value={row.idDimension} key={row.idDimension}>
-                                                    {row.dimensionDescription + " (" + row.idDimension + ")"}
+                                                    {row.dimensionDescription + " (" + row.idDimension +"-"+row.dimensionName + ")"}
                                                 </MenuItem>
                                             ))}
                                         </Select>
@@ -66,7 +63,7 @@ const MainTier = () => {
                 </Grid>
 
             </MainCard>
-            <MainTierGrid idDimension={1} />
+            <MainTierGrid idDimensionInp={dimensionValueId} />
         </div>
     );
 };
