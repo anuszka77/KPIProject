@@ -12,17 +12,17 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-import { operationEnum } from '../SimpleDictionary/SimpleDictionaryEnum';
+import { operationEnum } from '../DictionaryGeneralUtils/DictionaryEnum';
 import { loadDimensions, loadTierList, saveLayers, loadDictSystem, deleteSpecificLayer, layerModify } from '../../../services/dictionaryService';
 import { useEffect, useState } from 'react';
 import MainLayerGrid from './MainLayerGrid'
-import { useSimpleDictionaryContext } from '../SimpleDictionary/SimpleDictionaryContext';
+import { useDictionaryContext } from '../DictionaryGeneralUtils/DictionaryContext';
 import AlertDialogButton from '../../../utils/AlertDialogButton';
 import AlertInformationPopup from '../../../utils/AlertInformationPopup';
 
 
 const MainLayer = () => {
-    const { idSelectedRow, orderReloadGrid, setOrderReloadGrid } = useSimpleDictionaryContext();
+    const { idSelectedRow, orderReloadGrid, setOrderReloadGrid } = useDictionaryContext();
     const [dimensionList, setDimensionList] = useState([]);
     const [tierList, setTierList] = useState([]);
     const [dictSystemList, setDictSystemList] = useState([]);

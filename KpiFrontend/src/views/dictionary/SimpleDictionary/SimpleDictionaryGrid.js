@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { getColumnConfig } from './SimpleDictionaryColumnsToGrid';
-import { useSimpleDictionaryContext } from './SimpleDictionaryContext';
+import { getColumnConfig } from '../DictionaryGeneralUtils/SimpleDictionaryColumnsToGrid';
+import { useDictionaryContext } from '../DictionaryGeneralUtils/DictionaryContext';
 import { loadDictKpi, loadDictSystem, loadDictActivityHierarchy, loadDictBussinesValueAdded, loadDictDepartment, loadDictCriticalTo } from 'services/dictionaryService';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 
 export default function SimpleDictionaryGrid() {
 
-  const { idSimpleDictionarySelected, setIdSelectedRow, orderReloadGrid } = useSimpleDictionaryContext();
+  const { idSimpleDictionarySelected, setIdSelectedRow, orderReloadGrid } = useDictionaryContext();
   const [rowsSimpleDictionaryData, setRowsSimpleDictionaryData] = useState([]);
 
   useEffect(() => {
@@ -24,8 +24,6 @@ export default function SimpleDictionaryGrid() {
           const rows =
             z.map((item) =>
               ({ id: item.idActivityHierarchy, idActivityHierarchy: item.idActivityHierarchy, activityHierarchyName: item.activityHierarchyName }))
-
-          // setRowsSimpleDictionaryData([]);
           setRowsSimpleDictionaryData(rows);
         })
         break;
@@ -34,7 +32,6 @@ export default function SimpleDictionaryGrid() {
           const rows =
             z.map((item) =>
               ({ id: item.idBussinesValueAdded, idBussinesValueAdded: item.idBussinesValueAdded, bussinesValueAddedName: item.bussinesValueAddedName }))
-          // setRowsSimpleDictionaryData([]);
           setRowsSimpleDictionaryData(rows);
         })
         break;
@@ -43,7 +40,6 @@ export default function SimpleDictionaryGrid() {
           const rows =
             z.map((item) =>
               ({ id: item.idCriticalTo, idCriticalTo: item.idCriticalTo, criticalToName: item.criticalToName }))
-          // setRowsSimpleDictionaryData([]);
           setRowsSimpleDictionaryData(rows?.sort((x1, x2) => x1.idCriticalTo - x2.idCriticalTo));
         })
         break;
@@ -52,7 +48,6 @@ export default function SimpleDictionaryGrid() {
           const rows =
             z.map((item) =>
               ({ id: item.idDepartment, idDepartment: item.idDepartment, departmentName: item.departmentName }))
-          // setRowsSimpleDictionaryData([]);
           setRowsSimpleDictionaryData(rows);
         })
         break;

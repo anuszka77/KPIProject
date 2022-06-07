@@ -8,7 +8,7 @@ import MainLayer from './LayerDictionary/MainLayer';
 import SimpleDictionaryConfigPanel from './SimpleDictionary/SimpleDictionaryConfigPanel';
 import SimpleDictionaryGrid from './SimpleDictionary/SimpleDictionaryGrid';
 import MainTier from './TierDictionary/MainTier'
-import { SimpleDictionaryContext } from './SimpleDictionary/SimpleDictionaryContext';
+import { DictionaryContext } from './DictionaryGeneralUtils/DictionaryContext';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import TabContext from '@mui/lab/TabContext';
@@ -32,7 +32,7 @@ const Dictionary = () => {
 
 
     return (
-        <SimpleDictionaryContext.Provider value={{ idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow,orderReloadGrid,setOrderReloadGrid }}>
+        <DictionaryContext.Provider value={{ idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow, orderReloadGrid, setOrderReloadGrid }}>
             <Grid container spacing={gridSpacing}>
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>
@@ -54,14 +54,14 @@ const Dictionary = () => {
                                     {idSimpleDictionarySelected !== 0 && <SimpleDictionaryGrid />}
                                 </TabPanel>
                                 <TabPanel value="3" style={{ height: `inherit` }} >
-                                <MainTier/>
+                                    <MainTier />
                                 </TabPanel>
                             </TabContext>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-        </SimpleDictionaryContext.Provider>
+        </DictionaryContext.Provider>
     );
 }
 export default Dictionary;

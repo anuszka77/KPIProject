@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { loadTierList } from '../../../services/dictionaryService'
-
-const WIDTH_COL1 = 200;
-const WIDTH_COL2 = 400;
+import { getColumnConfig } from '../DictionaryGeneralUtils/SimpleDictionaryColumnsToGrid';
+import { dictionaryEnum } from "../DictionaryGeneralUtils/DictionaryEnum";
 
 export default function MainTierGrid(props) {
     const [rowsMainTierData, setrowsMainTierData] = useState([]);
@@ -13,13 +12,6 @@ export default function MainTierGrid(props) {
             getTierData(props.idDimensionInp);
         }
     }, [props.idDimensionInp]);
-
-
-    const columnsMainTier = [
-        { field: "tierId", headerName: "Numer tieru", width: WIDTH_COL1 },
-        { field: "tierName", headerName: "Nazwa tieru", width: WIDTH_COL2 }
-    ]
-
 
     const getTierData = async (idDimension) => {
         loadTierList(idDimension).then((z) => {
@@ -35,7 +27,7 @@ export default function MainTierGrid(props) {
             {"Ilość wierszy w bazie danych: " + rowsMainTierData.length}
             <DataGrid
                 rows={rowsMainTierData}
-                columns={columnsMainTier}
+                columns={getColumnConfig(dictionaryEnum.MainTier)}
                 getRowId={(row) => row.id}
                 components={{
                     Toolbar: GridToolbar

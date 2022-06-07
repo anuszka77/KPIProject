@@ -1,5 +1,5 @@
 
-import { simpleDictionaryEnum } from "./SimpleDictionaryEnum";
+import { dictionaryEnum } from "./DictionaryEnum";
 
 const WIDTH_COL1 = 200;
 const WIDTH_COL2 = 400;
@@ -39,23 +39,37 @@ const columnsSystemDictionary: DefinedColumnsType[] = [
     { field: "systemName", headerName: "Nazwa System", width: WIDTH_COL2 }
 ]
 
+const columnsMainTier: DefinedColumnsType[] = [
+    { field: "tierId", headerName: "Numer tieru", width: WIDTH_COL1 },
+    { field: "tierName", headerName: "Nazwa tieru", width: WIDTH_COL2 }
+]
 
-export const getColumnConfig = (idSimpleDictionarySelected: simpleDictionaryEnum): DefinedColumnsType[] => {
+const columnsMainLayer: DefinedColumnsType[] = [
+    { field: "idLayer", headerName: "Numer wartstwy", width: WIDTH_COL1 },
+    { field: "layerName", headerName: "Nazwa warstwy", width: WIDTH_COL2 }
+]
+
+
+export const getColumnConfig = (idSimpleDictionarySelected: dictionaryEnum): DefinedColumnsType[] => {
 
     switch (idSimpleDictionarySelected) {
-        case simpleDictionaryEnum.CriticalToDictionary
+        case dictionaryEnum.CriticalToDictionary
             : return columnsCriticalToDictionary;
-        case simpleDictionaryEnum.SystemDictionary
+        case dictionaryEnum.SystemDictionary
             : return columnsSystemDictionary;
-        case simpleDictionaryEnum.ActivityHierarchyDictionary
+        case dictionaryEnum.ActivityHierarchyDictionary
             : return columnsActivityHierarchyDictionary;
-        case simpleDictionaryEnum.BussinesValueAddedDictionary
+        case dictionaryEnum.BussinesValueAddedDictionary
             : return columnsBussinesValueAddedDictionary;
-        case simpleDictionaryEnum.DepartmentDictionary
+        case dictionaryEnum.DepartmentDictionary
             : return columnsDepartmentDictionary;
-        case simpleDictionaryEnum.KpiDictionary
+        case dictionaryEnum.KpiDictionary
             : return columnsKpiDictionary;
-    
+        case dictionaryEnum.MainTier
+            : return columnsMainTier;
+        case dictionaryEnum.MainLayer
+            : return columnsMainLayer;
+
     }
 
 

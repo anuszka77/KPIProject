@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
 
-export type SimpleDictionaryContextType = {
+export type DictionaryContextType = {
   idSimpleDictionarySelected: number;
   setIdSimpleDictionarySelected: (inputValue: number) => void;
   idSelectedRow: number[];
@@ -11,7 +11,7 @@ export type SimpleDictionaryContextType = {
 
 }
 
-export const SimpleDictionaryContext = createContext<SimpleDictionaryContextType>(
+export const DictionaryContext = createContext<DictionaryContextType>(
   {
     idSimpleDictionarySelected: 0,
     setIdSimpleDictionarySelected: idSimpleDictionarySelected => console.warn("ddd"),
@@ -21,4 +21,4 @@ export const SimpleDictionaryContext = createContext<SimpleDictionaryContextType
     setOrderReloadGrid: setOrderReloadGrid => console.warn("ddd"),
   }
 );
-export const useSimpleDictionaryContext = () => useContext(SimpleDictionaryContext);
+export const useDictionaryContext = () => useContext(DictionaryContext);

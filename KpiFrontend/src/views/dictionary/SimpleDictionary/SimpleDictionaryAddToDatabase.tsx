@@ -6,8 +6,9 @@ import {
     , addElementToKpiDictionary
     , addElementToDepartmentDictionary
 } from 'services/dictionaryService';
-import { simpleDictionaryEnum } from './SimpleDictionaryEnum';
 
+import { dictionaryEnum } from '../../dictionary/DictionaryGeneralUtils/DictionaryEnum';
+// DictionaryGeneralUtils/DictionaryEnum
 type infoReturnFormDbType = {
     returnMessage: string;
     returnStatus: number
@@ -17,22 +18,22 @@ export const simpleDictionaryAddToDatabase = async (id: number, name: string, id
     let retObj: infoReturnFormDbType = { returnMessage: "", returnStatus: 0 }
 
     switch (idSimpleDictionarySelected) {
-        case simpleDictionaryEnum.CriticalToDictionary
+        case dictionaryEnum.CriticalToDictionary
             : await addElementToCriticalToDictionary(id, name).then(x => { retObj = { returnMessage: x.returnMessage, returnStatus: x.returnStatus } });
             break;
-        case simpleDictionaryEnum.SystemDictionary
+        case dictionaryEnum.SystemDictionary
             : await addElementToSystemDictionary(id, name).then(x => { retObj = { returnMessage: x.returnMessage, returnStatus: x.returnStatus } });
             break;
-        case simpleDictionaryEnum.ActivityHierarchyDictionary
+        case dictionaryEnum.ActivityHierarchyDictionary
             : await addElementToActivityHierarchyDictionary(id, name).then(x => { retObj = { returnMessage: x.returnMessage, returnStatus: x.returnStatus } });
             break;
-        case simpleDictionaryEnum.BussinesValueAddedDictionary
+        case dictionaryEnum.BussinesValueAddedDictionary
             : await addElementToBussinesValueAddedDictionary(id, name).then(x => { retObj = { returnMessage: x.returnMessage, returnStatus: x.returnStatus } });
             break;
-        case simpleDictionaryEnum.DepartmentDictionary
+        case dictionaryEnum.DepartmentDictionary
             : await addElementToDepartmentDictionary(id, name).then(x => { retObj = { returnMessage: x.returnMessage, returnStatus: x.returnStatus } });
             break;
-        case simpleDictionaryEnum.KpiDictionary
+        case dictionaryEnum.KpiDictionary
             : await addElementToKpiDictionary(id, name).then(x => { retObj = { returnMessage: x.returnMessage, returnStatus: x.returnStatus } });
             break;
     }

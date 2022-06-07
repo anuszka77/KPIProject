@@ -1,30 +1,23 @@
 import { useEffect, useState} from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { loadLayersBySysDimTier } from '../../../services/dictionaryService'
-import { useSimpleDictionaryContext } from '../SimpleDictionary/SimpleDictionaryContext';
-
-const WIDTH_COL1 = 200;
-const WIDTH_COL2 = 400;
+import { useDictionaryContext } from '../DictionaryGeneralUtils/DictionaryContext';
+import { getColumnConfig } from '../DictionaryGeneralUtils/SimpleDictionaryColumnsToGrid';
+import { dictionaryEnum } from "../DictionaryGeneralUtils/DictionaryEnum";
 
 export default function MainLayerGrid(props) {
-    const {setIdSelectedRow} = useSimpleDictionaryContext();
+    const {setIdSelectedRow} = useDictionaryContext();
     const [rowsMainLayerData, setrowsMainLayerData] = useState([]);
 
     useEffect(() => {
-        if (props.idSystem && props.idDimension && props.idTier) {
+        if (props.idSystem && props.idDimension>=0 && props.idTier>=0) {
             getLayersData(props.idSystem, props.idDimension, props.idTier);
             setrowsMainLayerData([]);
         } else {
             setrowsMainLayerData([]);
-        }
-        setIdSelectedRow("")
+        } 
     }, [props.idSystem, props.idDimension, props.idTier,props.reloadGrid]);
 
-
-    const columnsMainTier = [
-        { field: "idLayer", headerName: "Numer wartstwy", width: WIDTH_COL1 },
-        { field: "layerName", headerName: "Nazwa warstwy", width: WIDTH_COL2 }
-    ]
 
 
     const getLayersData = async (idSystem, idDimension, idTier) => {
@@ -49,7 +42,7 @@ export default function MainLayerGrid(props) {
             {"Ilość wierszy w bazie danych: " + rowsMainLayerData.length}
             <DataGrid
                 rows={rowsMainLayerData}
-                columns={columnsMainTier}
+                columns={getColumnConfig(dictionaryEnum.MainLayer)}
                 getRowId={(row) => row.id}
                 checkboxSelection={true}
                 onSelectionModelChange={(idSel) => { getSelectedRow(idSel) ;  }}

@@ -9,15 +9,15 @@ import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import { loadDictListOfSimpleDictionary, modifySpecificDictionary, deleteSpecificDictionary } from '../../../services/dictionaryService';
 import MainCard from 'ui-component/cards/MainCard';
-import { useSimpleDictionaryContext } from './SimpleDictionaryContext';
+import { useDictionaryContext } from '../DictionaryGeneralUtils/DictionaryContext';
 import AlertDialogButton from '../../../utils/AlertDialogButton';
 import AlertInformationPopup from '../../../utils/AlertInformationPopup';
 import { simpleDictionaryAddToDatabase } from './SimpleDictionaryAddToDatabase';
-import { operationEnum } from "./SimpleDictionaryEnum";
+import { operationEnum } from "../DictionaryGeneralUtils/DictionaryEnum";
 
 const SimpleDictionaryConfigPanel = () => {
     const [dictListOfSimpleDictionary, setDictListOfSimpleDictionary] = useState([]);
-    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, orderReloadGrid, setOrderReloadGrid } = useSimpleDictionaryContext();
+    const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, orderReloadGrid, setOrderReloadGrid } = useDictionaryContext();
     const [idNewDictionarySelected, setIdNewDictionarySelected] = useState(0);
     const [nameNewDictionarySelected, setNameNewDictionarySelected] = useState("");
     const [isButtonDisable, setIsButtonDisable] = useState(true);
