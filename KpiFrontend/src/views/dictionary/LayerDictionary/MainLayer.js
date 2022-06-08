@@ -38,7 +38,7 @@ const MainLayer = () => {
     const [oparation, setOperation] = useState(operationEnum.Add);
     const [listOfSelectedRowToRemove, setListOfSelectedRowToRemove] = useState("")
     const [isVisibleTextFieldWithIdToRemove, setIsVisibleTextFieldWithIdToRemove] = useState(false)
-
+    const [isTextFieldLayerNameDisabled, setIsTextFieldLayerNameDisabled] = useState(false) 
     const [informationFromDb, setInformationFromDb] = useState("");
     const [statusFromDb, setStatusFromDb] = useState(0);
     const [showPopup, setShowPopup] = useState(false);
@@ -66,6 +66,7 @@ const MainLayer = () => {
 
     useEffect(() => {
         checkIfSetEnableButton();
+        checkIfExceptionToSaveExists();
     }, [systemValueId, dimensionValueId, tierValueId, layerName, listOfSelectedRowToRemove, oparation]);
 
 
@@ -101,8 +102,18 @@ const MainLayer = () => {
         }
     }
 
+    const checkIfExceptionToSaveExists = () => {
+        if (dimensionValueId === 10 && (tierValueId === 10 || tierValueId === 0)) {
+            setIsButtonDisable(true)
+            setIsTextFieldLayerNameDisabled(true)
+        } else {
+            setIsButtonDisable(false);
+            setIsTextFieldLayerNameDisabled(false)
+        }
+    }
+
     const checkIfSetEnableButton = () => {
-        if ((systemValueId && dimensionValueId && tierValueId && layerName) || oparation === 3) {
+        if ((systemValueId >= 0 && dimensionValueId >= 0 && tierValueId >= 0 && layerName) || oparation === 3) {
             setIsButtonDisable(false);
         } else {
             setIsButtonDisable(true);
@@ -242,6 +253,10 @@ const MainLayer = () => {
                                         variant="outlined"
                                         value={layerName}
                                         onChange={onLayerNameChanged}
+                                        disabled = {isTextFieldLayerNameDisabled}
+                                        error={isTextFieldLayerNameDisabled}
+                                        helperText={isTextFieldLayerNameDisabled?"Dla tego wymiaru i tieru możesz tylko podblądać dane.":""}
+                                        
                                     />
                                 </FormControl>
                             </Grid>
