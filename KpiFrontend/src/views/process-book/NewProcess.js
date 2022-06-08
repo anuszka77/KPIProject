@@ -36,7 +36,6 @@ const style = {
 export default function BasicModal() {
   const [open, setOpen] = React.useState(false);
   const [tierDict, setTierDict] = useState();
-  
   const [mainTier, setMainTier]=useState();
   const [area, setArea]=useState();
 
@@ -51,38 +50,36 @@ export default function BasicModal() {
     attributeId: ''
   })
 
-
-
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-    
 
   useEffect(() => {
     loadTierDictionary().then(x=>setTierDict(x));
     }, []);
 
     const tierDictionary =[
-      {id: 0, field: "mainTier", headerName: "Główny Tier"},
-      {id: 1, field: "areaTier", headerName: "Obszar"},
-      {id: 2, field: "subAreaTier", headerName: "Podobszar"},
-      {id: 3, field: "categoryTier", headerName: "Kategoria"},
-      {id: 4, field: "subjectTier", headerName: "Przedmiot"},
-      {id: 5, field: "objectTier", headerName: "Obiekt"},
-      {id: 6, field: "attributeTier", headerName: "Atrybut"},
+      {id: 0, field: "mainTier", headerName: "Główny Tier", fieldId: "mainTierId" },
+      {id: 1, field: "areaTier", headerName: "Obszar", fieldId: "areaId"},
+      {id: 2, field: "subAreaTier", headerName: "Podobszar", fieldId: "subAreaId"},
+      {id: 3, field: "categoryTier", headerName: "Kategoria", fieldId: "categoryId"},
+      {id: 4, field: "subjectTier", headerName: "Przedmiot", fieldId: "subjectId"},
+      {id: 5, field: "objectTier", headerName: "Obiekt", fieldId: "objectId"},
+      {id: 6, field: "attributeTier", headerName: "Atrybut", fieldId: "attributeId"},
     ]
 
-    const setTierValue = (id) => {
-     // setTierValues
+    const putTierValue = (fieldId) => { 
+      console.log(tierValues[fieldId]+ "wpisane z palca")   
+      return tierValues[fieldId];
     }
 
-    const handleChangeTier = (fieldId, value) => {
+    const handleChangeTier = (fieldId,value) => {
       setTierValues(prev => ({
           ...prev,
           [fieldId]: value
       }))
   }
 
+  
   return (
     <div>
       <IconButton 
@@ -106,29 +103,27 @@ export default function BasicModal() {
                     <Typography id="modal-modal-title" variant="h3" component="h2">
                       Szczegóły procesu
                     </Typography>
-
-
                     {tierDictionary?.map((row) => (
                     <Grid item xs={12}>               
                         <Grid container spacing={3} rowSpacing={2}> 
                                 <Grid item lg={6} md={6} sm={6} xs={12}>
                                   <Box sx={{ maxWidth: 350}}>
                                         <FormControl fullWidth>
-                                            <InputLabel id="demo-simple-select-label2">{row.headerName}</InputLabel>
+                                            <InputLabel id="demo-simple-select-label">{row.headerName}</InputLabel>
                                                           <Select
-                                                              labelId="demo-simple-select-label2"
-                                                              id="demo-simple-select2"
-                                                              value={setTierValue(row.id)}
+                                                              labelId="demo-simple-select-label"
+                                                              key={row.id}
+                                                              id="demo-simple-select"
+                                                              value={putTierValue(row.fieldId)}  
                                                               label={row.headerName}
                                                               width="200px"
-                                                              onChange={handleChangeTier}
+                                                              onChange={ (e) => handleChangeTier(row.fieldId, e.target.value)}
                                                           >
                                                             {tierDict?.filter(x=>x.dimensionId===row.id).map((row) => (
-                                                            <MenuItem value={row.tierName} key={row.idTier}>
+                                                            <MenuItem value={row.idTier} key={row.idTier}>
                                                                 {row.tierName}
                                                             </MenuItem>
-                                                            ))}  
-                                                                                                                         
+                                                            ))}                                                                                                            
                                                           </Select>                                     
                                         </FormControl>
                                     </Box>
