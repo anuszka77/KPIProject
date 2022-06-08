@@ -18,7 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { ArrowForward } from '@mui/icons-material';
 
-import { loadTierDictionary} from '../../services/processBookService';
+import { loadTierDictionary, loadListOfProcessLayers} from '../../services/processBookService';
 
 
 const style = {
@@ -38,6 +38,7 @@ export default function BasicModal() {
   const [tierDict, setTierDict] = useState();
   const [mainTier, setMainTier]=useState();
   const [area, setArea]=useState();
+  const [processLayers, setProcessLayers]=useState();
 
 
   const [tierValues, setTierValues] = useState({
@@ -55,17 +56,29 @@ export default function BasicModal() {
 
   useEffect(() => {
     loadTierDictionary().then(x=>setTierDict(x));
-    }, []);
+    loadListOfProcessLayers().then(y=>setProcessLayers(y));
+    //ustawiac puste wartosci w tiervalues
+    }, [open]);
 
     const tierDictionary =[
-      {id: 0, field: "mainTier", headerName: "Główny Tier", fieldId: "mainTierId" },
-      {id: 1, field: "areaTier", headerName: "Obszar", fieldId: "areaId"},
-      {id: 2, field: "subAreaTier", headerName: "Podobszar", fieldId: "subAreaId"},
-      {id: 3, field: "categoryTier", headerName: "Kategoria", fieldId: "categoryId"},
-      {id: 4, field: "subjectTier", headerName: "Przedmiot", fieldId: "subjectId"},
-      {id: 5, field: "objectTier", headerName: "Obiekt", fieldId: "objectId"},
-      {id: 6, field: "attributeTier", headerName: "Atrybut", fieldId: "attributeId"},
+      {id: 0, field: "mainTier", headerName: "Poziom główny procesu", fieldId: "mainTierId", fieldLayer: "areaLayerId", headerLayerName: "Warstwa obszaru" },
+      {id: 1, field: "areaTier", headerName: "Obszar", fieldId: "areaId", fieldLayer: "areaLayerId", headerLayerName: "Warstwa obszaru"},
+      {id: 2, field: "subAreaTier", headerName: "Podobszar", fieldId: "subAreaId", fieldLayer: "subareaLayerId", headerLayerName: "Warstwa podobszaru"},
+      {id: 3, field: "categoryTier", headerName: "Kategoria", fieldId: "categoryId", fieldLayer: "categoryLayerId", headerLayerName: "Wartstwa kategorii"},
+      {id: 4, field: "subjectTier", headerName: "Przedmiot", fieldId: "subjectId",  fieldLayer: "subjectLayerId", headerLayerName: "Warstawa przedmiotu"},
+      {id: 5, field: "objectTier", headerName: "Obiekt", fieldId: "objectId", fieldLayer: "objectLayerId", headerLayerName: "Warstwa obiektu"},
+      {id: 6, field: "attributeTier", headerName: "Atrybut", fieldId: "attributeId",fieldLayer: "attributeLayer", headerLayerName: "Warstwa atrybutu"},
     ]
+
+    const layerDictionary =[
+      {id: 1, field: "areaLayerId", headerName: "Warstwa obszaru", fieldId: "mainLayerId" },
+      {id: 2, field: "subareaLayerId", headerName: "Warstwa podobszaru", fieldId: "areaId"},
+      {id: 3, field: "categoryLayerId", headerName: "Wartstwa kategorii", fieldId: "subAreaId"},
+      {id: 3, field: "subjectLayerId", headerName: "Warstawa przedmiotu", fieldId: "categoryId"},
+      {id: 4, field: "objectLayerId", headerName: "Warstwa obiektu", fieldId: "subjectId"},
+      {id: 6, field: "attributeLayer", headerName: "Warstwa atrybut", fieldId: "attributeId"},
+    ]
+
 
     const putTierValue = (fieldId) => { 
       console.log(tierValues[fieldId]+ "wpisane z palca")   
@@ -103,9 +116,11 @@ export default function BasicModal() {
                     <Typography id="modal-modal-title" variant="h3" component="h2">
                       Szczegóły procesu
                     </Typography>
+                    
+            
                     {tierDictionary?.map((row) => (
-                    <Grid item xs={12}>               
-                        <Grid container spacing={3} rowSpacing={2}> 
+                      <Grid item xs={12}>                           
+                      <Grid container spacing={3} rowSpacing={2}> 
                                 <Grid item lg={6} md={6} sm={6} xs={12}>
                                   <Box sx={{ maxWidth: 350}}>
                                         <FormControl fullWidth>
@@ -118,20 +133,49 @@ export default function BasicModal() {
                                                               label={row.headerName}
                                                               width="200px"
                                                               onChange={ (e) => handleChangeTier(row.fieldId, e.target.value)}
+                                                              
                                                           >
                                                             {tierDict?.filter(x=>x.dimensionId===row.id).map((row) => (
                                                             <MenuItem value={row.idTier} key={row.idTier}>
-                                                                {row.tierName}
+                                                                {row.tierName + " (" + row.idTier + ")"}
                                                             </MenuItem>
                                                             ))}                                                                                                            
                                                           </Select>                                     
                                         </FormControl>
                                     </Box>
-                                  </Grid>                                                                                                  
-                                 
-                            </Grid>
+                                  </Grid>   
+                                  
+                                    
+                                  <Grid item lg={6} md={6} sm={6} xs={12}>
+                                  <Box sx={{ maxWidth: 350}}>
+                                        <FormControl fullWidth>
+                                            <InputLabel id="demo-simple-select-label">{row.headerLayerName}</InputLabel>
+                                                          <Select
+                                                              labelId="demo-simple-select-label"
+                                                              key={row.id}
+                                                              id="demo-simple-select"
+                                                              //value={putTierValue(row.fieldId)}  
+                                                              label={row.headerName}
+                                                              width="200px"
+                                                              //onChange={ (e) => handleChangeTier(row.fieldId, e.target.value)}
+                                                              hidden={row.id===0 ? true : false}  
+                                                              disabled={row.id===0 ? true : false}                                                             
+                                                           
+                                                          >
+                                                            {processLayers?.filter(x=>x.dimensionId===row.id && x.tierId===tierValues[row.fieldId]).map((row) => (
+                                                            <MenuItem value={row.layerId} key={row.layerId}>
+                                                                {row.layerName + " (" + row.layerId + ")"}
+                                                            </MenuItem>
+                                                            ))}                                                                                                            
+                                                          </Select>                                     
+                                        </FormControl>
+                                    </Box>
+                                  </Grid>                                                                                                                                   
+                      
+                      
                       </Grid> 
-                ))}  
+                      </Grid>
+                      ))}
 
                         <IconButton 
                         color="primary" 
