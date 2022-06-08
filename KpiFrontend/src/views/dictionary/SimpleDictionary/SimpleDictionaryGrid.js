@@ -1,29 +1,23 @@
 import { useEffect, useState } from 'react';
-import { getColumnConfig } from './SimpleDictionaryColumnsToGrid';
-import { useSimpleDictionaryContext } from './SimpleDictionaryContext';
-import { StyledDataGrid } from '../../../designed-components/StyledDataGrid';
+import { getColumnConfig } from '../DictionaryGeneralUtils/SimpleDictionaryColumnsToGrid';
+import { useDictionaryContext } from '../DictionaryGeneralUtils/DictionaryContext';
 import { loadDictKpi, loadDictSystem, loadDictActivityHierarchy, loadDictBussinesValueAdded, loadDictDepartment, loadDictCriticalTo } from 'services/dictionaryService';
-import { SimpleDictionaryActivityHierarchyType, SimpleDictionaryBussinesValueAddedType, SimpleDictionaryCriticalToType, SimpleDictionaryDepartmentType, SimpleDictionaryKpiType, SimpleDictionarySystemType } from './SimpleDictionaryTableInterfaces';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 
 export default function SimpleDictionaryGrid() {
 
-  const { idSimpleDictionarySelected, setIdSimpleDictionarySelected, idSelectedRow, setIdSelectedRow } = useSimpleDictionaryContext();
+  const { idSimpleDictionarySelected, setIdSelectedRow, orderReloadGrid } = useDictionaryContext();
   const [rowsSimpleDictionaryData, setRowsSimpleDictionaryData] = useState([]);
-  const [selectedRows, setSelectedRows] = useState([]);
-
 
   useEffect(() => {
     getSimpleDictionaryData(idSimpleDictionarySelected);;
-  }, [idSimpleDictionarySelected]);
-
-  useEffect(() => {
-    setIdSelectedRow(selectedRows)
-  }, [selectedRows]);
-
+    setIdSelectedRow("");
+  }, [idSimpleDictionarySelected, orderReloadGrid]);
 
   const getSimpleDictionaryData = async (idSimpleDictionarySelected) => {
+    setRowsSimpleDictionaryData([]);
+
     switch (idSimpleDictionarySelected) {
       case 1:
         loadDictActivityHierarchy().then((z) => {
@@ -62,6 +56,7 @@ export default function SimpleDictionaryGrid() {
           const rows =
             z.map((item) =>
               ({ id: item.idKpi, idKpi: item.idKpi, kpi: item.kpi }))
+     
           setRowsSimpleDictionaryData(rows);
         })
         break;
@@ -84,14 +79,12 @@ export default function SimpleDictionaryGrid() {
     const selectedRows = rowsSimpleDictionaryData.filter((row) =>
       selectedIDs.has(row.id),
     );
-    setSelectedRows(selectedRows);
+    setIdSelectedRow(selectedRows);
   };
-
-
 
   return (
     <div style={{ height: 200, width: '100%' }}>
-      {"Ilość wierszy w bazie danych: " + rowsSimpleDictionaryData.length }
+      {"Ilość wierszy w bazie danych: " + rowsSimpleDictionaryData.length}
       <DataGrid
         rows={rowsSimpleDictionaryData}
         columns={getColumnConfig(idSimpleDictionarySelected)}
@@ -101,12 +94,7 @@ export default function SimpleDictionaryGrid() {
         components={{
           Toolbar: GridToolbar
         }}
-        
-
       />
-      <pre style={{ fontSize: 10 }}>
-        {JSON.stringify(selectedRows, null, 4)}
-      </pre>
     </div>
   );
 }

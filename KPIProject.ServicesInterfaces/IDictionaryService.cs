@@ -22,13 +22,16 @@ namespace KPIProject.ServicesInterfaces
 
         Task<IEnumerable<FGetLayersBySysDimTier_ResultDTO>> GetLayersBySysDimTier(short systemId, byte dimensionId, byte tierId);
 
-        Task<string> AddElementToSystemDictionary(short idSystem,string systemName);
-        Task<string> AddElementToDepartmentDictionary(short idDepartment, string departmentName);
-        Task<string> AddElementToActivityHierarchyDictionary(byte idActivityHierarchy, string activityHierarchyName);
-        Task<string> AddElementToBussinesValueAddedDictionary(byte idBussinesValueAdded, string bussinesValueAddedName);
-        Task<string> AddElementToCriticalToDictionary(byte idCriticalTo, string criticalToName);
-        Task<string> AddElementToKpiDictionary(byte idKpi, string kpi);
-        Task<string> ModifySpecificDictionary(byte idNameSimpleDictionary, int idOfDictionary, string newNameOfDictionary);
-        Task<string> DeleteSpecificDictionary(byte idNameSimpleDictionary, string idOfDictionary);
+        Task<CallResultDTO> AddElementToSystemDictionary(short idSystem,string systemName);
+        Task<CallResultDTO> AddElementToDepartmentDictionary(short idDepartment, string departmentName);
+        Task<CallResultDTO> AddElementToActivityHierarchyDictionary(byte idActivityHierarchy, string activityHierarchyName);
+        Task<CallResultDTO> AddElementToBussinesValueAddedDictionary(byte idBussinesValueAdded, string bussinesValueAddedName);
+        Task<CallResultDTO> AddElementToCriticalToDictionary(byte idCriticalTo, string criticalToName);
+        Task<CallResultDTO> AddElementToKpiDictionary(byte idKpi, string kpi);
+        Task<CallResultDTO> ModifySpecificDictionary(byte idNameSimpleDictionary, int idOfDictionary, string newNameOfDictionary);
+        Task<CallResultDTO> DeleteSpecificDictionary(byte idNameSimpleDictionary, string idOfDictionary);
+
+        Task<CallResultDTO> DeleteSpecificLayer(short systemId, byte dimensionId, byte tierId, string layerId);
+        Task<CallResultDTO> LayerModify(short systemId, byte dimensionId, byte tierId, int layerId, string layerName);
     }
 }

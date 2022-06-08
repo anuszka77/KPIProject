@@ -3,12 +3,12 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import { Alert, AlertTitle } from '@mui/material';
 
 type InputParamsAlertProps = {
   information: string,
   isOpen: boolean,
+  statusFromDb: number
   onClosePopup: () => boolean
 };
 
@@ -24,6 +24,37 @@ export default function AlertInformationPopup(props: InputParamsAlertProps) {
     props.onClosePopup(); // odpowiedzialne aby znikał popup
   };
 
+  function returnMessagePopup() {
+    if (props.statusFromDb === 1) {
+      return (
+        <Alert variant="filled" severity="success">
+          <AlertTitle>Success</AlertTitle>
+          {props.information}
+        </Alert>
+      )
+    } else if (props.statusFromDb === -2) {
+      return (
+        <Alert variant="filled" severity="warning">
+          <AlertTitle>Warning</AlertTitle>
+          {props.information}
+        </Alert>
+      )
+    } else if (props.statusFromDb === -1) {
+      return (
+        <Alert variant="filled" severity="error">
+          <AlertTitle>Error</AlertTitle>
+          {props.information}
+        </Alert>
+      )
+    } else if (props.statusFromDb === 0) {
+      return (
+        <Alert variant="filled" severity="info">
+          <AlertTitle>Info</AlertTitle>
+          {props.information}
+        </Alert>
+      )
+    }
+  }
   return (
     <div>
       <Dialog
@@ -32,20 +63,13 @@ export default function AlertInformationPopup(props: InputParamsAlertProps) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Informacja"}
-        </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {props.information}
-            {/* <Alert severity="error">This is an error alert — check it out!</Alert> */}
-          </DialogContentText>
+          {returnMessagePopup()}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>OK</Button>
-
         </DialogActions>
       </Dialog>
-    </div>
+    </div >
   );
 }

@@ -5,6 +5,7 @@ export const mainGetApiService = async (apiPath) => {
         return await getApi(apiPath)
             .then((res) => {
                 if (res.status === 200) {
+                    console.log(res.data);
                     return Promise.resolve(res.data);
                 }
                 return Promise.resolve([]);
