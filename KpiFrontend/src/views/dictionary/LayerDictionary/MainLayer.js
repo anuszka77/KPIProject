@@ -38,20 +38,21 @@ const MainLayer = () => {
     const [oparation, setOperation] = useState(operationEnum.Add);
     const [listOfSelectedRowToRemove, setListOfSelectedRowToRemove] = useState("")
     const [isVisibleTextFieldWithIdToRemove, setIsVisibleTextFieldWithIdToRemove] = useState(false)
-    const [isTextFieldLayerNameDisabled, setIsTextFieldLayerNameDisabled] = useState(false) 
+    const [isTextFieldLayerNameDisabled, setIsTextFieldLayerNameDisabled] = useState(false)
     const [informationFromDb, setInformationFromDb] = useState("");
     const [statusFromDb, setStatusFromDb] = useState(0);
     const [showPopup, setShowPopup] = useState(false);
 
-    const[dimensionValueDisabled, setDimensionValueDisabled] =  useState(false);
-    const[tierValueDisabled, setTierValueDisabled] =  useState(false);
-    const[layerNameDisabled, setLayerNameDisabled] =  useState(false);
+    const [dimensionValueDisabled, setDimensionValueDisabled] = useState(true);
+    const [tierValueDisabled, setTierValueDisabled] = useState(true);
+    const [layerNameDisabled, setLayerNameDisabled] = useState(true);
 
 
 
     useEffect(() => {
         getDictSystem();
         getDimensions();
+        checkIfSetEnableSelectedList()
     }, []);
 
 
@@ -73,9 +74,11 @@ const MainLayer = () => {
     useEffect(() => {
         checkIfSetEnableButton();
         checkIfExceptionToSaveExists();
-        // checkIfSetEnableSelectedList();
     }, [systemValueId, dimensionValueId, tierValueId, layerName, listOfSelectedRowToRemove, oparation]);
 
+    useEffect(() => {
+        checkIfSetEnableSelectedList();
+    }, [systemValueId, dimensionValueId, tierValueId]);
 
     const getDimensions = async => {
         loadDimensions().then((x) => {
@@ -113,14 +116,14 @@ const MainLayer = () => {
         if (dimensionValueId === 10 && (tierValueId === 10 || tierValueId === 0)) {
             setIsButtonDisable(true)
             setIsTextFieldLayerNameDisabled(true)
-        } else {
+        } else if (systemValueId >0 && dimensionValueId >=0 && tierValueId >=0 && layerName){
             setIsButtonDisable(false);
             setIsTextFieldLayerNameDisabled(false)
         }
     }
 
     const checkIfSetEnableButton = () => {
-        if ((systemValueId >= 0 && dimensionValueId >= 0 && tierValueId >= 0 && layerName) || oparation === 3) {
+        if ((systemValueId >0 && dimensionValueId >=0 && tierValueId >=0 && layerName) || oparation === 3) {
             setIsButtonDisable(false);
         } else {
             setIsButtonDisable(true);
@@ -128,25 +131,24 @@ const MainLayer = () => {
     }
 
     const checkIfSetEnableSelectedList = () => {
-        if (systemValueId > 0) {
-            setDimensionValueDisabled(false);
-        } else {
+
+        if (!systemValueId) {
             setDimensionValueDisabled(true);
-        }
-
-        if (dimensionValueId > 0) {
-            setTierValueDisabled(false);
         } else {
+            setDimensionValueDisabled(false);
+        }
+        if (!dimensionValueId) {
             setTierValueDisabled(true);
-        }
-
-        if (tierValueId > 0) {
-            console.log(tierValueId)
-            setLayerNameDisabled(false);
         } else {
+            setTierValueDisabled(false);
+        }
+        if (!tierValueId) {
             setLayerNameDisabled(true);
+        } else {
+            setLayerNameDisabled(false);
         }
     }
+
 
     const onDimensionChanged = (event) => {
         setDimensionValueId(event.target.value);
@@ -181,20 +183,21 @@ const MainLayer = () => {
             case operationEnum.Add
                 : var list = [{ dimensionId: dimensionValueId, tierId: tierValueId, name: layerName }];
                 saveLayers(list, systemValueId).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true); setStatusFromDb(x.returnStatus) });
-                setOrderReloadGrid(!orderReloadGrid);
-                setLayerName("");
+                // setOrderReloadGrid(!orderReloadGrid);
+                // setLayerName("");
                 break;
             case operationEnum.Update
                 : layerModify(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove, layerName).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true); setStatusFromDb(x.returnStatus) });
-                setOrderReloadGrid(!orderReloadGrid);
-                setLayerName("");
+                // setOrderReloadGrid(!orderReloadGrid);
+                // setLayerName("");
                 break;
             case operationEnum.Delete
                 : deleteSpecificLayer(systemValueId, dimensionValueId, tierValueId, listOfSelectedRowToRemove).then(x => { setInformationFromDb(x.returnMessage); setShowPopup(true); setStatusFromDb(x.returnStatus) });
-                setOrderReloadGrid(!orderReloadGrid);
-                setLayerName("");
+                // setOrderReloadGrid(!orderReloadGrid);
+                // setLayerName("");
                 break;
         }
+        setOrderReloadGrid(!orderReloadGrid);
         setLayerName("");
     }
 
@@ -223,7 +226,7 @@ const MainLayer = () => {
                                             label="System"
                                             onChange={onSystemChanged}
                                             value={systemValueId}
-                                            
+
                                         >
                                             {dictSystemList.map((row) => (
                                                 <MenuItem value={row.idSystem} key={row.idSystem}>
@@ -266,7 +269,7 @@ const MainLayer = () => {
                                             label="Nazwa tier"
                                             disabled={tierValueDisabled}
                                             onChange={onTierChanged}>
-                                                
+
                                             {tierList.map((row) => (
                                                 <MenuItem value={row.tierId} key={row.tierId}>
                                                     {row.tierName + " (" + row.tierId + ")"}
@@ -284,10 +287,10 @@ const MainLayer = () => {
                                         variant="outlined"
                                         value={layerName}
                                         onChange={onLayerNameChanged}
-                                        disabled = {isTextFieldLayerNameDisabled || layerNameDisabled}
+                                        disabled={isTextFieldLayerNameDisabled || layerNameDisabled}
                                         error={isTextFieldLayerNameDisabled}
-                                        helperText={isTextFieldLayerNameDisabled?"Dla tego wymiaru i tieru możesz tylko podblądać dane.":""}
-                                        
+                                        helperText={isTextFieldLayerNameDisabled ? "Dla tego wymiaru i tieru możesz tylko podblądać dane." : ""}
+
                                     />
                                 </FormControl>
                             </Grid>

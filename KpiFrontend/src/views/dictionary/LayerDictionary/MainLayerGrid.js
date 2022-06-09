@@ -9,12 +9,21 @@ export default function MainLayerGrid(props) {
     const {setIdSelectedRow,orderReloadGrid} = useDictionaryContext();
     const [rowsMainLayerData, setrowsMainLayerData] = useState([]);
 
+    // useEffect(() => {
+    //     if (props.idSystem !==null && props.idDimension !==null && props.idTier!==null) {
+    //         setrowsMainLayerData([]);
+    //         getLayersData(props.idSystem, props.idDimension, props.idTier);      
+    //     } else {
+    //         setrowsMainLayerData([]);
+    //     } 
+    // }, [props.idSystem, props.idDimension, props.idTier,orderReloadGrid]);
     useEffect(() => {
-        if (props.idSystem && props.idDimension>=0 && props.idTier>=0) {
+        if (!props.idSystem || !props.idDimension || !props.idTier) {
             setrowsMainLayerData([]);
-            getLayersData(props.idSystem, props.idDimension, props.idTier);      
+                
         } else {
             setrowsMainLayerData([]);
+            getLayersData(props.idSystem, props.idDimension, props.idTier); 
         } 
     }, [props.idSystem, props.idDimension, props.idTier,orderReloadGrid]);
 
