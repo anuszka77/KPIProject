@@ -41,7 +41,6 @@ const SimpleDictionaryConfigPanel = () => {
         nameButtonSelect();
 
         if (idSelectedRow.length === 1) {
-            console.log(idSelectedRow[0].id)
             setIdNewDictionarySelected(idSelectedRow[0].id)
 
         } else if (idSelectedRow.length === 0) {

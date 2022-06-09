@@ -43,6 +43,12 @@ const MainLayer = () => {
     const [statusFromDb, setStatusFromDb] = useState(0);
     const [showPopup, setShowPopup] = useState(false);
 
+    const[dimensionValueDisabled, setDimensionValueDisabled] =  useState(false);
+    const[tierValueDisabled, setTierValueDisabled] =  useState(false);
+    const[layerNameDisabled, setLayerNameDisabled] =  useState(false);
+
+
+
     useEffect(() => {
         getDictSystem();
         getDimensions();
@@ -67,6 +73,7 @@ const MainLayer = () => {
     useEffect(() => {
         checkIfSetEnableButton();
         checkIfExceptionToSaveExists();
+        // checkIfSetEnableSelectedList();
     }, [systemValueId, dimensionValueId, tierValueId, layerName, listOfSelectedRowToRemove, oparation]);
 
 
@@ -120,6 +127,27 @@ const MainLayer = () => {
         }
     }
 
+    const checkIfSetEnableSelectedList = () => {
+        if (systemValueId > 0) {
+            setDimensionValueDisabled(false);
+        } else {
+            setDimensionValueDisabled(true);
+        }
+
+        if (dimensionValueId > 0) {
+            setTierValueDisabled(false);
+        } else {
+            setTierValueDisabled(true);
+        }
+
+        if (tierValueId > 0) {
+            console.log(tierValueId)
+            setLayerNameDisabled(false);
+        } else {
+            setLayerNameDisabled(true);
+        }
+    }
+
     const onDimensionChanged = (event) => {
         setDimensionValueId(event.target.value);
         setTierValueId(null);
@@ -127,7 +155,6 @@ const MainLayer = () => {
         loadTierList(event.target.value).then((x) => {
             setTierList(x);
         })
-        console.log(layerName);
     };
 
     const onSystemChanged = (e) => {
@@ -196,6 +223,7 @@ const MainLayer = () => {
                                             label="System"
                                             onChange={onSystemChanged}
                                             value={systemValueId}
+                                            
                                         >
                                             {dictSystemList.map((row) => (
                                                 <MenuItem value={row.idSystem} key={row.idSystem}>
@@ -216,6 +244,7 @@ const MainLayer = () => {
                                             label="Nazwa wymiaru"
                                             onChange={onDimensionChanged}
                                             value={dimensionValueId}
+                                            disabled={dimensionValueDisabled}
                                         >
                                             {dimensionList.map((row) => (
                                                 <MenuItem value={row.idDimension} key={row.idDimension}>
@@ -235,7 +264,9 @@ const MainLayer = () => {
                                             id="demo-simple-select2"
                                             value={tierValueId}
                                             label="Nazwa tier"
+                                            disabled={tierValueDisabled}
                                             onChange={onTierChanged}>
+                                                
                                             {tierList.map((row) => (
                                                 <MenuItem value={row.tierId} key={row.tierId}>
                                                     {row.tierName + " (" + row.tierId + ")"}
@@ -253,7 +284,7 @@ const MainLayer = () => {
                                         variant="outlined"
                                         value={layerName}
                                         onChange={onLayerNameChanged}
-                                        disabled = {isTextFieldLayerNameDisabled}
+                                        disabled = {isTextFieldLayerNameDisabled || layerNameDisabled}
                                         error={isTextFieldLayerNameDisabled}
                                         helperText={isTextFieldLayerNameDisabled?"Dla tego wymiaru i tieru możesz tylko podblądać dane.":""}
                                         
@@ -289,7 +320,8 @@ const MainLayer = () => {
                 </Grid>
 
             </MainCard>
-            <MainLayerGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} reloadGrid={orderReloadGrid} />
+            {/* <MainLayerGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} reloadGrid={orderReloadGrid} /> */}
+            <MainLayerGrid idSystem={systemValueId} idDimension={dimensionValueId} idTier={tierValueId} />
         </div>
     );
 };

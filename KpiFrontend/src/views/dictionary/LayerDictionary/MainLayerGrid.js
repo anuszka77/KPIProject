@@ -6,17 +6,17 @@ import { getColumnConfig } from '../DictionaryGeneralUtils/SimpleDictionaryColum
 import { dictionaryEnum } from "../DictionaryGeneralUtils/DictionaryEnum";
 
 export default function MainLayerGrid(props) {
-    const {setIdSelectedRow} = useDictionaryContext();
+    const {setIdSelectedRow,orderReloadGrid} = useDictionaryContext();
     const [rowsMainLayerData, setrowsMainLayerData] = useState([]);
 
     useEffect(() => {
         if (props.idSystem && props.idDimension>=0 && props.idTier>=0) {
-            getLayersData(props.idSystem, props.idDimension, props.idTier);
             setrowsMainLayerData([]);
+            getLayersData(props.idSystem, props.idDimension, props.idTier);      
         } else {
             setrowsMainLayerData([]);
         } 
-    }, [props.idSystem, props.idDimension, props.idTier,props.reloadGrid]);
+    }, [props.idSystem, props.idDimension, props.idTier,orderReloadGrid]);
 
 
 
